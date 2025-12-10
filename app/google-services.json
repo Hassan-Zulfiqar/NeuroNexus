@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "795944039862",
+    "firebase_url": "https://colorcalling-2a53d-default-rtdb.firebaseio.com",
+    "project_id": "colorcalling-2a53d",
+    "storage_bucket": "colorcalling-2a53d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795944039862:android:8de34401f8a6b2288cbd17",
+        "android_client_info": {
+          "package_name": "com.example.neuronexus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu9W-BvK5jFy2lV6xE60BbPDfS-vFqdE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

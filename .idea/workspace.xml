@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="_android_virtual_device_id_Pixel_3a" />
+      </config>
+    </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_bottom_nav.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_bottom_sheet_rounded.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_btn_gradient.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_blue_overlay.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_header_rounded_bottom.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_white_rounded.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_background.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_dashboard_black_24dp.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_home_black_24dp.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/login_img.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/tab_selector.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/welcome.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_dashboard.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_sign_up.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_forgot_password.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_onboarding.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_patient_dashboard.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_patient_sign_up.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up_role.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_image_selection.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_appointments.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_edit_profile.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_history.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_home.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_more.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_profile.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_scans.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_schedule.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_search.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_history_analysis.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_history_consultations.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_history_labs.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_edit_profile.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_history.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_home.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_lab_test.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_more.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_profile.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_schedule.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_doctor_appointment_card.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_doctor_history_appointment.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_doctor_history_scan.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_doctor_quick_access.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_history_analysis.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_history_consultation.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_history_lab.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_onboarding_page.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_patient_dashboard_service.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_patient_schedule_appointment.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/layout_appointment_card.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/layout_top_doctor_card.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu_doctor.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu_patient.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/navigation/doctor_mobile_navigation.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/navigation/patient_mobile_navigation.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+    </layouts>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9d7cde5c-ef8b-4968-b842-9c2327f55e80" name="Changes" comment="Implemented history and profile screens" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Administrator\.android\avd\Medium_Phone.avd)]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="navigationResourceFile" />
+        <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Hassan-Zulfiqar-687&quot;
+  }
+}</component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;Hassan-Zulfiqar-687&quot;,
+      &quot;fullname&quot;: &quot;Muhammad Abu-Ul-Hassan&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://gitlab.com/group19263649/neuronexus.git&quot;,
+    &quot;second&quot;: &quot;53956711-212f-49fd-95c6-a3233c7fcdd9&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Hassan-Zulfiqar-687/NeuroNexus.git&quot;,
+    &quot;accountId&quot;: &quot;993b11f0-3133-4319-9e9e-a4c5f983cfd3&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="35qLoJvoZd1zbXemwcmvq2SmoJ6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrator/Desktop/NeuroNexus/app/src/main/res/drawable&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="android.template.499151773">
+      <recent name="com.example.neuronexus.ui.doctor.schedule" />
+      <recent name="com.example.neuronexus.ui.doctor.search" />
+      <recent name="com.example.neuronexus.ui.doctor.home" />
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.-1750650455">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.-327118929">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.-1295663287">
+      <recent name="com.example.neuronexus.ui.profile" />
+    </key>
+    <key name="android.template.1727521602">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.1504895637">
+      <recent name="com.example.neuronexus.ui.lab" />
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.894565221">
+      <recent name="com.example.neuronexus.ui.profile" />
+    </key>
+    <key name="android.template.1131271743">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.-570539149">
+      <recent name="com.example.neuronexus.ui.doctor.profile" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\NeuroNexus\app\src\main\res\drawable" />
+    </key>
+    <key name="android.template.-1573301570">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.-1329586971">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.1873357839">
+      <recent name="com.example.neuronexus" />
+    </key>
+    <key name="android.template.-934429214">
+      <recent name="com.example.neuronexus.ui.doctor.history.tabs" />
+      <recent name="com.example.neuronexus.ui.doctor.history" />
+      <recent name="com.example.neuronexus.ui.history.tabs" />
+      <recent name="com.example.neuronexus.ui.history" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="NeuroNexus.app" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9d7cde5c-ef8b-4968-b842-9c2327f55e80" name="Changes" comment="" />
+      <created>1763832830333</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763832830333</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Initial commit: Project setup and UI baseline">
+      <option name="closed" value="true" />
+      <created>1764610398566</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1764610398566</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updated SignUp, Login with Authentication and Patient Dashboard implementation">
+      <option name="closed" value="true" />
+      <created>1765029246658</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1765029246658</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated SignUp, Login with Authentication and Patient Dashboard implementation">
+      <option name="closed" value="true" />
+      <created>1765029453593</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765029453593</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implemented Doctor Home Screen">
+      <option name="closed" value="true" />
+      <created>1765162779038</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765162779038</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Implemented history and profile screens">
+      <option name="closed" value="true" />
+      <created>1765384162496</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765384162496</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit: Project setup and UI baseline" />
+    <MESSAGE value="Updated SignUp, Login with Authentication and Patient Dashboard implementation" />
+    <MESSAGE value="Implemented Doctor Home Screen" />
+    <MESSAGE value="Implemented history and profile screens" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented history and profile screens" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/utils/ZoomOutPageTransformer.kt</url>
+          <line>2</line>
+          <properties class="com.example.neuronexus.utils.ZoomOutPageTransformer" method="&lt;init&gt;">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.example.neuronexus">
+          <value>
+            <CheckInfo lastCheckTimestamp="1765343136569" />
+          </value>
+        </entry>
+        <entry key="com.example.neuronexus.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1765343136569" />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
