@@ -19,36 +19,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeuroNexus">
         <activity
-            android:name=".DoctorDashboardActivity"
+            android:name=".common.activities.NotificationsActivity"
+            android:exported="false"
+            android:label="Notifications" />
+        <activity
+            android:name=".doctor.activities.DetectionActivity"
+            android:exported="false"
+            android:label="Tumor Detection" />
+        <activity
+            android:name=".doctor.activities.DoctorDashboardActivity"
             android:exported="false"
             android:label="@string/title_activity_doctor_dashboard" />
         <activity
-            android:name=".PatientDashboardActivity"
+            android:name=".patient.activities.PatientDashboardActivity"
             android:exported="false"
             android:label="@string/title_activity_patient_dashboard" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".common.auth.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".PatientSignUpActivity"
+            android:name=".patient.activities.PatientSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".DoctorSignUpActivity"
+            android:name=".doctor.activities.DoctorSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpRoleActivity"
+            android:name=".common.auth.SignUpRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".common.auth.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".common.auth.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".common.auth.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".common.auth.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

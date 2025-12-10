@@ -1,4 +1,4 @@
-package com.example.neuronexus.ui.schedule
+package com.example.neuronexus.patient.ui.schedule
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.neuronexus.R
-import com.example.neuronexus.adapters.PatientAppointmentAdapter
+import com.example.neuronexus.patient.adapters.PatientAppointmentAdapter
 import com.example.neuronexus.databinding.FragmentPatientScheduleBinding
 
 class PatientScheduleFragment : Fragment() {
@@ -48,20 +48,17 @@ class PatientScheduleFragment : Fragment() {
     }
 
     private fun selectUpcomingTab() {
-        // 1. Fetch data
         val list = scheduleViewModel.getUpcomingList()
         adapter.updateList(list)
 
-        // 2. ACTIVE TAB (Upcoming): Set White Rounded Background + Blue Tint
         binding.tabUpcoming.setBackgroundResource(R.drawable.bg_white_rounded)
         binding.tabUpcoming.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(requireContext(), R.color.primary_blue)
         )
         binding.tabUpcoming.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_white))
 
-        // 3. INACTIVE TAB (Past): Remove Background/Tint
         binding.tabPast.setBackgroundResource(android.R.color.transparent)
-        binding.tabPast.backgroundTintList = null // Clear the tint
+        binding.tabPast.backgroundTintList = null
         binding.tabPast.setTextColor(ContextCompat.getColor(requireContext(), R.color.textSecondary))
     }
 
@@ -85,3 +82,4 @@ class PatientScheduleFragment : Fragment() {
         _binding = null
     }
 }
+

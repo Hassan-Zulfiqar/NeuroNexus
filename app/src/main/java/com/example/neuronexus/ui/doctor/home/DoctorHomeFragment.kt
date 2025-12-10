@@ -1,5 +1,6 @@
 package com.example.neuronexus.ui.doctor.home
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.neuronexus.adapters.DoctorAppointmentAdapter
 import com.example.neuronexus.databinding.FragmentDoctorHomeBinding
 import com.example.neuronexus.ui.common.ImagePickerHelper
 import com.example.neuronexus.ui.common.ImageSelectionDialog
+import com.example.neuronexus.doctor.activities.DetectionActivity
 
 class DoctorHomeFragment : Fragment() {
 
@@ -45,6 +47,14 @@ class DoctorHomeFragment : Fragment() {
 
         setupQuickAccess()
         setupAppointmentsList()
+        setupNotificationClick()
+    }
+
+    private fun setupNotificationClick() {
+        binding.btnNotification.setOnClickListener {
+            val intent = Intent(requireContext(), com.example.neuronexus.common.activities.NotificationsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupQuickAccess() {
@@ -79,8 +89,9 @@ class DoctorHomeFragment : Fragment() {
     }
 
     private fun onImageSelected(uri: Uri) {
-        // 4. Handle the result
-        Toast.makeText(context, "Image Selected: $uri", Toast.LENGTH_LONG).show()
+        val intent = Intent(requireContext(), DetectionActivity::class.java)
+        intent.putExtra("image_uri", uri)
+        startActivity(intent)
     }
 
     private fun setupAppointmentsList() {

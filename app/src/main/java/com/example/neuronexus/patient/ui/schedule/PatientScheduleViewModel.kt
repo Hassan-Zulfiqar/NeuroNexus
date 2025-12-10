@@ -1,8 +1,8 @@
-package com.example.neuronexus.ui.schedule
+package com.example.neuronexus.patient.ui.schedule
 
 import androidx.lifecycle.ViewModel
 import com.example.neuronexus.R
-import com.example.neuronexus.models.PatientAppointmentItem
+import com.example.neuronexus.patient.models.PatientAppointmentItem
 
 class PatientScheduleViewModel : ViewModel() {
 
@@ -14,7 +14,6 @@ class PatientScheduleViewModel : ViewModel() {
         )
     }
 
-    // Function to get Past Data
     fun getPastList(): List<PatientAppointmentItem> {
         return listOf(
             PatientAppointmentItem("Dr. John Doe", "Dentist", "10 Sep, 2022", "10:00 - 10:30 am", R.drawable.doctor, "PAST"),
@@ -22,3 +21,4 @@ class PatientScheduleViewModel : ViewModel() {
         )
     }
 }
+

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +8,9 @@
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="20dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
 
         <View
             android:id="@+id/headerBg"
@@ -22,28 +21,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivDocProfile"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/doctor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivDocProfile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/doctor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvGreeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:fontFamily="@font/poppins"
-        android:text="Hello, Dr. Asha"
-        android:textColor="@color/colorBackground"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/ivDocProfile"
-        app:layout_constraintTop_toTopOf="@id/ivDocProfile" />
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/poppins"
+            android:text="Hello, Dr. Asha"
+            android:textColor="@color/colorBackground"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivDocProfile"
+            app:layout_constraintTop_toTopOf="@id/ivDocProfile" />
 
         <TextView
             android:id="@+id/textView6"
@@ -57,19 +56,19 @@
             app:layout_constraintStart_toStartOf="@id/tvGreeting"
             app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
 
-    <ImageView
-        android:id="@+id/btnNotification"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/bg_white_rounded"
-        android:backgroundTint="#20FFFFFF"
-        android:padding="8dp"
-        android:src="@drawable/notifications"
-        app:tint="@color/text_white"
-        app:layout_constraintBottom_toBottomOf="@id/ivDocProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivDocProfile" />
+        <ImageView
+            android:id="@+id/btnNotification"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_white_rounded"
+            android:backgroundTint="#20FFFFFF"
+            android:padding="8dp"
+            android:src="@drawable/notifications"
+            app:layout_constraintBottom_toBottomOf="@id/ivDocProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivDocProfile"
+            app:tint="@color/text_white" />
 
         <EditText
             android:id="@+id/etSearch"
@@ -132,19 +131,19 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-    <TextView
-        android:id="@+id/labelUpcoming"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/poppins"
-        android:text="Upcoming Appointments"
-        android:textColor="@color/text_black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutQuickAccess" />
+        <TextView
+            android:id="@+id/labelUpcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins"
+            android:text="Upcoming Appointments"
+            android:textColor="@color/text_black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutQuickAccess" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAppointments"
@@ -156,9 +155,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelUpcoming"
-            app:spanCount="2"
-            tools:itemCount="4"
+            app:spanCount="1"
+            tools:itemCount="3"
             tools:listitem="@layout/item_doctor_appointment_card" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,7 +1,7 @@
-package com.example.neuronexus.ui.home
+package com.example.neuronexus.patient.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.example.neuronexus.models.PatientDashboardService
+import com.example.neuronexus.patient.models.PatientDashboardService
 import com.example.neuronexus.R
 
 class PatientHomeViewModel : ViewModel() {
@@ -15,3 +15,4 @@ class PatientHomeViewModel : ViewModel() {
         )
     }
 }
+

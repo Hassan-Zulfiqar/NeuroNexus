@@ -58,13 +58,11 @@ class LoginActivity : AppCompatActivity() {
             override fun onSuccess(user: User) {
                 showLoading(false)
 
-                // CHECK STATUS FIRST
                 if (user.status == "blocked") {
                     Toast.makeText(this@LoginActivity, "Your account has been blocked. Contact Admin.", Toast.LENGTH_LONG).show()
                     return
                 }
 
-                // ROUTING LOGIC (The "Traffic Cop")
                 when (user.role) {
                     "doctor" -> {
                         val intent = Intent(this@LoginActivity, DoctorDashboardActivity::class.java)
@@ -80,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }
                     "admin" -> {
-                        // Admin should not use the mobile app
+
                         Toast.makeText(this@LoginActivity, "Please login via Web Portal", Toast.LENGTH_LONG).show()
                     }
                     else -> {
