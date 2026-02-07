@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neuronexus.databinding.ItemHistoryConsultationBinding
-import com.example.neuronexus.patient.models.HistoryConsultationItem
 import com.example.neuronexus.R
+import com.example.neuronexus.models.HistoryConsultationItem
 
 class PatientHistoryConsultationAdapter(
     private val consultationList: List<HistoryConsultationItem>,

@@ -17,18 +17,20 @@ class SignUpRoleActivity : AppCompatActivity() {
         _binding = ActivitySignUpRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         binding.btnDoctorRole.setOnClickListener {
-            val intent = Intent(this, DoctorSignUpActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, DoctorSignUpActivity::class.java))
         }
 
         binding.btnPatientRole.setOnClickListener {
-            val intent = Intent(this, PatientSignUpActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, PatientSignUpActivity::class.java))
         }
     }
 
@@ -37,4 +39,3 @@ class SignUpRoleActivity : AppCompatActivity() {
         _binding = null
     }
 }
-

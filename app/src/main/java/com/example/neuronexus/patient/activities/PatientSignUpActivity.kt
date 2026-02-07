@@ -12,10 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.example.neuronexus.databinding.ActivityPatientSignUpBinding
-import com.example.neuronexus.patient.models.Patient
-import com.example.neuronexus.common.repository.AuthRepository
+import com.example.neuronexus.R
 import com.example.neuronexus.common.auth.LoginActivity
+import com.example.neuronexus.common.utils.AlertUtils
+import com.example.neuronexus.common.viewmodel.AuthViewModel
+import com.example.neuronexus.databinding.ActivityPatientSignUpBinding
+import com.example.neuronexus.models.Patient
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
 class PatientSignUpActivity : AppCompatActivity() {
@@ -23,7 +26,7 @@ class PatientSignUpActivity : AppCompatActivity() {
     private var _binding: ActivityPatientSignUpBinding? = null
     private val binding get() = _binding!!
 
-    private val authRepository = AuthRepository()
+    private val viewModel: AuthViewModel by viewModel()
 
     private var profileImageUri: Uri? = null
     private var tempCameraUri: Uri? = null
@@ -38,7 +41,6 @@ class PatientSignUpActivity : AppCompatActivity() {
 
     private val profileCameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         val uri = tempCameraUri
-
         if (success && uri != null) {
             profileImageUri = uri
             binding.imgProfile.setImageURI(uri)
@@ -48,9 +50,9 @@ class PatientSignUpActivity : AppCompatActivity() {
 
     private val requestCameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
-            Toast.makeText(this, "Permission granted. Try again.", Toast.LENGTH_SHORT).show()
+            AlertUtils.showInfo(this, "Camera permission granted. You can now take a photo.")
         } else {
-            Toast.makeText(this, "Camera permission is required to take photos", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Camera permission is required to take photos.")
         }
     }
 
@@ -59,6 +61,7 @@ class PatientSignUpActivity : AppCompatActivity() {
         _binding = ActivityPatientSignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Restore State if available
         if (savedInstanceState != null) {
             profileImageUri = savedInstanceState.getParcelable("profile_uri")
             tempCameraUri = savedInstanceState.getParcelable("temp_uri")
@@ -70,6 +73,7 @@ class PatientSignUpActivity : AppCompatActivity() {
         }
 
         setupClickListeners()
+        setupObservers()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -97,6 +101,23 @@ class PatientSignUpActivity : AppCompatActivity() {
         }
     }
 
+    // 2. Observe ViewModel State
+    private fun setupObservers() {
+        viewModel.loading.observe(this) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        viewModel.authMessage.observe(this) { result ->
+            result.onSuccess { message ->
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                navigateToLogin()
+            }
+            result.onFailure { error ->
+                AlertUtils.showError(this, error.message ?: "Registration Failed")
+            }
+        }
+    }
+
     private fun showImageSourceDialog() {
         val options = arrayOf("Take Photo", "Choose from Gallery")
         AlertDialog.Builder(this)
@@ -121,7 +142,6 @@ class PatientSignUpActivity : AppCompatActivity() {
     private fun openCamera() {
         val uri = createImageUri()
         tempCameraUri = uri
-
         profileCameraLauncher.launch(uri)
     }
 
@@ -143,18 +163,19 @@ class PatientSignUpActivity : AppCompatActivity() {
         val password = binding.inputPass.editText?.text.toString().trim()
         val confirmPass = binding.inputConfirmPass.editText?.text.toString().trim()
 
+        // UI Validations
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || cnic.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Please fill all required fields", "Missing Information")
             return
         }
 
         if (password.length < 6) {
-            Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Password must be at least 6 characters")
             return
         }
 
         if (password != confirmPass) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Passwords do not match")
             return
         }
 
@@ -165,29 +186,8 @@ class PatientSignUpActivity : AppCompatActivity() {
             cnic = cnic
         )
 
-        showLoading(true)
-
-        authRepository.registerPatient(
-            patient,
-            password,
-            profileImageUri,
-            object : AuthRepository.RegisterCallback {
-                override fun onSuccess(message: String) {
-                    showLoading(false)
-                    Toast.makeText(this@PatientSignUpActivity, message, Toast.LENGTH_LONG).show()
-
-                    val intent = Intent(this@PatientSignUpActivity, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
-                }
-
-                override fun onError(message: String) {
-                    showLoading(false)
-                    Toast.makeText(this@PatientSignUpActivity, "Error: $message", Toast.LENGTH_LONG).show()
-                }
-            }
-        )
+        // 3. Trigger ViewModel Registration
+        viewModel.registerPatient(patient, password, profileImageUri)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -205,9 +205,15 @@ class PatientSignUpActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 }
-

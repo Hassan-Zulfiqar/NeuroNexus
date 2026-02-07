@@ -2,6 +2,7 @@ package com.example.neuronexus.doctor.activities
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,11 @@ class DetectionActivity : AppCompatActivity() {
         binding = ActivityDetectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         imageUri = intent.getParcelableExtra("image_uri")
+
+        Log.e("CHECK_IMG", "Detection: ${imageUri.toString()}")
+
 
         if (imageUri != null) {
             displayImage(imageUri!!)
@@ -102,5 +107,11 @@ class DetectionActivity : AppCompatActivity() {
             }
         )
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 }
 

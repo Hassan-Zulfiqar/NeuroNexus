@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neuronexus.R
 import com.example.neuronexus.databinding.ItemDoctorHistoryAppointmentBinding
-import com.example.neuronexus.doctor.models.DoctorAppointmentHistoryItem
+import com.example.neuronexus.models.DoctorAppointmentHistoryItem
 
 class DoctorAppointmentHistoryAdapter(
     private val list: List<DoctorAppointmentHistoryItem>,

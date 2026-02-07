@@ -92,8 +92,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
-                    style="@style/LoginEditText"
-                    android:text="Alex Martines" />
+                    style="@style/LoginEditText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -111,8 +110,7 @@
                     style="@style/LoginEditText"
                     android:alpha="0.6"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:text="alex.martines@gmail.com" />
+                    android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -128,8 +126,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPhone"
                     style="@style/LoginEditText"
-                    android:inputType="phone"
-                    android:text="+92 300 1234567" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -147,26 +144,7 @@
                     style="@style/LoginEditText"
                     android:alpha="0.6"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:text="42101-1234567-1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/LoginLabelText"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="Password" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/LoginInputLayout"
-                app:endIconMode="password_toggle"
-                app:startIconDrawable="@drawable/lock">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    style="@style/LoginEditText"
-                    android:inputType="textPassword"
-                    android:text="123456" />
+                    android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

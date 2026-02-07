@@ -13,7 +13,20 @@
           "package_name": "com.example.neuronexus"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "795944039862-k64u9sk1b9ak8c7840l9d03dcqeog7ct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.neuronexus",
+            "certificate_hash": "366429f09927b6c75870c008298dfe8997ffb20f"
+          }
+        },
+        {
+          "client_id": "795944039862-0qq47aquviol3fp29siqiiavml8oim5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCu9W-BvK5jFy2lV6xE60BbPDfS-vFqdE0"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795944039862-0qq47aquviol3fp29siqiiavml8oim5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

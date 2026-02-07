@@ -4,21 +4,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import android.view.animation.AnimationUtils
 import com.example.neuronexus.R
-import com.example.neuronexus.common.auth.OnboardingActivity
+import com.example.neuronexus.common.utils.AlertUtils
+import com.example.neuronexus.common.viewmodel.AuthViewModel
+import com.example.neuronexus.doctor.activities.DoctorDashboardActivity
+import com.example.neuronexus.patient.activities.PatientDashboardActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    // Inject ViewModel
+    private val viewModel: AuthViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        // UI Animations
         val logo = findViewById<ImageView>(R.id.logo)
         val tagline = findViewById<TextView>(R.id.tagline)
         val progressBar = findViewById<android.widget.ProgressBar>(R.id.progressBar)
@@ -36,21 +45,58 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             checkOnboardingStatus()
         }, 3000)
+
+        // Setup Observer for Auto-Login Logic
+        setupObservers()
     }
 
     private fun checkOnboardingStatus() {
         val sharedPref = getSharedPreferences("OnboardingPref", MODE_PRIVATE)
         val isFinished = sharedPref.getBoolean("isOnboardingFinished", false)
 
-        if (isFinished) {
-            val intent = Intent(this, OnboardingActivity::class.java)
-            startActivity(intent)
-        } else {
-            val intent = Intent(this, OnboardingActivity::class.java)
-            startActivity(intent)
-        }
+        if (isFinished)
+        {
+            // Onboarding is done, check if user is logged in
+            //viewModel.checkCurrentUser()
 
+            // for testing
+            val intent = Intent(this, OnboardingActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else
+        {
+            val intent = Intent(this, OnboardingActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun setupObservers()
+    {
+        viewModel.userState.observe(this) { result ->
+            result.onSuccess { user ->
+                // User Found! Navigate to Dashboard based on Role
+                when (user.role)
+                {
+                    "doctor" -> navigateTo(DoctorDashboardActivity::class.java)
+                    "patient" -> navigateTo(PatientDashboardActivity::class.java)
+                    "admin" -> AlertUtils.showError(this, "Please login via Web Portal")
+                    else -> navigateTo(LoginActivity::class.java) // Fallback for new/unknown users
+                }
+            }
+            result.onFailure {
+                // No user logged in (or error), go to Login
+                navigateTo(LoginActivity::class.java)
+            }
+        }
+    }
+
+    private fun navigateTo(activityClass: Class<*>)
+    {
+        val intent = Intent(this, activityClass)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
         finish()
     }
 }
-

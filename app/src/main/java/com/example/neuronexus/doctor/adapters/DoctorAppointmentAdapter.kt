@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neuronexus.databinding.ItemDoctorAppointmentCardBinding
-import com.example.neuronexus.doctor.models.DoctorAppointmentItem
+import com.example.neuronexus.models.DoctorAppointmentItem
 
 class DoctorAppointmentAdapter(private val appointmentList: List<DoctorAppointmentItem>) :
     RecyclerView.Adapter<DoctorAppointmentAdapter.AppointmentViewHolder>() {

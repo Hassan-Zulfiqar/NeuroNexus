@@ -7,8 +7,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.neuronexus.databinding.ActivityDoctorDashboardBinding
-import com.example.neuronexus.doctor.ui.more.DoctorMoreFragment
 import com.example.neuronexus.R
+import com.example.neuronexus.doctor.ui.more.DoctorMoreFragment
 
 class DoctorDashboardActivity : AppCompatActivity() {
 

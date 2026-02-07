@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neuronexus.databinding.ItemPatientDashboardServiceBinding
-import com.example.neuronexus.patient.models.PatientDashboardService
+import com.example.neuronexus.models.PatientDashboardService
 
 class PatientServiceAdapter(private val serviceList: List<PatientDashboardService>) :
     RecyclerView.Adapter<PatientServiceAdapter.ServiceViewHolder>() {

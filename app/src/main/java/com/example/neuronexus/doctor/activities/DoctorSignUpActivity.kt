@@ -13,10 +13,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.example.neuronexus.databinding.ActivityDoctorSignUpBinding
-import com.example.neuronexus.doctor.models.Doctor
-import com.example.neuronexus.common.repository.AuthRepository
+import com.example.neuronexus.R
 import com.example.neuronexus.common.auth.LoginActivity
+import com.example.neuronexus.common.utils.AlertUtils
+import com.example.neuronexus.common.viewmodel.AuthViewModel
+import com.example.neuronexus.databinding.ActivityDoctorSignUpBinding
+import com.example.neuronexus.models.Doctor
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
 class DoctorSignUpActivity : AppCompatActivity() {
@@ -24,13 +27,14 @@ class DoctorSignUpActivity : AppCompatActivity() {
     private var _binding: ActivityDoctorSignUpBinding? = null
     private val binding get() = _binding!!
 
-    private val authRepository = AuthRepository()
+    // 1. Inject ViewModel using Koin
+    private val viewModel: AuthViewModel by viewModel()
 
     private var profileImageUri: Uri? = null
     private var licenseImageUri: Uri? = null
-
     private var tempCameraUri: Uri? = null
 
+    // Image Launchers
     private val profileGalleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
             profileImageUri = uri
@@ -69,7 +73,7 @@ class DoctorSignUpActivity : AppCompatActivity() {
         if (isGranted) {
             Toast.makeText(this, "Permission granted. Try again.", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Camera permission is required to take photos.")
         }
     }
 
@@ -79,21 +83,26 @@ class DoctorSignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (savedInstanceState != null) {
-            profileImageUri = savedInstanceState.getParcelable("profile_uri")
-            licenseImageUri = savedInstanceState.getParcelable("license_uri")
-            tempCameraUri = savedInstanceState.getParcelable("temp_uri")
-
-            if (profileImageUri != null) {
-                binding.imgProfile.setImageURI(profileImageUri)
-                binding.textUploadHint.text = "Profile Photo Selected"
-            }
-            if (licenseImageUri != null) {
-                binding.imgLicensePreview.setImageURI(licenseImageUri)
-                binding.imgLicensePreview.scaleType = ImageView.ScaleType.CENTER_CROP
-            }
+            restoreState(savedInstanceState)
         }
 
         setupClickListeners()
+        setupObservers()
+    }
+
+    private fun restoreState(savedInstanceState: Bundle) {
+        profileImageUri = savedInstanceState.getParcelable("profile_uri")
+        licenseImageUri = savedInstanceState.getParcelable("license_uri")
+        tempCameraUri = savedInstanceState.getParcelable("temp_uri")
+
+        if (profileImageUri != null) {
+            binding.imgProfile.setImageURI(profileImageUri)
+            binding.textUploadHint.text = "Profile Photo Selected"
+        }
+        if (licenseImageUri != null) {
+            binding.imgLicensePreview.setImageURI(licenseImageUri)
+            binding.imgLicensePreview.scaleType = ImageView.ScaleType.CENTER_CROP
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -126,6 +135,30 @@ class DoctorSignUpActivity : AppCompatActivity() {
         }
     }
 
+    // 2. Setup Observers
+    private fun setupObservers() {
+        // Observe Loading State
+        viewModel.loading.observe(this) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        // Observe Registration Result (Success or Failure)
+        viewModel.authMessage.observe(this) { result ->
+            result.onSuccess { message ->
+                // Success
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            result.onFailure { error ->
+                // Failure
+                AlertUtils.showError(this, error.message ?: "Registration Failed")
+            }
+        }
+    }
+
     private fun showImageSourceDialog(isProfile: Boolean) {
         val options = arrayOf("Take Photo", "Choose from Gallery")
         AlertDialog.Builder(this)
@@ -153,12 +186,8 @@ class DoctorSignUpActivity : AppCompatActivity() {
     private fun openCamera(isProfile: Boolean) {
         val uri = createImageUri()
         tempCameraUri = uri
-
-        if (isProfile) {
-            profileCameraLauncher.launch(uri)
-        } else {
-            licenseCameraLauncher.launch(uri)
-        }
+        if (isProfile) profileCameraLauncher.launch(uri)
+        else licenseCameraLauncher.launch(uri)
     }
 
     private fun createImageUri(): Uri {
@@ -184,23 +213,24 @@ class DoctorSignUpActivity : AppCompatActivity() {
         val fee = binding.inputFee.editText?.text.toString().trim()
         val schedule = binding.inputSchedule.editText?.text.toString().trim()
 
+
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || license.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Please fill all required fields", "Missing Info")
             return
         }
 
         if (password.length < 6) {
-            Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Password must be at least 6 characters")
             return
         }
 
         if (password != confirmPass) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Passwords do not match")
             return
         }
 
         if (licenseImageUri == null) {
-            Toast.makeText(this, "Please upload your License Copy", Toast.LENGTH_SHORT).show()
+            AlertUtils.showError(this, "Please upload your License Copy", "License Missing")
             return
         }
 
@@ -217,29 +247,8 @@ class DoctorSignUpActivity : AppCompatActivity() {
             registrationStatus = "pending"
         )
 
-        showLoading(true)
-
-        authRepository.registerDoctor(
-            doctor,
-            password,
-            profileImageUri,
-            licenseImageUri,
-            object : AuthRepository.RegisterCallback {
-                override fun onSuccess(message: String) {
-                    showLoading(false)
-                    Toast.makeText(this@DoctorSignUpActivity, message, Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@DoctorSignUpActivity, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
-                }
-
-                override fun onError(message: String) {
-                    showLoading(false)
-                    Toast.makeText(this@DoctorSignUpActivity, "Error: $message", Toast.LENGTH_LONG).show()
-                }
-            }
-        )
+        // 4. Trigger ViewModel Action
+        viewModel.registerDoctor(doctor, password, profileImageUri, licenseImageUri)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -260,4 +269,3 @@ class DoctorSignUpActivity : AppCompatActivity() {
         _binding = null
     }
 }
-

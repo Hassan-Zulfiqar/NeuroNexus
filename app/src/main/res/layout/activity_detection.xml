@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/primary_blue">
+            android:background="@color/text_white">
 
             <ImageView
                 android:id="@+id/btnBack"
@@ -24,14 +24,14 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/arrow_back"
                 android:contentDescription="Back"
-                app:tint="@color/text_white" />
+                app:tint="@color/text_black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Tumor Detection"
-                android:textColor="@color/text_white"
+                android:textColor="@color/text_black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

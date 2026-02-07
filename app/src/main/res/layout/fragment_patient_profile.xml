@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/poppins"
-        android:text="Alex Martines"
+        android:text="......."
         android:textColor="@color/text_white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -116,7 +116,7 @@
                     android:id="@+id/tvEmail"
                     style="@style/ProfileValueStyle"
                     android:drawableStart="@drawable/email"
-                    android:text="alex.martines@gmail.com" />
+                    android:text="........" />
 
                 <View style="@style/DividerStyle" />
 
@@ -129,7 +129,7 @@
                     android:id="@+id/tvPhone"
                     style="@style/ProfileValueStyle"
                     android:drawableStart="@drawable/ic_call"
-                    android:text="+92 300 1234567" />
+                    android:text="........" />
 
                 <View style="@style/DividerStyle" />
 
@@ -142,7 +142,7 @@
                     android:id="@+id/tvCnic"
                     style="@style/ProfileValueStyle"
                     android:drawableStart="@drawable/ic_cnic"
-                    android:text="42101-1234567-1" />
+                    android:text="........" />
 
                 <View style="@style/DividerStyle" />
 

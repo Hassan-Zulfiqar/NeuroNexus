@@ -7,37 +7,37 @@
 
     <fragment
         android:id="@+id/navigation_doctor_home"
-        android:name="com.example.neuronexus.ui.doctor.home.DoctorHomeFragment"
+        android:name="com.example.neuronexus.doctor.ui.home.DoctorHomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_doctor_home" />
 
     <fragment
         android:id="@+id/navigation_doctor_search"
-        android:name="com.example.neuronexus.ui.doctor.search.DoctorSearchFragment"
+        android:name="com.example.neuronexus.doctor.ui.search.DoctorSearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_doctor_search" />
 
     <fragment
         android:id="@+id/navigation_doctor_schedule"
-        android:name="com.example.neuronexus.ui.doctor.schedule.DoctorScheduleFragment"
+        android:name="com.example.neuronexus.doctor.ui.schedule.DoctorScheduleFragment"
         android:label="Schedule"
         tools:layout="@layout/fragment_doctor_schedule" />
 
     <fragment
         android:id="@+id/navigation_doctor_profile"
-        android:name="com.example.neuronexus.ui.doctor.profile.DoctorProfileFragment"
+        android:name="com.example.neuronexus.doctor.ui.profile.DoctorProfileFragment"
         android:label="My Profile"
         tools:layout="@layout/fragment_doctor_profile" />
 
     <fragment
         android:id="@+id/navigation_doctor_edit_profile"
-        android:name="com.example.neuronexus.ui.doctor.profile.DoctorEditProfileFragment"
+        android:name="com.example.neuronexus.doctor.ui.profile.DoctorEditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_doctor_edit_profile" />
 
     <fragment
         android:id="@+id/navigation_doctor_history"
-        android:name="com.example.neuronexus.ui.doctor.history.DoctorHistoryFragment"
+        android:name="com.example.neuronexus.doctor.ui.history.DoctorHistoryFragment"
         android:label="History"
         tools:layout="@layout/fragment_doctor_history" />
 

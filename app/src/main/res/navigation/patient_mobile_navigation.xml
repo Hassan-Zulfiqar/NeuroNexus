@@ -7,37 +7,37 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.neuronexus.ui.home.PatientHomeFragment"
+        android:name="com.example.neuronexus.patient.ui.home.PatientHomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_patient_home" />
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.example.neuronexus.ui.schedule.PatientScheduleFragment"
+        android:name="com.example.neuronexus.patient.ui.schedule.PatientScheduleFragment"
         android:label="Schedule"
         tools:layout="@layout/fragment_patient_schedule" />
 
     <fragment
         android:id="@+id/navigation_lab"
-        android:name="com.example.neuronexus.ui.lab.PatientLabTestFragment"
-        android:label="Lab Test"
-        tools:layout="@layout/fragment_patient_lab_test" />
+        android:name="com.example.neuronexus.patient.ui.lab.LabListFragment"
+        android:label="Labs"
+        tools:layout="@layout/fragment_lab_list" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.neuronexus.ui.profile.PatientProfileFragment"
+        android:name="com.example.neuronexus.patient.ui.profile.PatientProfileFragment"
         android:label="My Profile"
         tools:layout="@layout/fragment_patient_profile" />
 
     <fragment
         android:id="@+id/navigation_edit_profile"
-        android:name="com.example.neuronexus.ui.profile.PatientEditProfileFragment"
+        android:name="com.example.neuronexus.patient.ui.profile.PatientEditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_patient_edit_profile" />
 
     <fragment
         android:id="@+id/navigation_patient_history"
-        android:name="com.example.neuronexus.ui.history.PatientHistoryFragment"
+        android:name="com.example.neuronexus.patient.ui.history.PatientHistoryFragment"
         android:label="My History"
         tools:layout="@layout/fragment_patient_history" />
 

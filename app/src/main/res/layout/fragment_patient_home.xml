@@ -31,20 +31,9 @@
             android:textColor="@color/text_black"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
             app:layout_constraintStart_toEndOf="@id/ivProfile"
             app:layout_constraintTop_toTopOf="@id/ivProfile" />
-
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins"
-            android:text="Dhaka, Bangladesh"
-            android:textColor="@color/textSecondary"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/tvGreeting"
-            app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
 
         <FrameLayout
             android:id="@+id/btnNotification"
@@ -64,14 +53,17 @@
                 app:tint="@color/text_white" />
         </FrameLayout>
 
+<!--        search bar-->
+
         <EditText
             android:id="@+id/etSearch"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/bg_white_rounded"
             android:drawableStart="@drawable/search"
+            android:drawableTint="@color/text_hint"
             android:drawablePadding="12dp"
             android:fontFamily="@font/poppins"
             android:hint="Search"
@@ -86,8 +78,8 @@
 
         <ImageButton
             android:id="@+id/btnFilter"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:background="@drawable/bg_white_rounded"
             android:contentDescription="Filter"
             android:src="@drawable/filter"

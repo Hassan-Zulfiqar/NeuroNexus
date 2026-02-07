@@ -4,9 +4,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.neuronexus.R
 import com.example.neuronexus.databinding.ItemDoctorHistoryScanBinding
-import com.example.neuronexus.doctor.models.DoctorScanHistoryItem
+import com.example.neuronexus.models.DoctorScanHistoryItem
 
 class DoctorScanHistoryAdapter(
     private val list: List<DoctorScanHistoryItem>,

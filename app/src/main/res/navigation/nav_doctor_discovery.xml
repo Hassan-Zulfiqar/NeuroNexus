@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_doctor_discovery"
+    app:startDestination="@id/doctorListFragment">
+
+    <!-- 1. Doctor List -->
+    <fragment
+        android:id="@+id/doctorListFragment"
+        android:name="com.example.neuronexus.patient.ui.doctor_discovery.DoctorListFragment"
+        android:label="Find Doctors"
+        tools:layout="@layout/fragment_doctor_list">
+
+        <action
+            android:id="@+id/action_list_to_details"
+            app:destination="@id/doctorDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <!-- 2. Doctor Details -->
+    <fragment
+        android:id="@+id/doctorDetailsFragment"
+        android:name="com.example.neuronexus.patient.ui.doctor_discovery.DoctorDetailsFragment"
+        android:label="Doctor Details"
+        tools:layout="@layout/fragment_doctor_details">
+
+        <action
+            android:id="@+id/action_details_to_booking"
+            app:destination="@id/scheduleSelectionFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <!-- 3. Appointment Booking (Date/Time) -->
+    <fragment
+        android:id="@+id/scheduleSelectionFragment"
+        android:name="com.example.neuronexus.patient.ui.doctor_discovery.ScheduleSelectionFragment"
+        android:label="Book Appointment"
+        tools:layout="@layout/fragment_schedule_selection">
+
+        <action
+            android:id="@+id/action_booking_to_patient_selection"
+            app:destination="@id/patientSelectionFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <!-- 4. Patient Selection -->
+    <fragment
+        android:id="@+id/patientSelectionFragment"
+        android:name="com.example.neuronexus.patient.ui.doctor_discovery.PatientSelectionFragment"
+        android:label="Select Patient"
+        tools:layout="@layout/fragment_patient_selection">
+
+        <action
+            android:id="@+id/action_patient_to_booking_confirmation"
+            app:destination="@id/bookingConfirmationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <!-- 5. Booking Confirmation (Final Step) -->
+    <fragment
+        android:id="@+id/bookingConfirmationFragment"
+        android:name="com.example.neuronexus.patient.ui.doctor_discovery.BookingConfirmationFragment"
+        android:label="Confirm Booking"
+        tools:layout="@layout/fragment_booking_confirmation" />
+
+</navigation>

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neuronexus.databinding.ItemHistoryAnalysisBinding
-import com.example.neuronexus.patient.models.HistoryAnalysisItem
+import com.example.neuronexus.models.HistoryAnalysisItem
 
 class PatientHistoryAnalysisAdapter(
     private val analysisList: List<HistoryAnalysisItem>,
@@ -37,10 +37,12 @@ class PatientHistoryAnalysisAdapter(
                 holder.binding.chipRisk.setTextColor(Color.parseColor("#C62828"))
                 holder.binding.chipRisk.background.setTint(Color.parseColor("#FFEBEE"))
             }
+
             "Moderate Risk" -> {
                 holder.binding.chipRisk.setTextColor(Color.parseColor("#F57C00"))
                 holder.binding.chipRisk.background.setTint(Color.parseColor("#FFF3E0"))
             }
+
             else -> {
                 holder.binding.chipRisk.setTextColor(Color.parseColor("#2E7D32"))
                 holder.binding.chipRisk.background.setTint(Color.parseColor("#E8F5E9"))

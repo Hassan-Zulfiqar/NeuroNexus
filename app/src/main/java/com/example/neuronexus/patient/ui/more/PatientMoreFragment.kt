@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.neuronexus.common.auth.LoginActivity
 import com.example.neuronexus.R
+import com.example.neuronexus.common.utils.AuthUtils
 import com.example.neuronexus.databinding.FragmentPatientMoreBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -57,21 +58,12 @@ class PatientMoreFragment : BottomSheetDialogFragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            performLogout()
+            requireActivity().let { activity ->
+                AuthUtils.logout(activity)
+            }
         }
     }
 
-    private fun performLogout() {
-        val sharedPref = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.clear()
-        editor.apply()
-
-        val intent = Intent(requireActivity(), LoginActivity::class.java)
-        startActivity(intent)
-
-        requireActivity().finishAffinity()
-    }
 
     override fun getTheme(): Int {
         return R.style.BottomSheetDialogTheme
