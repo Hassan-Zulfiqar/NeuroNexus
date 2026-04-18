@@ -1,5 +1,6 @@
 package com.example.neuronexus.patient.ui.doctor_discovery
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,8 +16,9 @@ import com.example.neuronexus.common.utils.AlertUtils
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentDoctorListBinding
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import com.example.neuronexus.patient.adapters.DoctorDiscoveryAdapter
+import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
@@ -47,6 +49,7 @@ class DoctorListFragment : Fragment() {
         setupListeners()
         setupObservers()
 
+        sharedViewModel.clearBookingState()
         networkViewModel.fetchAllDoctors()
     }
 
@@ -88,13 +91,14 @@ class DoctorListFragment : Fragment() {
         // Filter Chip Listeners
         binding.chipGroupFilters.setOnCheckedChangeListener { _, checkedId ->
             filterDoctors(binding.etSearch.text.toString(), checkedId)
+            applyChipStyles()
         }
     }
 
     private fun setupObservers() {
         // 1. Loading State
         networkViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.cardProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         // 2. Doctor List Data
@@ -143,6 +147,17 @@ class DoctorListFragment : Fragment() {
         }
 
         doctorAdapter.updateList(filtered)
+    }
+
+    private fun applyChipStyles() {
+        for (i in 0 until binding.chipGroupFilters.childCount) {
+            val chip = binding.chipGroupFilters.getChildAt(i) as Chip
+            if (chip.isChecked) {
+                chip.setTextColor(Color.WHITE)
+            } else {
+                chip.setTextColor(Color.BLACK)
+            }
+        }
     }
 
     override fun onDestroyView() {

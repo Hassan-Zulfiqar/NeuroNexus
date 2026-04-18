@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/primary_blue"/>
+
+            <!-- Section 1: Header -->
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:contentDescription="Navigate back"
+                android:src="@drawable/arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_white" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Appointment Detail"
+                android:textColor="@color/text_white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnBack" />
+
+            <!-- Section 2: Patient Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPatientInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="28dp"
+                app:cardBackgroundColor="@color/colorBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                app:strokeColor="#F5F5F5"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Subtle Left Accent Border (Decorative Only) -->
+                    <View
+                        android:id="@+id/viewPatientAccent"
+                        android:layout_width="4dp"
+                        android:layout_height="0dp"
+                        android:background="@color/primary_blue"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPatientInitial"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/bg_avatar_circle"
+                        android:contentDescription="Patient initial"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/viewPatientAccent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="J" />
+
+                    <TextView
+                        android:id="@+id/tvPatientName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="6dp"
+                        android:contentDescription="Patient name"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tvPatientInitial"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="John Doe" />
+
+                    <TextView
+                        android:id="@+id/tvPatientAgeGender"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="Patient age and gender"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/text_hint"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tvPatientName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPatientName"
+                        tools:text="25 years • Male" />
+
+                    <TextView
+                        android:id="@+id/tvContactNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="Patient contact number"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tvPatientName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPatientAgeGender"
+                        tools:text="+92 300 1234567" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section 3: Appointment Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAppointmentInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/colorBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardPatientInfo"
+                app:strokeColor="#F5F5F5"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Horizontal Header Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins"
+                            android:text="Appointment Details"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <!-- Status Chip with Neutral Runtime XML Defaults -->
+                        <TextView
+                            android:id="@+id/chipStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_white_rounded"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white"
+                            app:backgroundTint="@color/warning"
+                            tools:text="Confirmed" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvAppointmentDate"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Appointment date"
+                        android:drawablePadding="12dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@android:drawable/ic_menu_my_calendar"
+                        app:drawableTint="@color/gray_1"
+                        tools:text="Dec 10, 2024" />
+
+                    <TextView
+                        android:id="@+id/tvAppointmentTime"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:contentDescription="Appointment time"
+                        android:drawablePadding="12dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@android:drawable/ic_menu_recent_history"
+                        app:drawableTint="@color/gray_1"
+                        tools:text="10:00 AM" />
+
+                    <TextView
+                        android:id="@+id/tvReasonForVisit"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:contentDescription="Reason for visit"
+                        android:drawablePadding="12dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@android:drawable/ic_menu_info_details"
+                        app:drawableTint="@color/gray_1"
+                        tools:text="Reason: General Consultation" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Subtle Divider (Decorative Only) -->
+            <View
+                android:id="@+id/dividerActions"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:background="#E0E0E0"
+                android:importantForAccessibility="no"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardAppointmentInfo"
+                tools:visibility="visible" />
+
+            <!-- Section 4: Action Buttons (Active Mode Only) -->
+            <LinearLayout
+                android:id="@+id/layoutActionButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dividerActions"
+                tools:visibility="visible">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnActionLeft"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    tools:text="Reject" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnActionRight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@android:color/white"
+                    tools:text="Accept" />
+            </LinearLayout>
+
+            <!-- Barrier 1 to fix constraints below action buttons -->
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierAbovePrescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="layoutActionButtons,cardAppointmentInfo,dividerActions" />
+
+            <!-- Section 5: Prescription Section (Read Only Mode) -->
+            <LinearLayout
+                android:id="@+id/layoutPrescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrierAbovePrescription"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Prescription"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Single Robust Card for Prescription States -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPrescriptionContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorBackground"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#F5F5F5"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvPrescriptionEmpty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:gravity="center"
+                            android:text="No prescription has been added for this appointment"
+                            android:textColor="@color/text_hint"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutPrescriptionDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvDiagnosis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                tools:text="Diagnosis: Viral Infection" />
+
+                            <TextView
+                                android:id="@+id/tvMedications"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/poppins"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                tools:text="Medications:\n- Paracetamol 500mg\n- Vitamin C" />
+
+                            <TextView
+                                android:id="@+id/tvInstructions"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/poppins"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                tools:text="Instructions: Take medicine after meals." />
+
+                            <TextView
+                                android:id="@+id/tvFollowUpDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/poppins"
+                                android:textColor="@color/primary_blue"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="Follow up on: 15 Dec 2024" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAddPrescription"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Add Prescription"
+                            android:visibility="gone"
+                            app:icon="@android:drawable/ic_menu_add"
+                            tools:visibility="visible" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Barrier 2 to securely anchor History Button -->
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierAboveHistoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="layoutPrescription,barrierAbovePrescription,layoutActionButtons" />
+
+            <!-- Section 6: View Patient History Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewPatientTimeline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:padding="12dp"
+                android:text="View Patient Timeline"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/primary_blue"
+                app:backgroundTint="@color/primary_blue"
+                app:layout_constraintTop_toBottomOf="@+id/barrierAboveHistoryButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

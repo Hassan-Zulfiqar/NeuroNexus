@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.neuronexus.common.models.User
 import com.example.neuronexus.common.repository.AppRepository
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import com.example.neuronexus.models.Patient
 
 class AuthViewModel(private val repository: AppRepository) : ViewModel()

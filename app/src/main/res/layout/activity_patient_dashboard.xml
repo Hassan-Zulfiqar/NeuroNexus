@@ -48,12 +48,12 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Add Booking"
+        android:contentDescription="Search"
         app:backgroundTint="@color/primary_blue"
         app:elevation="10dp"
         app:layout_anchor="@id/bottomAppBar"
         app:maxImageSize="30dp"
-        app:srcCompat="@drawable/plus"
+        app:srcCompat="@drawable/search"
         app:tint="@color/text_white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

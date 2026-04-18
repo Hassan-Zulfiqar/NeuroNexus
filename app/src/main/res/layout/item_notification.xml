@@ -77,8 +77,8 @@
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp"
                 android:fontFamily="@font/poppins"
-                android:maxLines="2"
-                android:ellipsize="end" />
+                android:maxLines="7"
+                android:ellipsize="none" />
 
             <TextView
                 android:id="@+id/tvNotificationDateTime"

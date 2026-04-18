@@ -1,6 +1,7 @@
 package com.example.neuronexus.patient.ui.doctor_discovery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.example.neuronexus.common.utils.AlertUtils
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentBookingConfirmationBinding
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import com.example.neuronexus.patient.models.DoctorAppointment
 import com.example.neuronexus.patient.models.PatientProfile
 import com.example.neuronexus.patient.models.Payment
@@ -57,12 +58,12 @@ class BookingConfirmationFragment : Fragment() {
         }
 
         sharedViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
-            selectedDateTimestamp = date
+            selectedDateTimestamp = date ?: 0L
             updateUI()
         }
 
         sharedViewModel.selectedTimeSlot.observe(viewLifecycleOwner) { time ->
-            selectedTimeSlot = time
+            selectedTimeSlot = time ?: ""
             updateUI()
         }
 
@@ -72,7 +73,7 @@ class BookingConfirmationFragment : Fragment() {
         }
 
         sharedViewModel.bookingReason.observe(viewLifecycleOwner) { reason ->
-            bookingReason = reason
+            bookingReason = reason ?: ""
             updateUI()
         }
 
@@ -107,9 +108,10 @@ class BookingConfirmationFragment : Fragment() {
             binding.tvDateTime.text = "$dateStr • $selectedTimeSlot"
         }
 
-        if (selectedPatient != null) {
-            val relationText = if (selectedPatient!!.relation.equals("Self", true)) "(Self)" else "(${selectedPatient!!.relation})"
-            binding.tvPatientName.text = "${selectedPatient!!.fullName} $relationText"
+        val patient = selectedPatient
+        if (patient != null) {
+            val relationText = if (patient.relation.equals("Self", true)) "(Self)" else "(${patient.relation})"
+            binding.tvPatientName.text = "${patient.fullName} $relationText"
         }
 
         binding.tvReason.text = if (bookingReason.isNotEmpty()) "Reason: $bookingReason" else "No reason specified"
@@ -129,25 +131,31 @@ class BookingConfirmationFragment : Fragment() {
     }
 
     private fun confirmBooking() {
-        if (selectedDoctor == null || selectedDateTimestamp == 0L || selectedTimeSlot.isEmpty() || selectedPatient == null) {
+        val doctor = selectedDoctor
+        val patient = selectedPatient
+
+        if (doctor == null || selectedDateTimestamp == 0L || selectedTimeSlot.isEmpty() || patient == null) {
             AlertUtils.showError(requireContext(), "Incomplete booking details. Please go back and select all fields.")
             return
         }
-
-        val doctor = selectedDoctor!!
-        val patient = selectedPatient!!
 
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         val formattedDate = sdf.format(Date(selectedDateTimestamp))
 
         val feeAmount = doctor.consultationFee.replace(Regex("[^0-9.]"), "").toDoubleOrNull() ?: 0.0
 
+        val calculatedExactTime = try {
+            val parseFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+            parseFormat.parse("$formattedDate $selectedTimeSlot")?.time ?: 0L
+        } catch (e: Exception) {
+            0L
+        }
+
         val booking = DoctorAppointment(
-            status = "created",
+            status = "pending",
             createdAt = System.currentTimeMillis(),
             updatedAt = System.currentTimeMillis(),
 
-            // FIX: Explicitly set the snapshot name
             patientNameSnapshot = patient.fullName,
 
             payment = Payment(
@@ -166,7 +174,17 @@ class BookingConfirmationFragment : Fragment() {
 
             appointmentDate = formattedDate,
             appointmentTime = selectedTimeSlot,
-            reasonForVisit = bookingReason
+            reasonForVisit = bookingReason,
+
+            // ==========================================
+            // Pass the calculated timestamp
+            // ==========================================
+            exactTimeInMillis = calculatedExactTime,
+
+            // ==========================================
+            // Link to previous booking for Rebook
+            // ==========================================
+            previousBookingId = sharedViewModel.previousBookingId.value
         )
 
         networkViewModel.bookAppointment(booking)

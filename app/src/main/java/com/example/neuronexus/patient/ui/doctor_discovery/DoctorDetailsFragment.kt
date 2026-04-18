@@ -12,10 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.neuronexus.R
 import com.example.neuronexus.common.utils.AlertUtils
+import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentDoctorDetailsBinding
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
 class DoctorDetailsFragment : Fragment() {
@@ -23,8 +25,8 @@ class DoctorDetailsFragment : Fragment() {
     private var _binding: FragmentDoctorDetailsBinding? = null
     private val binding get() = _binding!!
 
-    // SharedViewModel holds the selected doctor from the previous screen
     private val sharedViewModel: SharedViewModel by sharedViewModel()
+    private val networkViewModel: NetworkViewModel by viewModel()
 
     private var currentDoctor: Doctor? = null
 
@@ -48,15 +50,29 @@ class DoctorDetailsFragment : Fragment() {
             if (doctor != null) {
                 currentDoctor = doctor
                 populateUI(doctor)
+
+                if (doctor.reviewCount > 0) {
+                    networkViewModel.fetchEntityReviews(doctor.uid)
+                }
             } else {
                 AlertUtils.showError(requireContext(), "Error loading doctor details.")
                 findNavController().popBackStack()
             }
         }
+
+        // Observe and bind the fetched reviews
+        networkViewModel.entityReviews.observe(viewLifecycleOwner) { result ->
+            result ?: return@observe
+            if (result.isSuccess) {
+                val reviews = result.getOrNull() ?: emptyList()
+                populateReviews(reviews)
+            }
+            networkViewModel.resetEntityReviews()
+        }
     }
 
     private fun populateUI(doctor: Doctor) {
-        // 1. Name with Dr. Prefix Logic
+
         val cleanName = doctor.name.trim()
         val displayName = if (cleanName.lowercase(Locale.ROOT).startsWith("dr.") ||
             cleanName.lowercase(Locale.ROOT).startsWith("dr ")) {
@@ -70,13 +86,38 @@ class DoctorDetailsFragment : Fragment() {
         binding.tvQualifications.text = "${doctor.qualification} - ${doctor.specialization}"
 
         // 3. Rating
-        binding.tvRating.text = String.format("%.1f", doctor.rating)
+        binding.tvRating.text = String.format(Locale.getDefault(), "%.1f", doctor.rating)
 
         // 4. Consultation Fee
         binding.tvConsultationFee.text = if (doctor.consultationFee.isNotEmpty())
             "RS ${doctor.consultationFee}" else "N/A"
-        // 5. Patient Count (Placeholder)
-        binding.tvPatientCount.text = "100+"
+
+        // Dynamically parse the total review count
+        binding.tvReviewCount.text = when {
+            doctor.reviewCount == 0 -> "No reviews yet"
+            doctor.reviewCount == 1 -> "1 review"
+            doctor.reviewCount < 1000 -> "${doctor.reviewCount} reviews"
+            else -> "${doctor.reviewCount / 1000}k reviews"
+        }
+
+        if (doctor.reviewCount == 0) {
+            binding.reviewsHeader.visibility = View.GONE
+            binding.cardReview1.visibility = View.GONE
+            binding.cardReview2.visibility = View.GONE
+        }
+        else if (doctor.reviewCount == 1)
+        {
+            binding.reviewsHeader.visibility = View.VISIBLE
+            binding.tvSeeAllReviews.visibility = View.GONE
+            binding.cardReview1.visibility = View.VISIBLE
+            binding.cardReview2.visibility = View.GONE
+        }
+        else
+        {
+            binding.reviewsHeader.visibility = View.VISIBLE
+            binding.cardReview1.visibility = View.VISIBLE
+            binding.cardReview2.visibility = View.VISIBLE
+        }
 
         // 6. Location / Address
         binding.tvLocation.text = if (doctor.clinicAddress.isNotEmpty()) doctor.clinicAddress else "Address not available"
@@ -93,18 +134,25 @@ class DoctorDetailsFragment : Fragment() {
     private fun setupListeners() {
         // Back Button
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            // Try to pop back stack, if nothing to pop, finish the activity
+            if (!findNavController().popBackStack()) {
+                requireActivity().finish()
+            }
         }
 
         // Book Appointment Button
         binding.btnBookNow.setOnClickListener {
             if (currentDoctor != null) {
-                // Navigate to Booking Fragment
+                sharedViewModel.selectDate(0L)
+                sharedViewModel.selectTimeSlot("")
+                sharedViewModel.setBookingReason("")
+
                 findNavController().navigate(R.id.action_details_to_booking)
+            } else {
+                AlertUtils.showError(requireContext(), "Please wait for doctor details to load.")
             }
         }
 
-        // See All Reviews Click
         binding.tvSeeAllReviews.setOnClickListener {
             Toast.makeText(requireContext(), "See All Reviews Clicked", Toast.LENGTH_SHORT).show()
         }
@@ -127,6 +175,60 @@ class DoctorDetailsFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "Address not available for map", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun populateReviews(reviews: List<com.example.neuronexus.patient.models.Review>) {
+        val b = binding ?: return
+
+        if (reviews.isEmpty()) {
+            b.reviewsHeader.visibility = View.GONE
+            b.cardReview1.visibility = View.GONE
+            b.cardReview2.visibility = View.GONE
+        } else {
+            b.reviewsHeader.visibility = View.VISIBLE
+
+            // Bind Review 1
+            b.cardReview1.visibility = View.VISIBLE
+            val r1 = reviews[0]
+            if (r1.comment.isNotBlank()) {
+                b.tvReview1.visibility = View.VISIBLE
+                b.tvReview1.text = "\"${r1.comment}\""
+            } else {
+                b.tvReview1.visibility = View.VISIBLE
+                b.tvReview1.text = "\"No comments\""
+            }
+            b.tvReviewer1.text = "- ${r1.reviewerName}"
+            b.tvInitials1.text = getInitials(r1.reviewerName)
+
+            // Bind Review 2 (if it exists)
+            if (reviews.size > 1) {
+                b.tvSeeAllReviews.visibility = View.VISIBLE
+                b.cardReview2.visibility = View.VISIBLE
+                val r2 = reviews[1]
+                if (r2.comment.isNotBlank()) {
+                    b.tvReview2.visibility = View.VISIBLE
+                    b.tvReview2.text = "\"${r2.comment}\""
+                } else {
+                    b.tvReview2.visibility = View.VISIBLE
+                    b.tvReview2.text = "\"No comments\""
+                }
+                b.tvReviewer2.text = "- ${r2.reviewerName}"
+                b.tvInitials2.text = getInitials(r2.reviewerName)
+            } else {
+                b.tvSeeAllReviews.visibility = View.GONE
+                b.cardReview2.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun getInitials(name: String): String {
+        if (name.isBlank()) return "AN" // Anonymous
+        val parts = name.trim().split(" ")
+        return if (parts.size >= 2) {
+            "${parts[0].first().uppercase()}${parts[1].first().uppercase()}"
+        } else {
+            parts[0].take(2).uppercase()
         }
     }
 

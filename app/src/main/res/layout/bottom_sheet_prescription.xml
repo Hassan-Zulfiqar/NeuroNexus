@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:backgroundTint="@color/colorBackground"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+            android:text="Prescription Details"
+            android:textColor="@color/text_black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnBsClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/text_hint" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="12dp"
+        android:background="#F5F5F5" />
+
+    <!-- Doctor & Date -->
+    <TextView
+        android:id="@+id/tvBsDoctorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/text_black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Dr. Ahmad Hassan" />
+
+    <TextView
+        android:id="@+id/tvBsIssuedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/text_hint"
+        android:textSize="13sp"
+        tools:text="Issued: 14 Mar 2024" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#F5F5F5" />
+
+    <!-- Diagnosis -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="Diagnosis"
+        android:textColor="@color/primary_blue"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvBsDiagnosis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/text_black"
+        android:textSize="14sp"
+        tools:text="Hypertension" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#F5F5F5" />
+
+    <!-- Medications -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="Medications"
+        android:textColor="@color/primary_blue"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvBsMedications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins"
+        android:lineSpacingMultiplier="1.4"
+        android:textColor="@color/text_black"
+        android:textSize="14sp"
+        tools:text="• Panadol 500mg\n• Amoxicillin 250mg" />
+
+    <!-- Optional Instructions Divider (Managed Programmatically) -->
+    <View
+        android:id="@+id/dividerInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#F5F5F5"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- Instructions -->
+    <TextView
+        android:id="@+id/tvBsInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/text_black"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="Instructions: Take after meals."
+        tools:visibility="visible" />
+
+    <!-- Optional Follow Up Divider (Managed Programmatically) -->
+    <View
+        android:id="@+id/dividerFollowUp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#F5F5F5"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- Follow Up -->
+    <TextView
+        android:id="@+id/tvBsFollowUpDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/primary_blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="Follow-up: 21 Mar 2024"
+        tools:visibility="visible" />
+
+</LinearLayout>

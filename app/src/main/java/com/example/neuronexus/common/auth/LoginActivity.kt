@@ -3,6 +3,7 @@ package com.example.neuronexus.common.auth
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.neuronexus.R
@@ -23,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
 
-    // 1. INJECT VIEWMODEL (Replaces AuthRepository instantiation)
+    // 1. INJECT VIEWMODEL
     private val viewModel: AuthViewModel by viewModel()
 
     private var googleSignInClient: GoogleSignInClient? = null
@@ -36,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 account?.idToken?.let { token ->
-                    // 2. Call ViewModel instead of Repository directly
+                    // 2. Call ViewModel
                     viewModel.googleLogin(token)
                 }
             } catch (e: ApiException) {
@@ -52,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         setupGoogleClient()
         setupClickListeners()
 
-        // 3. SETUP OBSERVERS (The Core of MVVM)
+        // 3. SETUP OBSERVERS
         observeViewModel()
     }
 
@@ -97,6 +98,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.btnFacebook.setOnClickListener {
+            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // 4. OBSERVE DATA CHANGES
@@ -123,6 +128,10 @@ class LoginActivity : AppCompatActivity() {
                     "Please contact support.", "Access Denied")
             return
         }
+
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val roleToSave = if (user.role == "doctor") "doctors" else "patients"
+        prefs.edit().putString("user_role", roleToSave).apply()
 
         when (user.role) {
             "doctor" -> navigateTo(DoctorDashboardActivity::class.java)

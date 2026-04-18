@@ -4,13 +4,15 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.neuronexus.databinding.ItemHistoryConsultationBinding
+import com.bumptech.glide.Glide
 import com.example.neuronexus.R
-import com.example.neuronexus.models.HistoryConsultationItem
+import com.example.neuronexus.databinding.ItemHistoryConsultationBinding
+import com.example.neuronexus.patient.models.DoctorAppointment
+import java.util.Locale
 
 class PatientHistoryConsultationAdapter(
-    private val consultationList: List<HistoryConsultationItem>,
-    private val onPrescriptionClick: (HistoryConsultationItem) -> Unit
+    private var appointments: List<DoctorAppointment>,
+    private val onItemClick: (DoctorAppointment) -> Unit
 ) : RecyclerView.Adapter<PatientHistoryConsultationAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(val binding: ItemHistoryConsultationBinding) :
@@ -26,42 +28,66 @@ class PatientHistoryConsultationAdapter(
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        val item = consultationList[position]
+        val appointment = appointments[position]
 
-        holder.binding.tvDoctorName.text = item.doctorName
-        holder.binding.tvSpecialty.text = item.specialty
-        holder.binding.tvDate.text = item.date
-        holder.binding.tvTime.text = item.time
-        holder.binding.imgDoctor.setImageResource(item.imageResId)
+        // Text Bindings
+        holder.binding.tvDoctorName.text = "Dr. ${appointment.doctorName}".trim()
+        holder.binding.tvSpecialty.text = appointment.doctorSpecialization.ifBlank { "General Physician" }
+        holder.binding.tvDate.text = appointment.appointmentDate
+        holder.binding.tvTime.text = appointment.appointmentTime
 
-        holder.binding.chipStatus.text = item.status
+        // Image Binding (Option A)
+        Glide.with(holder.itemView.context)
+            .load(appointment.doctorImageUrl)
+            .placeholder(R.drawable.doctor)
+            .error(R.drawable.doctor)
+            .into(holder.binding.imgDoctor)
 
-        holder.binding.btnViewPrescription.visibility = android.view.View.VISIBLE
-        holder.binding.divider.visibility = android.view.View.VISIBLE
-
-        if (item.status == "Cancelled") {
-            holder.binding.chipStatus.setTextColor(Color.parseColor("#C62828"))
-            holder.binding.chipStatus.background.setTint(Color.parseColor("#FFEBEE"))
-
-            holder.binding.btnViewPrescription.isEnabled = false
-            holder.binding.btnViewPrescription.setTextColor(Color.parseColor("#BDBDBD"))
-            holder.binding.btnViewPrescription.setOnClickListener(null)
-
-        } else {
-            holder.binding.chipStatus.setTextColor(Color.parseColor("#2E7D32"))
-            holder.binding.chipStatus.background.setTint(Color.parseColor("#E8F5E9"))
-
-            holder.binding.btnViewPrescription.isEnabled = true
-            holder.binding.btnViewPrescription.setTextColor(holder.itemView.context.getColor(R.color.primary_blue))
-
-            holder.binding.btnViewPrescription.setOnClickListener {
-                onPrescriptionClick(item)
+        // Status Chip Formatting
+        val statusLower = appointment.status.lowercase(Locale.getDefault())
+        when (statusLower) {
+            "completed" -> {
+                holder.binding.chipStatus.text = "Completed"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#2E7D32"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#E8F5E9"))
             }
+            "cancelled" -> {
+                holder.binding.chipStatus.text = "Cancelled"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#C62828"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFEBEE"))
+            }
+            "no_show" -> {
+                holder.binding.chipStatus.text = "No Show"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#E65100"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFF3E0"))
+            }
+            "rejected" -> {
+                holder.binding.chipStatus.text = "Rejected"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#C62828"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFEBEE"))
+            }
+            "expired" -> {
+                holder.binding.chipStatus.text = "Expired"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#757575"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#F5F5F5"))
+            }
+            else -> {
+                holder.binding.chipStatus.text = appointment.status.replaceFirstChar { it.uppercase() }
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#E65100"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFF3E0"))
+            }
+        }
+
+        // Action Button
+        holder.binding.btnViewPrescription.setOnClickListener {
+            onItemClick(appointment)
         }
     }
 
-    override fun getItemCount(): Int {
-        return consultationList.size
+    override fun getItemCount(): Int = appointments.size
+
+    fun updateList(newList: List<DoctorAppointment>) {
+        appointments = newList
+        notifyDataSetChanged()
     }
 }
-

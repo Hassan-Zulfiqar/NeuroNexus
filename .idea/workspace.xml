@@ -10,6 +10,11 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_avatar_circle.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_bottom_nav.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
@@ -35,12 +40,32 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_notification_badge.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_popup_window.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_progress_bar.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_white_rounded.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_background.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/coin.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
@@ -55,7 +80,27 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_insert_image.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_notifications_black_24dp.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/login_img.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/search.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/selector_radio_button.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
@@ -135,12 +180,27 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_prescription.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_image_selection.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_prescription.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_booking_confirmation.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_appointment_detail.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
@@ -180,6 +240,11 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_patient_timeline.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_profile.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
@@ -215,7 +280,37 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_booking_confirmation.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_details.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_list.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_reports.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_schedule_selection.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_medical_records.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_appointment_detail.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
@@ -245,6 +340,11 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_profile_selector.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_schedule.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
@@ -255,7 +355,42 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_prescriptions.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_risk_analysis.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_schedule_selection.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_submit_complaint.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_test_details.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tumor_risk_disclaimer.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tumor_risk_result.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_write_review.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
@@ -280,6 +415,11 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_doctor_schedule_appointment.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_history_analysis.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
@@ -300,6 +440,21 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_lab_report_card.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_lab_test.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_notification.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_onboarding_page.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
@@ -310,7 +465,22 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_patient_profile_selector.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_patient_schedule_appointment.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_prescription_card.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_profile_switcher_popup.xml">
         <config>
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
@@ -360,44 +530,51 @@
           <theme>@style/Theme.NeuroNexus</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/xml/network_security_config.xml">
+        <config>
+          <theme>@style/Theme.NeuroNexus</theme>
+        </config>
+      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d7cde5c-ef8b-4968-b842-9c2327f55e80" name="Changes" comment="Implemented history and profile screens">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/NeuroNexusApp.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/repository/AppRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/utils/AlertUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/utils/AuthUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/AuthViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/NetworkViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/SharedViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/di/AppModule.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/HistoryAnalysisItem.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/DoctorDiscoveryActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/DoctorDiscoveryAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/LabListAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/TimeSlotAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/BookingModels.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/LabModels.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/ScheduleModels.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/BookingConfirmationFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/DoctorDetailsFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/DoctorListFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/PatientSelectionFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/ScheduleSelectionFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/utils/ScheduleParser.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_discovery.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_booking_confirmation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_details.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_list.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_selection.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedule_selection.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_lab.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_time_slot.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_doctor_discovery.xml" afterDir="false" />
+    <list default="true" id="9d7cde5c-ef8b-4968-b842-9c2327f55e80" name="Changes" comment="Restructured and Implemented google login and backend for patient dashboard and profile screen">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/utils/ScheduleUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorScheduleAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/detail/DoctorAppointmentDetailFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/patienttimeline/DoctorPatientTimelineFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/prescription/AddPrescriptionFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/LabTestAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/LabBookingConfirmationFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/LabDetailsFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/LabScheduleSelectionFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/TestDetailsFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/medicalrecords/MedicalRecordsFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/medicalrecords/PatientProfileSelectorFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/medicalrecords/tabs/LabReportsFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/medicalrecords/tabs/PrescriptionsFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_avatar_circle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_notification_badge.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_check.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_close.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_warning.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/placeholder_report.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_prescription.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_appointment_detail.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_patient_timeline.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_booking_confirmation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_details.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_reports.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_schedule_selection.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_medical_records.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_profile_selector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_prescriptions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_test_details.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_doctor_schedule_appointment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_lab_test.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" afterDir="false" />
@@ -409,122 +586,106 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/navEditor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/google-services.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/DoctorDashboardActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/DoctorSignUpActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ForgotPasswordActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/LoginActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/OnboardingActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/PatientDashboardActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/PatientSignUpActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/SignUpRoleActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/WelcomeActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/DoctorAppointmentAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/DoctorAppointmentHistoryAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/DoctorHistoryPagerAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/DoctorScanHistoryAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/OnboardingAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/PatientAppointmentAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/PatientHistoryAnalysisAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/PatientHistoryConsultationAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/PatientHistoryLabAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/PatientHistoryPagerAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/adapters/PatientServiceAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/ForgotPasswordActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/ForgotPasswordActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/NeuroNexusApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/NeuroNexusApp.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/activities/NotificationsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/activities/NotificationsActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/adapters/NotificationAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/adapters/NotificationAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/LoginActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/SignUpRoleActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/auth/SignUpRoleActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/repository/AuthRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/models/NotificationItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/models/AppNotification.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/repository/AppRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/repository/AppRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/AuthViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/AuthViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/NetworkViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/NetworkViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/SharedViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/common/viewmodel/SharedViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/activities/DetectionActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/activities/DetectionActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/activities/DoctorDashboardActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/activities/DoctorDashboardActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/activities/DoctorSignUpActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/activities/DoctorSignUpActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorAppointmentAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorAppointmentAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorAppointmentHistoryAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorAppointmentHistoryAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorScanHistoryAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/adapters/DoctorScanHistoryAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/models/Doctor.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/models/DoctorAppointmentHistoryItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/models/DoctorAppointmentItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/models/DoctorScanHistoryItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/HistoryAnalysisModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/PatientAppointmentItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/User.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/PatientSignUpActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/PatientSignUpActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/DoctorHistoryViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorAppointmentsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorAppointmentsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorAppointmentsViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorScansFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorScansFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorScansViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/home/DoctorHomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/home/DoctorHomeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/home/DoctorHomeViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/more/DoctorMoreFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/more/DoctorMoreFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorEditProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorEditProfileFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorEditProfileViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorProfileFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorProfileViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/schedule/DoctorScheduleFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/schedule/DoctorScheduleFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/schedule/DoctorScheduleViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/Doctor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/models/Doctor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/DoctorAppointmentHistoryItem.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/DoctorAppointmentItem.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/HistoryConsultationItem.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/models/HistoryLabItem.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/DoctorDiscoveryActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/DoctorDiscoveryActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/PatientDashboardActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/activities/PatientDashboardActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/DoctorDiscoveryAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/DoctorDiscoveryAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientAppointmentAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientAppointmentAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryAnalysisAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryAnalysisAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryConsultationAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryConsultationAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryLabAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryLabAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientServiceAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientServiceAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/HistoryAnalysisModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/HistoryConsultationItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/HistoryLabItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/Patient.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/PatientAppointmentItem.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/PatientDashboardService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryPagerAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/PatientHistoryPagerAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/TimeSlotAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/adapters/TimeSlotAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/BookingModels.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/models/BookingModels.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/BookingConfirmationFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/BookingConfirmationFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/DoctorDetailsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/DoctorDetailsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/DoctorListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/DoctorListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/PatientSelectionFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/PatientSelectionFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/ScheduleSelectionFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/doctor_discovery/ScheduleSelectionFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/PatientHistoryFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/PatientHistoryFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/PatientHistoryViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryConsultationsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryConsultationsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryConsultationsViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryLabsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryLabsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryLabsViewModel.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/home/PatientHomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/home/PatientHomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/home/PatientHomeViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/LabListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/LabListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/PatientLabTestViewModel.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/more/PatientMoreFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/more/PatientMoreFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/schedule/PatientScheduleFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/schedule/PatientScheduleFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/schedule/PatientScheduleViewModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/repository/AuthRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/common/ImagePickerHelper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/common/ImageSelectionDialog.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/history/DoctorHistoryFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/DoctorHistoryFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/history/DoctorHistoryViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/DoctorHistoryViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/history/tabs/DoctorAppointmentsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorAppointmentsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/history/tabs/DoctorAppointmentsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorAppointmentsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/history/tabs/DoctorScansFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorScansFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/history/tabs/DoctorScansViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/history/tabs/DoctorScansViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/home/DoctorHomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/home/DoctorHomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/home/DoctorHomeViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/home/DoctorHomeViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/more/DoctorMoreFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/more/DoctorMoreFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/profile/DoctorEditProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorEditProfileFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/profile/DoctorEditProfileViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorEditProfileViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/profile/DoctorProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorProfileFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/profile/DoctorProfileViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/profile/DoctorProfileViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/schedule/DoctorScheduleFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/schedule/DoctorScheduleFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/schedule/DoctorScheduleViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/schedule/DoctorScheduleViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/search/DoctorSearchFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/search/DoctorSearchFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/doctor/search/DoctorSearchViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/doctor/ui/search/DoctorSearchViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/PatientHistoryFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/PatientHistoryFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/PatientHistoryViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/PatientHistoryViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/tabs/HistoryAnalysisFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryAnalysisFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/tabs/HistoryAnalysisViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryAnalysisViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/tabs/HistoryConsultationsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryConsultationsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/tabs/HistoryConsultationsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryConsultationsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/tabs/HistoryLabsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryLabsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/history/tabs/HistoryLabsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/history/tabs/HistoryLabsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/lab/PatientLabTestFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/LabListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/lab/PatientLabTestViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/lab/PatientLabTestViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/profile/PatientEditProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/profile/PatientEditProfileFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/profile/PatientEditProfileViewModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/profile/PatientProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/ui/profile/PatientProfileFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/ui/profile/PatientProfileViewModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/utils/ZoomOutPageTransformer.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/color/selector_switch_thumb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/color/selector_switch_thumb.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/search.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/search.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/utils/ScheduleParser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neuronexus/patient/utils/ScheduleParser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/search.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_detection.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_detection.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_doctor_sign_up.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_patient_dashboard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_patient_dashboard.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_patient_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_patient_sign_up.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_appointments.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_appointments.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_details.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_edit_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_edit_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_scans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_scans.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_schedule.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_doctor_schedule.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_edit_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_edit_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history_consultations.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history_consultations.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history_labs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_history_labs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_history.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_lab_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_lab_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_top_doctor_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_top_doctor_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_more.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_more.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_schedule.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_patient_schedule.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedule_selection.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedule_selection.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_doctor_history_appointment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_doctor_history_appointment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_notification.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_notification.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_patient_schedule_appointment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_patient_schedule_appointment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_appointment_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_appointment_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu_doctor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu_doctor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/doctor_mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/doctor_mobile_navigation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/nav_doctor_discovery.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_doctor_discovery.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/patient_mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/patient_mobile_navigation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -535,7 +696,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=7XFIIFFIYPAMKBBM)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Administrator\.android\avd\Medium_Phone.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -596,11 +757,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="resourceFile" />
         <option value="navigationResourceFile" />
-        <option value="Kotlin Data Class" />
         <option value="layoutResourceFile" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Object" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -643,6 +806,9 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="35qLoJvoZd1zbXemwcmvq2SmoJ6" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -666,7 +832,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;experimental&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.Kotlin&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -713,6 +879,10 @@
     </key>
     <key name="android.template.-1329586971">
       <recent name="com.example.neuronexus" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.neuronexus.patient.ui.medicalrecords" />
+      <recent name="com.example.neuronexus.doctor.models" />
     </key>
     <key name="android.template.1873357839">
       <recent name="com.example.neuronexus" />
@@ -878,7 +1048,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765384162496</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Restructured and Implemented google login and backend for patient dashboard and profile screen">
+      <option name="closed" value="true" />
+      <created>1770491849410</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1770491849410</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -897,19 +1075,20 @@
     <MESSAGE value="Updated SignUp, Login with Authentication and Patient Dashboard implementation" />
     <MESSAGE value="Implemented Doctor Home Screen" />
     <MESSAGE value="Implemented history and profile screens" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented history and profile screens" />
+    <MESSAGE value="Restructured and Implemented google login and backend for patient dashboard and profile screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Restructured and Implemented google login and backend for patient dashboard and profile screen" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
       <map>
         <entry key="com.example.neuronexus">
           <value>
-            <CheckInfo lastCheckTimestamp="1770407533821" />
+            <CheckInfo lastCheckTimestamp="1775710359743" />
           </value>
         </entry>
         <entry key="com.example.neuronexus.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1770407533823" />
+            <CheckInfo lastCheckTimestamp="1775710359743" />
           </value>
         </entry>
       </map>

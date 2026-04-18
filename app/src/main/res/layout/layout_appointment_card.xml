@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="16dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDocImage"
@@ -34,12 +34,12 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tvDocName"
+            android:id="@+id/tvProviderName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:fontFamily="@font/poppins"
-            android:text="Dr. Tasnim Mridha"
+            tools:text="Dr. Tasnim Mridha"
             android:textColor="@color/text_white"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -48,22 +48,22 @@
             app:layout_constraintTop_toTopOf="@+id/cardDocImage" />
 
         <TextView
-            android:id="@+id/tvDocSpec"
+            android:id="@+id/tvServiceName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins"
-            android:text="Dermatologist specialist"
+            tools:text="Dermatologist specialist"
             android:textColor="#D9FFFFFF"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvDocName"
-            app:layout_constraintTop_toBottomOf="@+id/tvDocName" />
+            app:layout_constraintStart_toStartOf="@+id/tvProviderName"
+            app:layout_constraintTop_toBottomOf="@+id/tvProviderName" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_dark_blue_overlay"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins"
-                android:text="Mon, Oct 17, 08.00am - 10am"
+                tools:text="Mon, Oct 17, 08.00am - 10am"
                 android:textColor="@color/text_white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"

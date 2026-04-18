@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/colorBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:strokeColor="#F5F5F5"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgLabIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/research"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.13"
+            app:tint="@color/primary_blue" />
+
+        <TextView
+            android:id="@+id/tvTestDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="14 Mar 2024" />
+
+        <TextView
+            android:id="@+id/tvTestName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvTestDate"
+            app:layout_constraintStart_toEndOf="@+id/imgLabIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MRI Brain Scan" />
+
+        <TextView
+            android:id="@+id/tvLabName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_hint"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvTestName"
+            app:layout_constraintStart_toStartOf="@+id/tvTestName"
+            app:layout_constraintTop_toBottomOf="@+id/tvTestName"
+            tools:text="City Diagnostic Lab" />
+
+        <TextView
+            android:id="@+id/tvResultSummary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins"
+            android:maxLines="2"
+            android:textColor="@color/text_black"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvLabName"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabName"
+            tools:text="Summary: Normal limits observed. No acute findings." />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewReport"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins"
+            android:text="View Full Report"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_blue"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultSummary"
+            app:strokeColor="@color/primary_blue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

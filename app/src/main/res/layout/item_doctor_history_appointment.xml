@@ -22,13 +22,24 @@
             android:id="@+id/imgPatient"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:background="@drawable/bg_white_rounded"
-            android:backgroundTint="#F0F8FF"
-            android:padding="14dp"
-            android:src="@drawable/patient_avatar"
-            app:tint="@color/primary_blue"
+            android:background="@drawable/bg_avatar_circle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPatientInitial"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="Patient initial"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="J" />
+
         <TextView
             android:id="@+id/tvPatientName"
             android:layout_width="0dp"

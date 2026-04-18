@@ -88,8 +88,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
-                    style="@style/LoginEditText"
-                    android:text="Dr. Ahmad" />
+                    style="@style/LoginEditText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -106,8 +105,7 @@
                     style="@style/LoginEditText"
                     android:alpha="0.6"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:text="doctor@gmail.com" />
+                    android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -122,8 +120,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPhone"
                     style="@style/LoginEditText"
-                    android:inputType="phone"
-                    android:text="0334-1245367" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -137,8 +134,27 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAddress"
-                    style="@style/LoginEditText"
-                    android:text="ABC, 124" />
+                    style="@style/LoginEditText" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/LoginLabelText"
+                android:layout_marginTop="16dp"
+                android:text="Specialization" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSpecialization"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_badge">
+
+                <AutoCompleteTextView
+                    android:id="@+id/etSpecialization"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -152,8 +168,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etQualification"
-                    style="@style/LoginEditText"
-                    android:text="MBBS, FCPS" />
+                    style="@style/LoginEditText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -168,8 +183,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFee"
                     style="@style/LoginEditText"
-                    android:inputType="number"
-                    android:text="3500" />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -187,8 +201,7 @@
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
                     android:maxLines="5"
-                    android:minLines="2"
-                    android:text="Mon-Wed: 5pm-9pm\nSat-Sun: 6pm-8pm" />
+                    android:minLines="2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -205,25 +218,7 @@
                     style="@style/LoginEditText"
                     android:alpha="0.6"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:text="1234567" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/LoginLabelText"
-                android:layout_marginTop="16dp"
-                android:text="Password" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/LoginInputLayout"
-                app:endIconMode="password_toggle"
-                app:startIconDrawable="@drawable/lock">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    style="@style/LoginEditText"
-                    android:inputType="textPassword"
-                    android:text="1234567" />
+                    android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -244,3 +239,20 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--            <TextView-->
+    <!--                style="@style/LoginLabelText"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:text="Password" />-->
+
+    <!--            <com.google.android.material.textfield.TextInputLayout-->
+    <!--                style="@style/LoginInputLayout"-->
+    <!--                app:endIconMode="password_toggle"-->
+    <!--                app:startIconDrawable="@drawable/lock">-->
+
+    <!--                <com.google.android.material.textfield.TextInputEditText-->
+    <!--                    android:id="@+id/etPassword"-->
+    <!--                    style="@style/LoginEditText"-->
+    <!--                    android:inputType="textPassword"-->
+    <!--                    android:text="1234567" />-->
+    <!--            </com.google.android.material.textfield.TextInputLayout>-->

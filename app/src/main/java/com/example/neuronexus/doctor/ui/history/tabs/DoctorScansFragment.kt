@@ -6,37 +6,77 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.neuronexus.R
 import com.example.neuronexus.databinding.FragmentDoctorScansBinding
 import com.example.neuronexus.doctor.adapters.DoctorScanHistoryAdapter
+import com.example.neuronexus.models.DoctorScanHistoryItem
 
 class DoctorScansFragment : Fragment() {
 
     private var _binding: FragmentDoctorScansBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: DoctorScansViewModel
+    private lateinit var scansAdapter: DoctorScanHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this).get(DoctorScansViewModel::class.java)
         _binding = FragmentDoctorScansBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
+    }
 
-        binding.rvScans.layoutManager = LinearLayoutManager(context)
+    private fun setupUI() {
+        // 1. Create Hardcoded Dummy List
+        val dummyList = listOf(
+            DoctorScanHistoryItem(
+                prediction = "Meningioma",
+                confidence = "98%",
+                patientName = "Eleanor Vance",
+                date = "Dec 10, 10:45 AM",
+                imageResId = R.drawable.ic_mri
+            ),
+            DoctorScanHistoryItem(
+                prediction = "Glioma",
+                confidence = "85%",
+                patientName = "Robert Ford",
+                date = "Dec 09, 02:30 PM",
+                imageResId = R.drawable.ic_mri
+            )
+        )
 
-        viewModel.scans.observe(viewLifecycleOwner) { list ->
-            val adapter = DoctorScanHistoryAdapter(list) { item ->
-                Toast.makeText(context, "Viewing scan: ${item.prediction}", Toast.LENGTH_SHORT).show()
-            }
-            binding.rvScans.adapter = adapter
+        // 2. Initialize Adapter
+        scansAdapter = DoctorScanHistoryAdapter(dummyList) { item ->
+            Toast.makeText(requireContext(), "Viewing scan: ${item.prediction}", Toast.LENGTH_SHORT).show()
+        }
+
+        // 3. Setup RecyclerView
+        binding.rvScans.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = scansAdapter
+        }
+
+        // 4. Wire SwipeRefreshLayout (Dummy action)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            // Briefly delay to simulate a network call, then dismiss spinner
+            binding.swipeRefreshLayout.postDelayed({
+                binding.swipeRefreshLayout.isRefreshing = false
+            }, 500)
+        }
+
+        // 5. Handle Empty State UI
+        if (dummyList.isEmpty()) {
+            binding.layoutEmptyScans.visibility = View.VISIBLE
+            binding.rvScans.visibility = View.GONE
+        } else {
+            binding.layoutEmptyScans.visibility = View.GONE
+            binding.rvScans.visibility = View.VISIBLE
         }
     }
 

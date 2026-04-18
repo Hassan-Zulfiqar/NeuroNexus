@@ -29,8 +29,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="patient_avatar" />
-                            <entry key="sourceFile" value="C:\Users\Administrator\Downloads\patient.svg" />
+                            <entry key="outputName" value="search" />
+                            <entry key="sourceFile" value="C:\Users\Administrator\Downloads\search.svg" />
                           </map>
                         </option>
                       </PersistentState>

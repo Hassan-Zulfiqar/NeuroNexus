@@ -8,11 +8,13 @@
         android:title="Home"
         app:showAsAction="always" />
 
+    <!-- Commented out - Search option
     <item
         android:id="@+id/navigation_doctor_search"
         android:icon="@drawable/search"
         android:title="Search"
         app:showAsAction="always" />
+    -->
 
     <item
         android:id="@+id/navigation_doctor_schedule"

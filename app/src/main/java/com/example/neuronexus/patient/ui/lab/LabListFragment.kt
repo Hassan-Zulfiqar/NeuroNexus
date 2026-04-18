@@ -1,12 +1,12 @@
 package com.example.neuronexus.patient.ui.lab
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,6 +18,8 @@ import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentLabListBinding
 import com.example.neuronexus.patient.adapters.LabListAdapter
 import com.example.neuronexus.patient.models.Lab
+import com.google.android.material.chip.Chip
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LabListFragment : Fragment() {
@@ -27,7 +29,9 @@ class LabListFragment : Fragment() {
 
     // Koin Injection
     private val networkViewModel: NetworkViewModel by viewModel()
-    private val sharedViewModel: SharedViewModel by viewModel()
+
+    // FIX: Use sharedViewModel() to share data with Details Fragment
+    private val sharedViewModel: SharedViewModel by sharedViewModel()
 
     private lateinit var adapter: LabListAdapter
     private var allLabs: List<Lab> = emptyList()
@@ -45,11 +49,16 @@ class LabListFragment : Fragment() {
 
         setupUI()
         setupObservers()
-        networkViewModel.fetchAllLabs()
+
+        sharedViewModel.clearBookingState()
+
+        // Fetch only if empty to avoid reloading on back press
+        if (networkViewModel.labsList.value == null) {
+            networkViewModel.fetchAllLabs()
+        }
     }
 
     private fun setupUI() {
-        // Initialize Adapter
         adapter = LabListAdapter(emptyList()) { selectedLab ->
             onLabSelected(selectedLab)
         }
@@ -57,49 +66,45 @@ class LabListFragment : Fragment() {
         binding.rvLabs.layoutManager = LinearLayoutManager(context)
         binding.rvLabs.adapter = adapter
 
-        // Back Button
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        // Search Listener
         binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                filterList()
-            }
+            override fun afterTextChanged(s: Editable?) { filterList() }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Filter Chip Listener
         binding.chipGroupFilters.setOnCheckedChangeListener { _, _ ->
             filterList()
+            applyChipStyles()
         }
     }
 
     private fun setupObservers() {
-        // Observe Lab List
         networkViewModel.labsList.observe(viewLifecycleOwner) { result ->
             result.onSuccess { labs ->
                 allLabs = labs
-                filterList() // Initial filter (shows all)
-                binding.progressBar.isVisible = false
+                filterList()
+                binding.cardProgress.isVisible = false
             }.onFailure { error ->
-                binding.progressBar.isVisible = false
+                binding.cardProgress.isVisible = false
                 AlertUtils.showError(requireContext(), error.message ?: "Failed to load labs")
             }
         }
 
-        // Loading State
         networkViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.isVisible = isLoading
+            // Only show loader if list is empty
+            if (allLabs.isEmpty()) {
+                binding.cardProgress.isVisible = isLoading
+            }
         }
     }
 
     private fun filterList() {
         val query = binding.etSearch.text.toString().trim().lowercase()
         val isTopRatedOnly = binding.chipTopRated.isChecked
-        // 'Nearby' logic would require Location permission & GeoFire, skipping for now (showing all if checked or not)
 
         val filteredLabs = allLabs.filter { lab ->
             val matchesSearch = lab.name.lowercase().contains(query) ||
@@ -109,26 +114,32 @@ class LabListFragment : Fragment() {
             val matchesRating = if (isTopRatedOnly) lab.rating >= 4.5 else true
 
             matchesSearch && matchesRating
-        }.sortedByDescending { if (isTopRatedOnly) it.rating else 0.0 } // Sort by rating if filter active
+        }.sortedByDescending { if (isTopRatedOnly) it.rating else 0.0 }
 
         adapter.updateList(filteredLabs)
+    }
 
-        // Optional: Show "No Results" view if list is empty
-        // binding.tvNoResults.isVisible = filteredLabs.isEmpty()
+    private fun applyChipStyles() {
+        for (i in 0 until binding.chipGroupFilters.childCount) {
+            val chip = binding.chipGroupFilters.getChildAt(i) as Chip
+            if (chip.isChecked) {
+                chip.setTextColor(Color.WHITE)
+            } else {
+                chip.setTextColor(Color.BLACK)
+            }
+        }
     }
 
     private fun onLabSelected(lab: Lab) {
-        // 1. Pass data to SharedViewModel
+        // 1. Pass data to SharedViewModel (Scoped to Activity)
         sharedViewModel.selectLab(lab)
-        Toast.makeText(context, "Navigating to ${lab.name}", Toast.LENGTH_SHORT).show()
+
         // 2. Navigate to Details
-        // Note: Ensure this ID exists in your mobile_navigation.xml
-//        try {
-//            findNavController().navigate(R.id.action_labList_to_labDetails)
-//        } catch (e: Exception) {
-//            // Fallback for development if nav graph isn't updated yet
-//            //Toast.makeText(context, "Navigating to ${lab.name}", Toast.LENGTH_SHORT).show()
-//        }
+        try {
+            findNavController().navigate(R.id.action_labList_to_labDetails)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onDestroyView() {

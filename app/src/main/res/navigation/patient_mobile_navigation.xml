@@ -5,11 +5,34 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <!-- Global actions — safe for ViewPager2 hosted fragments -->
+    <action
+        android:id="@+id/action_global_to_medical_records"
+        app:destination="@id/navigation_medical_records" />
+    <action
+        android:id="@+id/action_global_to_patient_profile_selector"
+        app:destination="@id/navigation_patient_profile_selector" />
+
+    <action
+        android:id="@+id/action_global_to_patient_appointment_detail"
+        app:destination="@id/navigation_patient_appointment_detail" />
+
+    <action
+        android:id="@+id/action_global_to_search"
+        app:destination="@id/navigation_search" />
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.neuronexus.patient.ui.home.PatientHomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_patient_home" />
+        tools:layout="@layout/fragment_patient_home">
+        <action
+            android:id="@+id/action_home_to_disclaimer"
+            app:destination="@id/navigation_tumor_risk_disclaimer" />
+<!--        <action-->
+<!--            android:id="@+id/action_home_to_risk_analysis"-->
+<!--            app:destination="@id/navigation_risk_analysis" />-->
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_schedule"
@@ -21,7 +44,69 @@
         android:id="@+id/navigation_lab"
         android:name="com.example.neuronexus.patient.ui.lab.LabListFragment"
         android:label="Labs"
-        tools:layout="@layout/fragment_lab_list" />
+        tools:layout="@layout/fragment_lab_list">
+        <!-- Action to navigate to Details -->
+        <action
+            android:id="@+id/action_labList_to_labDetails"
+            app:destination="@id/navigation_lab_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lab_details"
+        android:name="com.example.neuronexus.patient.ui.lab.LabDetailsFragment"
+        android:label="Lab Details"
+        tools:layout="@layout/fragment_lab_details">
+        <!-- Action to navigate to Test Details -->
+        <action
+            android:id="@+id/action_labDetails_to_testDetails"
+            app:destination="@id/navigation_test_details" />
+    </fragment>
+
+    <!-- Test Details Fragment with NEW Action -->
+    <fragment
+        android:id="@+id/navigation_test_details"
+        android:name="com.example.neuronexus.patient.ui.lab.TestDetailsFragment"
+        android:label="Test Details"
+        tools:layout="@layout/fragment_test_details">
+        <!-- Action to navigate to Lab Schedule -->
+        <action
+            android:id="@+id/action_testDetails_to_labSchedule"
+            app:destination="@id/navigation_lab_schedule" />
+    </fragment>
+
+    <!-- NEW: Lab Schedule Selection Fragment -->
+    <fragment
+        android:id="@+id/navigation_lab_schedule"
+        android:name="com.example.neuronexus.patient.ui.lab.LabScheduleSelectionFragment"
+        android:label="Lab Schedule Selection"
+        tools:layout="@layout/fragment_lab_schedule_selection">
+        <!-- Action to navigate to the shared Patient Selection Fragment -->
+        <action
+            android:id="@+id/action_lab_schedule_to_patient_selection"
+            app:destination="@id/navigation_patient_selection" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_patient_appointment_detail"
+        android:name="com.example.neuronexus.patient.ui.schedule.PatientAppointmentDetailFragment"
+        android:label="PatientAppointmentDetailFragment" />
+
+    <!-- Note: Assuming navigation_patient_selection is defined either below or in a nested graph -->
+    <fragment
+        android:id="@+id/navigation_patient_selection"
+        android:name="com.example.neuronexus.patient.ui.doctor_discovery.PatientSelectionFragment"
+        android:label="Patient Selection"
+        tools:layout="@layout/fragment_patient_selection">
+        <action
+            android:id="@+id/action_patient_to_lab_booking_confirmation"
+            app:destination="@id/navigation_lab_booking_confirmation" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lab_booking_confirmation"
+        android:name="com.example.neuronexus.patient.ui.lab.LabBookingConfirmationFragment"
+        android:label="Booking Confirmation"
+        tools:layout="@layout/fragment_booking_confirmation" />
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -40,5 +125,84 @@
         android:name="com.example.neuronexus.patient.ui.history.PatientHistoryFragment"
         android:label="My History"
         tools:layout="@layout/fragment_patient_history" />
+
+    <fragment
+        android:id="@+id/navigation_more"
+        android:name="com.example.neuronexus.patient.ui.more.PatientMoreFragment"
+        android:label="More"
+        tools:layout="@layout/fragment_patient_more" />
+
+    <!-- Patient Profile Selector — gateway for Medical Records from More -->
+    <fragment
+        android:id="@+id/navigation_patient_profile_selector"
+        android:name="com.example.neuronexus.patient.ui.medicalrecords.PatientProfileSelectorFragment"
+        android:label="PatientProfileSelectorFragment">
+        <action
+            android:id="@+id/action_profile_selector_to_medical_records"
+            app:destination="@id/navigation_medical_records"
+            app:popUpTo="@id/navigation_patient_profile_selector"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Medical Records — parent with TabLayout -->
+    <fragment
+        android:id="@+id/navigation_medical_records"
+        android:name="com.example.neuronexus.patient.ui.medicalrecords.MedicalRecordsFragment"
+        android:label="MedicalRecordsFragment" />
+
+    <fragment
+        android:id="@+id/navigation_risk_analysis"
+        android:name="com.example.neuronexus.patient.ui.tumor_risk_analysis.RiskAnalysisFragment"
+        android:label="Symptom Checker"
+        tools:layout="@layout/fragment_risk_analysis">
+        <action
+            android:id="@+id/action_symptom_checker_to_risk_result"
+            app:destination="@id/navigation_risk_result" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_tumor_risk_disclaimer"
+        android:name="com.example.neuronexus.patient.ui.tumor_risk_analysis.TumorRiskDisclaimerFragment"
+        android:label="Tumor Risk Disclaimer"
+        tools:layout="@layout/fragment_tumor_risk_disclaimer">
+        <action
+            android:id="@+id/action_disclaimer_to_risk_analysis"
+            app:destination="@id/navigation_risk_analysis" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_risk_result"
+        android:name="com.example.neuronexus.patient.ui.tumor_risk_analysis.TumorRiskResultFragment"
+        android:label="Risk Result"
+        tools:layout="@layout/fragment_tumor_risk_result">
+    </fragment>
+
+    <!-- Search Fragment with Tab Navigation -->
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.neuronexus.patient.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_lab_details"
+            app:destination="@id/navigation_lab_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_write_review"
+        android:name="com.example.neuronexus.patient.ui.schedule.WriteReviewFragment"
+        android:label="WriteReviewFragment" />
+
+    <action
+        android:id="@+id/action_global_to_write_review"
+        app:destination="@id/navigation_write_review" />
+
+    <fragment
+        android:id="@+id/navigation_submit_complaint"
+        android:name="com.example.neuronexus.common.ui.SubmitComplaintFragment"
+        android:label="SubmitComplaintFragment" />
+
+    <action
+        android:id="@+id/action_global_to_submit_complaint"
+        app:destination="@id/navigation_submit_complaint" />
 
 </navigation>

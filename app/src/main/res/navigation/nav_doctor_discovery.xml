@@ -44,6 +44,9 @@
         android:label="Book Appointment"
         tools:layout="@layout/fragment_schedule_selection">
 
+        <!-- ADDED: Deep Link for cross-graph navigation from Rebook flow -->
+        <deepLink app:uri="app://neuronexus/doctor_schedule" />
+
         <action
             android:id="@+id/action_booking_to_patient_selection"
             app:destination="@id/patientSelectionFragment"

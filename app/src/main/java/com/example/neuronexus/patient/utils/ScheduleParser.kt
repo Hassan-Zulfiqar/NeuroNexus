@@ -41,37 +41,37 @@ object ScheduleParser {
         return DoctorSchedule(weeklyMap)
     }
 
-    // Helper: "Mon-Wed" -> [1, 2, 3]
+    // Helper: "Mon-Wed, Fri" -> [1, 2, 3, 5]
     private fun parseDayPart(dayPart: String): List<Int> {
         val days = mutableSetOf<Int>()
-        val lower = dayPart.lowercase(Locale.ROOT)
 
-        if (lower.contains("-")) {
-            // Range: "Mon-Wed"
-            val parts = lower.split("-")
-            if (parts.size == 2) {
-                val start = getDayIndex(parts[0].trim())
-                val end = getDayIndex(parts[1].trim())
-                if (start != -1 && end != -1) {
-                    if (start <= end) {
-                        for (i in start..end) days.add(i)
-                    } else {
-                        // Wrap around (e.g. Fri-Mon -> 5,6,7,1)
-                        for (i in start..7) days.add(i)
-                        for (i in 1..end) days.add(i)
+        // FIX: Always split by comma first to handle mixed groups and regex-captured leading commas
+        val groups = dayPart.lowercase(Locale.ROOT).split(",")
+
+        for (group in groups) {
+            val cleanGroup = group.trim()
+            if (cleanGroup.isEmpty()) continue // Ignore artifacts like the leading comma in ", sat-sun"
+
+            if (cleanGroup.contains("-")) {
+                // Range: "mon-wed"
+                val parts = cleanGroup.split("-")
+                if (parts.size == 2) {
+                    val start = getDayIndex(parts[0].trim())
+                    val end = getDayIndex(parts[1].trim())
+                    if (start != -1 && end != -1) {
+                        if (start <= end) {
+                            for (i in start..end) days.add(i)
+                        } else {
+                            // Wrap around (e.g. Fri-Mon -> 5,6,7,1)
+                            for (i in start..7) days.add(i)
+                            for (i in 1..end) days.add(i)
+                        }
                     }
                 }
-            }
-        } else if (lower.contains(",")) {
-            // List: "Mon, Wed, Fri"
-            lower.split(",").forEach {
-                val idx = getDayIndex(it.trim())
+            } else {
+                val idx = getDayIndex(cleanGroup)
                 if (idx != -1) days.add(idx)
             }
-        } else {
-            // Single Day: "Mon"
-            val idx = getDayIndex(lower.trim())
-            if (idx != -1) days.add(idx)
         }
         return days.toList()
     }

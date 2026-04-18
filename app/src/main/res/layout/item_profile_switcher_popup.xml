@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Avatar initial circle -->
+    <TextView
+        android:id="@+id/tvPopupInitial"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_avatar_circle"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins" />
+
+    <!-- Profile name + relation -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+
+        <TextView
+            android:id="@+id/tvPopupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPopupRelation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+
+    <!-- Selected checkmark (using safe android fallback) -->
+    <ImageView
+        android:id="@+id/ivSelected"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_check"
+        app:tint="@color/primary_blue"
+        android:visibility="gone" />
+
+</LinearLayout>

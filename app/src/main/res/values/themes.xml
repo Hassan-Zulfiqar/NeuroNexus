@@ -85,6 +85,9 @@
     <style name="CalenderViewCustom" parent="Theme.AppCompat">
         <item name="colorAccent">@color/primary_blue</item>
         <item name="colorPrimary">@color/primary_blue</item>
+        <item name="android:textColorPrimary">@color/text_black</item>
+        <item name="android:textColorSecondary">@color/text_black</item>
+        <item name="android:colorForeground">@color/text_black</item>
     </style>
 
     <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.Medium">

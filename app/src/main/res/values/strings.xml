@@ -7,4 +7,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_doctor_dashboard">DoctorDashboardActivity</string>
+
+    <string name="facebook_app_id">920737924095408</string>
+    <string name="fb_login_protocol_scheme">08f22ce10e6e66ee9983562b72623519</string>
 </resources>

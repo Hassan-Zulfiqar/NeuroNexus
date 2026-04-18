@@ -70,36 +70,36 @@
                     android:textColor="@color/text_black"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/ratingContainer"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Rating Container -->
-                <LinearLayout
-                    android:id="@+id/ratingContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ratingContainer"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent">-->
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/star"
-                        app:tint="@color/yellow" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:src="@drawable/star"-->
+<!--                        app:tint="@color/yellow" />-->
 
-                    <TextView
-                        android:id="@+id/tvRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="4.7"
-                        android:textColor="@color/text_black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvRating"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="6dp"-->
+<!--                        android:fontFamily="@font/poppins"-->
+<!--                        android:text="4.7"-->
+<!--                        android:textColor="@color/text_black"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                </LinearLayout>-->
 
                 <TextView
                     android:id="@+id/tvQualifications"
@@ -126,79 +126,94 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvQualifications">
 
                     <!-- Patient Card -->
+                    <!-- Fee card — attractive green tint -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardFee"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="@color/primary_blue"
+                        app:cardBackgroundColor="#E8F5E9"
                         app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
+                            android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="8dp">
+                            android:padding="16dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="PATIENT"
-                                android:textColor="@color/text_white"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvPatientCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="5000+"
-                                android:textColor="@color/text_white"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="@color/primary_pest"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:padding="8dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="CONSULTATION FEE"
-                                android:textColor="@color/text_white"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/coin"
+                                app:tint="#2E7D32" />
 
                             <TextView
                                 android:id="@+id/tvConsultationFee"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="RS 3500"
-                                android:textColor="@color/text_white"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
+                                android:textColor="#2E7D32"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="Rs. 1500" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Consultation Fee"
+                                android:textColor="#4CAF50"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Rating card — warm amber tint (Replaced Patient Count) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardRating"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        app:cardBackgroundColor="#FFF8E1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@android:drawable/btn_star_big_on"
+                                app:tint="#FFA000" />
+
+                            <TextView
+                                android:id="@+id/tvRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:textColor="#E65100"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="4.8" />
+
+                            <TextView
+                                android:id="@+id/tvReviewCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:textColor="#FFA000"
+                                android:textSize="11sp"
+                                tools:text="124 reviews" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
@@ -260,11 +275,12 @@
                             app:cardElevation="0dp">
 
                             <TextView
+                                android:id="@+id/tvInitials1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/poppins"
                                 android:gravity="center"
-                                android:text="SK"
+                                tools:text="SK"
                                 android:textColor="@color/text_white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -282,7 +298,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Great doctor, very professional and caring. Highly recommended."
+                                tools:text="Great doctor, very professional and caring. Highly recommended."
                                 android:textColor="@color/text_black"
                                 android:textSize="14sp" />
 
@@ -292,7 +308,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="- Suresh K."
+                                tools:text="- Suresh K."
                                 android:textColor="@color/text_hint"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -325,11 +341,12 @@
                             app:cardElevation="0dp">
 
                             <TextView
+                                android:id="@+id/tvInitials2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/poppins"
                                 android:gravity="center"
-                                android:text="DL"
+                                tools:text="DL"
                                 android:textColor="@color/text_white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -347,7 +364,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Dr. Rahim explained everything clearly and made me feel comfortable. Excellent service."
+                                tools:text="Dr. Rahim explained everything clearly and made me feel comfortable. Excellent service."
                                 android:textColor="@color/text_black"
                                 android:textSize="14sp" />
 
@@ -357,7 +374,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="- David L."
+                                tools:text="- David L."
                                 android:textColor="@color/text_hint"
                                 android:textSize="12sp" />
                         </LinearLayout>

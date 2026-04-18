@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/colorBackground"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="#F5F5F5"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgPatient"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_avatar_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- New Overlapping Initials TextView -->
+        <TextView
+            android:id="@+id/tvPatientInitial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imgPatient"
+            app:layout_constraintEnd_toEndOf="@+id/imgPatient"
+            app:layout_constraintStart_toStartOf="@+id/imgPatient"
+            app:layout_constraintTop_toTopOf="@+id/imgPatient"
+            tools:text="J" />
+        <TextView
+            android:id="@+id/tvPatientName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="John Doe"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/chipStatus"
+            app:layout_constraintStart_toEndOf="@+id/imgPatient"
+            app:layout_constraintTop_toTopOf="@+id/imgPatient" />
+
+        <TextView
+            android:id="@+id/tvPurpose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="Brain Tumor Checkup"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvPatientName"
+            app:layout_constraintStart_toStartOf="@+id/tvPatientName"
+            app:layout_constraintTop_toBottomOf="@+id/tvPatientName" />
+
+        <TextView
+            android:id="@+id/chipStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_white_rounded"
+            android:backgroundTint="#E8F5E9"
+            android:fontFamily="@font/poppins"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="Completed"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layoutDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvPatientName"
+            app:layout_constraintTop_toBottomOf="@+id/tvPurpose">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/calendar"
+                app:tint="@color/text_hint" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/poppins"
+                android:text="Dec 10, 2024"
+                android:textColor="@color/text_black"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="12dp"
+                android:background="#E0E0E0" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="10:00 AM"
+                android:textColor="@color/text_black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#F5F5F5"
+            app:layout_constraintTop_toBottomOf="@+id/layoutDate" />
+
+        <!-- New Action Buttons Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnActionLeft"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="@font/poppins"
+                android:text="Action Left"
+                android:textColor="@color/text_hint" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnActionRight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/poppins"
+                android:text="Action Right"
+                android:textColor="@color/text_white" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

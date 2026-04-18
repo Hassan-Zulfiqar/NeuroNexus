@@ -1,5 +1,6 @@
 package com.example.neuronexus.patient.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,10 @@ class TimeSlotAdapter(
             // 2. Selection: Check if this slot is selected
             isChecked = slot.isSelected
 
-            // 3. Click Listener
+            // 3. Text color: White when selected, black when unselected
+            setTextColor(if (slot.isSelected) Color.WHITE else Color.BLACK)
+
+            // 4. Click Listener
             setOnClickListener {
                 if (slot.isAvailable) {
                     // Reset all other selections
@@ -57,8 +61,14 @@ class TimeSlotAdapter(
     override fun getItemCount() = timeSlots.size
 
     // Helper to update list from Fragment
-    fun updateList(newSlots: List<TimeSlot>) {
-        timeSlots = newSlots
+    fun updateList(newSlots: List<TimeSlot>, selectedTime: String? = null) {
+        timeSlots = newSlots.map { it.copy(isSelected = it.timeLabel == selectedTime) }
+        notifyDataSetChanged()
+    }
+
+    fun setSelectedTimeSlot(selectedTime: String?) {
+        if (selectedTime == null) return
+        timeSlots.forEach { it.isSelected = it.timeLabel == selectedTime }
         notifyDataSetChanged()
     }
 }

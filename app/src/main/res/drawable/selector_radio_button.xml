@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SELECTED STATE: filled blue outer ring + white inner circle -->
+    <item android:state_checked="true">
+        <layer-list>
+            <!-- Outer filled blue circle -->
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/primary_blue" />
+                </shape>
+            </item>
+            <!-- White ring -->
+            <item
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp">
+                <shape android:shape="oval">
+                    <solid android:color="@android:color/white" />
+                </shape>
+            </item>
+            <!-- Blue center dot -->
+            <item
+                android:bottom="6dp"
+                android:left="6dp"
+                android:right="6dp"
+                android:top="6dp">
+                <shape android:shape="oval">
+                    <solid android:color="@color/primary_blue" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- UNSELECTED STATE: grey outline circle, white fill -->
+    <item android:state_checked="false">
+        <layer-list>
+            <!-- Grey border -->
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#D1D5DB" />
+                </shape>
+            </item>
+            <!-- White fill inside -->
+            <item
+                android:bottom="1.5dp"
+                android:left="1.5dp"
+                android:right="1.5dp"
+                android:top="1.5dp">
+                <shape android:shape="oval">
+                    <solid android:color="@android:color/white" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

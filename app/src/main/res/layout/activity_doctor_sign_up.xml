@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".DoctorSignUpActivity">
+    android:background="@android:color/white">
 
     <ImageView
         android:id="@+id/btnBack"
@@ -375,18 +374,23 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputSpec"
-                style="@style/LoginInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelSpec"
                 app:startIconDrawable="@drawable/ic_badge">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/etSpec"
-                    style="@style/LoginEditText"
-                    android:hint="e.g. Cardiologist"
-                    android:inputType="textCapWords" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Select Specialization"
+                    android:inputType="none"
+                    tools:text="Cardiologist" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

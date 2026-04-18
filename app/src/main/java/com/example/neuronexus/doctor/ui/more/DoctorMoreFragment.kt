@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation.findNavController
 import com.example.neuronexus.common.auth.LoginActivity
 import com.example.neuronexus.R
 import com.example.neuronexus.common.utils.AuthUtils
@@ -35,13 +36,14 @@ class DoctorMoreFragment : BottomSheetDialogFragment() {
 
             // 2. Find the *Doctor* Activity's Navigation Controller
             // Note: We use 'nav_host_fragment_doctor' here!
-            androidx.navigation.Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_doctor)
+            findNavController(requireActivity(), R.id.nav_host_fragment_doctor)
                 .navigate(R.id.navigation_doctor_profile)
         }
 
         binding.btnHistory.setOnClickListener {
-            Toast.makeText(context, "Opening History...", Toast.LENGTH_SHORT).show()
             dismiss()
+            findNavController(requireActivity(), R.id.nav_host_fragment_doctor)
+                .navigate(R.id.navigation_doctor_history)
         }
 
         binding.btnSettings.setOnClickListener {
@@ -50,8 +52,12 @@ class DoctorMoreFragment : BottomSheetDialogFragment() {
         }
 
         binding.btnHelp.setOnClickListener {
-            Toast.makeText(context, "Opening Help...", Toast.LENGTH_SHORT).show()
             dismiss()
+
+            findNavController(
+                requireActivity(),
+                R.id.nav_host_fragment_doctor
+            ).navigate(R.id.action_global_to_submit_complaint)
         }
 
         binding.btnLogout.setOnClickListener {

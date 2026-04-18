@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.neuronexus.R
 import com.example.neuronexus.databinding.LayoutTopDoctorCardBinding
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import java.util.Locale
 
 class DoctorDiscoveryAdapter(
@@ -46,7 +46,10 @@ class DoctorDiscoveryAdapter(
 
             tvLocation.text = if (doctor.clinicAddress.isNotEmpty()) doctor.clinicAddress else "Online"
 
-            tvReviews.text = "(0)"
+            tvReviews.text = when {
+                doctor.reviewCount < 1000 -> "(${doctor.reviewCount})"
+                else -> "(${doctor.reviewCount / 1000}k)"
+            }
 
             val starViews = listOf(ivStar1, ivStar2, ivStar3, ivStar4, ivStar5)
             val rating = doctor.rating.toInt()

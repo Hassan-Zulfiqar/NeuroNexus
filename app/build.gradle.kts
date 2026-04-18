@@ -1,7 +1,15 @@
+import java.util.Properties
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
     id("androidx.navigation.safeargs.kotlin")
     alias(libs.plugins.google.gms.google.services)
 }
@@ -18,6 +26,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "CLOUDINARY_CLOUD_NAME",
+            "\"${localProperties["CLOUDINARY_CLOUD_NAME"]}\""
+        )
+        buildConfigField(
+            "String",
+            "CLOUDINARY_UPLOAD_PRESET",
+            "\"${localProperties["CLOUDINARY_UPLOAD_PRESET"]}\""
+        )
     }
 
     buildTypes {
@@ -32,6 +51,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -42,6 +62,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
 }
 
 dependencies {
@@ -75,4 +96,16 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+
+    implementation("com.facebook.android:facebook-login:18.2.3")
 }
+
+
+
+

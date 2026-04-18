@@ -12,7 +12,7 @@ import com.example.neuronexus.R
 import com.example.neuronexus.common.utils.AlertUtils
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentScheduleSelectionBinding
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import com.example.neuronexus.patient.adapters.TimeSlotAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
@@ -47,12 +47,17 @@ class ScheduleSelectionFragment : Fragment() {
         // Initialize Adapter with empty list first
         setupTimeSlotsAdapter()
 
-        // Set initial date to today
-        val calendar = Calendar.getInstance()
-        updateSelectedDate(calendar.timeInMillis)
-
-        // Trigger initial load for today
-        sharedViewModel.selectDate(calendar.timeInMillis)
+        // Restore previously selected date (if available) or set to today
+        val existingDate = sharedViewModel.selectedDate.value
+        if (existingDate != null) {
+            binding.calendarView.date = existingDate
+            updateSelectedDate(existingDate)
+            sharedViewModel.selectDate(existingDate)
+        } else {
+            val calendar = Calendar.getInstance()
+            updateSelectedDate(calendar.timeInMillis)
+            sharedViewModel.selectDate(calendar.timeInMillis)
+        }
 
         setupObservers()
         setupCalendar()
@@ -70,13 +75,32 @@ class ScheduleSelectionFragment : Fragment() {
             }
         }
 
+        sharedViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            binding.cardProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        sharedViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+            date?.let {
+                binding.calendarView.date = it
+                updateSelectedDate(it)
+            }
+        }
+
+        sharedViewModel.selectedTimeSlot.observe(viewLifecycleOwner) { time ->
+            selectedTime = time ?: ""
+            timeSlotAdapter.setSelectedTimeSlot(time)
+        }
+
         // 2. Available Slots (Generated from ScheduleParser)
         sharedViewModel.availableTimeSlots.observe(viewLifecycleOwner) { slots ->
+            val isLoading = sharedViewModel.loading.value ?: false
             if (slots.isNullOrEmpty()) {
                 timeSlotAdapter.updateList(emptyList())
-                Toast.makeText(requireContext(), "No slots available for this date", Toast.LENGTH_SHORT).show()
+                if (!isLoading) {
+                    Toast.makeText(requireContext(), "No slots available for this date", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                timeSlotAdapter.updateList(slots)
+                timeSlotAdapter.updateList(slots, sharedViewModel.selectedTimeSlot.value)
             }
         }
     }
@@ -116,7 +140,7 @@ class ScheduleSelectionFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.btnConfirmBooking.setOnClickListener {
+        binding.btnConfirmSchedule.setOnClickListener {
             if (validateSelection()) {
                 findNavController().navigate(R.id.action_booking_to_patient_selection)
             }
@@ -124,6 +148,10 @@ class ScheduleSelectionFragment : Fragment() {
     }
 
     private fun validateSelection(): Boolean {
+        if (currentDoctor == null) {
+            AlertUtils.showError(requireContext(), "Doctor information is missing. Please try again.")
+            return false
+        }
         if (selectedDate.isEmpty()) {
             AlertUtils.showError(requireContext(), "Please select a date.")
             return false

@@ -17,8 +17,9 @@ import com.example.neuronexus.R
 import com.example.neuronexus.common.auth.LoginActivity
 import com.example.neuronexus.common.utils.AlertUtils
 import com.example.neuronexus.common.viewmodel.AuthViewModel
+import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.databinding.ActivityDoctorSignUpBinding
-import com.example.neuronexus.models.Doctor
+import com.example.neuronexus.doctor.models.Doctor
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
@@ -26,7 +27,8 @@ class DoctorSignUpActivity : AppCompatActivity() {
 
     private var _binding: ActivityDoctorSignUpBinding? = null
     private val binding get() = _binding!!
-
+    // Inject NetworkViewModel for categories
+    private val networkViewModel: NetworkViewModel by viewModel()
     // 1. Inject ViewModel using Koin
     private val viewModel: AuthViewModel by viewModel()
 
@@ -85,7 +87,7 @@ class DoctorSignUpActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             restoreState(savedInstanceState)
         }
-
+        networkViewModel.fetchDoctorCategories()
         setupClickListeners()
         setupObservers()
     }
@@ -156,6 +158,29 @@ class DoctorSignUpActivity : AppCompatActivity() {
                 // Failure
                 AlertUtils.showError(this, error.message ?: "Registration Failed")
             }
+        }
+
+        networkViewModel.doctorCategories.observe(this) { result ->
+            result ?: return@observe
+            if (result.isSuccess) {
+                val categories = result.getOrNull() ?: emptyList()
+                if (categories.isEmpty()) {
+                    // Fallback — if no categories in Firebase yet, allow free text
+                    binding.inputSpec.editText?.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS
+                } else {
+                    val adapter = android.widget.ArrayAdapter(
+                        this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        categories
+                    )
+                    (binding.inputSpec.editText as? android.widget.AutoCompleteTextView)?.setAdapter(adapter)
+                }
+            } else {
+                // Firebase fetch failed — allow free text as fallback
+                binding.inputSpec.editText?.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS
+                Toast.makeText(this, "Could not load specializations. Please type manually.", Toast.LENGTH_SHORT).show()
+            }
+            networkViewModel.resetDoctorCategories()
         }
     }
 

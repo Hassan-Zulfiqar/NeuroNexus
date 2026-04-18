@@ -4,13 +4,15 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.neuronexus.R
 import com.example.neuronexus.databinding.ItemHistoryLabBinding
-import com.example.neuronexus.models.HistoryLabItem
+import com.example.neuronexus.patient.models.LabTestBooking
+import java.util.Locale
 
 class PatientHistoryLabAdapter(
-    private val labList: List<HistoryLabItem>,
-    private val onReportClick: (HistoryLabItem) -> Unit
+    private var bookings: List<LabTestBooking>,
+    private val onItemClick: (LabTestBooking) -> Unit
 ) : RecyclerView.Adapter<PatientHistoryLabAdapter.LabViewHolder>() {
 
     class LabViewHolder(val binding: ItemHistoryLabBinding) :
@@ -26,40 +28,65 @@ class PatientHistoryLabAdapter(
     }
 
     override fun onBindViewHolder(holder: LabViewHolder, position: Int) {
-        val item = labList[position]
+        val booking = bookings[position]
 
-        holder.binding.tvTestName.text = item.testName
-        holder.binding.tvLabName.text = item.labName
-        holder.binding.tvDate.text = item.date
+        // Text Bindings
+        holder.binding.tvTestName.text = booking.testName.ifBlank { "Lab Test" }
+        holder.binding.tvLabName.text = booking.labName.ifBlank { "Unknown Lab" }
+        holder.binding.tvDate.text = booking.testDate
 
-        holder.binding.btnViewReport.visibility = android.view.View.VISIBLE
-        holder.binding.divider.visibility = android.view.View.VISIBLE
+//        // Image Binding (Option A with Circle Crop and Safe Blank Check)
+//        Glide.with(holder.itemView.context)
+//            .load(booking.labImageUrl.takeIf { it.isNotBlank() })
+//            .placeholder(R.drawable.research).centerCrop()
+//            .error(R.drawable.research)
+//            .into(holder.binding.imgLabIcon)
 
-        holder.binding.chipStatus.text = item.status
-
-        if (item.status == "Cancelled") {
-            holder.binding.chipStatus.setTextColor(Color.parseColor("#C62828"))
-            holder.binding.chipStatus.background.setTint(Color.parseColor("#FFEBEE"))
-
-            holder.binding.btnViewReport.isEnabled = false
-            holder.binding.btnViewReport.setTextColor(Color.parseColor("#BDBDBD"))
-            holder.binding.btnViewReport.setOnClickListener(null)
-
-        } else {
-            holder.binding.chipStatus.setTextColor(Color.parseColor("#2E7D32"))
-            holder.binding.chipStatus.background.setTint(Color.parseColor("#E8F5E9"))
-
-            holder.binding.btnViewReport.isEnabled = true
-            holder.binding.btnViewReport.setTextColor(holder.itemView.context.getColor(R.color.primary_blue))
-
-            holder.binding.btnViewReport.setOnClickListener {
-                onReportClick(item)
+        // Status Chip Formatting
+        val statusLower = booking.status.lowercase(Locale.getDefault())
+        when (statusLower) {
+            "completed" -> {
+                holder.binding.chipStatus.text = "Completed"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#2E7D32"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#E8F5E9"))
             }
+            "cancelled" -> {
+                holder.binding.chipStatus.text = "Cancelled"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#C62828"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFEBEE"))
+            }
+            "no_show" -> {
+                holder.binding.chipStatus.text = "No Show"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#E65100"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFF3E0"))
+            }
+            "rejected" -> {
+                holder.binding.chipStatus.text = "Rejected"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#C62828"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFEBEE"))
+            }
+            "expired" -> {
+                holder.binding.chipStatus.text = "Expired"
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#757575"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#F5F5F5"))
+            }
+            else -> {
+                holder.binding.chipStatus.text = booking.status.replaceFirstChar { it.uppercase() }
+                holder.binding.chipStatus.setTextColor(Color.parseColor("#E65100"))
+                holder.binding.chipStatus.background.setTint(Color.parseColor("#FFF3E0"))
+            }
+        }
+
+        // Action Button
+        holder.binding.btnViewReport.setOnClickListener {
+            onItemClick(booking)
         }
     }
 
-    override fun getItemCount(): Int {
-        return labList.size
+    override fun getItemCount(): Int = bookings.size
+
+    fun updateList(newList: List<LabTestBooking>) {
+        bookings = newList
+        notifyDataSetChanged()
     }
 }
-

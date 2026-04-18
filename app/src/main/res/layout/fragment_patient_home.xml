@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:fillViewport="true">
+    android:orientation="vertical">
 
+    <!-- ==================== STICKY HEADER (does not scroll) ==================== -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="12dp"
+        android:background="@color/colorBackground">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProfile"
@@ -19,7 +24,7 @@
             android:layout_height="50dp"
             android:src="@drawable/doctor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvGreeting"
@@ -27,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/poppins"
-            android:text="Hello, James!"
+            tools:text="Hello, James!"
             android:textColor="@color/text_black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -41,6 +46,7 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_white_rounded"
             android:backgroundTint="@color/primary_blue"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="@id/ivProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivProfile">
@@ -53,159 +59,367 @@
                 app:tint="@color/text_white" />
         </FrameLayout>
 
-<!--        search bar-->
-
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_white_rounded"
-            android:drawableStart="@drawable/search"
-            android:drawableTint="@color/text_hint"
-            android:drawablePadding="12dp"
-            android:fontFamily="@font/poppins"
-            android:hint="Search"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/text_black"
-            android:textColorHint="@color/text_hint"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/btnFilter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
-
-        <ImageButton
-            android:id="@+id/btnFilter"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/bg_white_rounded"
-            android:contentDescription="Filter"
-            android:src="@drawable/filter"
-            android:padding="12dp"
-            android:scaleType="fitCenter"
-            app:tint="@color/primary_blue"
-            app:layout_constraintBottom_toBottomOf="@+id/etSearch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etSearch" />
-
         <TextView
-            android:id="@+id/labelUpcoming"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/poppins"
-            android:text="Upcoming Schedule"
-            android:textColor="@color/text_black"
-            android:textSize="18sp"
+            android:id="@+id/tvNotificationBadge"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/bg_notification_badge"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="9sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
-
-        <TextView
-            android:id="@+id/btnSeeAllSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="See All"
-            android:textColor="@color/primary_blue"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/labelUpcoming"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/labelUpcoming" />
-
-        <include
-            android:id="@+id/cardUpcoming"
-            layout="@layout/layout_appointment_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelUpcoming" />
-
-        <TextView
-            android:id="@+id/labelServices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/poppins"
-            android:text="Our Services"
-            android:textColor="@color/text_black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardUpcoming" />
-
-        <TextView
-            android:id="@+id/btnSeeAllServices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="View All"
-            android:textColor="@color/primary_blue"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/labelServices"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/labelServices" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvServices"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_patient_dashboard_service"
-            app:layout_constraintTop_toBottomOf="@+id/labelServices"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/labelTopDoctors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/poppins"
-            android:text="Top Doctor"
-            android:textColor="@color/text_black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvServices" />
-
-        <TextView
-            android:id="@+id/btnSeeAllDoctors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="View All"
-            android:textColor="@color/primary_blue"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/labelTopDoctors"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/labelTopDoctors" />
-
-        <include
-            android:id="@+id/cardTopDoctor"
-            layout="@layout/layout_top_doctor_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelTopDoctors"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toBottomOf="@+id/cardTopDoctor"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:visibility="gone"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="@+id/btnNotification"
+            app:layout_constraintEnd_toEndOf="@+id/btnNotification"
+            app:layout_constraintStart_toEndOf="@+id/btnNotification"
+            tools:text="3"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- ==================== END STICKY HEADER ==================== -->
 
-</androidx.core.widget.NestedScrollView>
+    <!-- ==================== SWIPE REFRESH + SCROLLABLE CONTENT ==================== -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp">
+
+<!--                &lt;!&ndash; ==================== SEARCH BAR ==================== &ndash;&gt;-->
+<!--                <EditText-->
+<!--                    android:id="@+id/etSearch"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_marginTop="12dp"-->
+<!--                    android:layout_marginEnd="12dp"-->
+<!--                    android:background="@drawable/bg_white_rounded"-->
+<!--                    android:drawableStart="@drawable/search"-->
+<!--                    android:drawableTint="@color/text_hint"-->
+<!--                    android:drawablePadding="12dp"-->
+<!--                    android:fontFamily="@font/poppins"-->
+<!--                    android:hint="Search"-->
+<!--                    android:paddingStart="16dp"-->
+<!--                    android:paddingEnd="16dp"-->
+<!--                    android:textColor="@color/text_black"-->
+<!--                    android:textColorHint="@color/text_hint"-->
+<!--                    android:textSize="14sp"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/btnFilter"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btnFilter"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:background="@drawable/bg_white_rounded"-->
+<!--                    android:contentDescription="Filter"-->
+<!--                    android:src="@drawable/filter"-->
+<!--                    android:padding="12dp"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    app:tint="@color/primary_blue"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/etSearch"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/etSearch" />-->
+
+                <!-- ==================== UPCOMING SCHEDULE ==================== -->
+                <TextView
+                    android:id="@+id/labelUpcoming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Upcoming Appointments"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btnSeeAllSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="See All"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/labelUpcoming"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/labelUpcoming" />
+
+                <include
+                    android:id="@+id/cardUpcoming"
+                    layout="@layout/layout_appointment_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/labelUpcoming" />
+
+                <!-- ==================== OUR SERVICES ==================== -->
+                <TextView
+                    android:id="@+id/labelServices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Our Services"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardUpcoming" />
+
+                <TextView
+                    android:id="@+id/btnSeeAllServices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="View All"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/labelServices"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/labelServices" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvServices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_patient_dashboard_service"
+                    app:layout_constraintTop_toBottomOf="@+id/labelServices"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <!-- ==================== 3 NEW CARDS ==================== -->
+
+                <!-- Row 1: Find a Doctor + Book Lab Test (equal width, side by side) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFindDoctor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/colorCard"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cardBookLabTest"
+                    app:layout_constraintTop_toBottomOf="@+id/rvServices"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardBookLabTest">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Icon background circle -->
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_white_rounded"
+                            android:backgroundTint="#EBF0FB">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/search"
+                                app:tint="@color/primary_blue" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Find a Doctor"
+                            android:textColor="@color/text_black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Book a visit with top specialists near you."
+                            android:textColor="@color/text_hint"
+                            android:textSize="12sp"
+                            android:lineSpacingMultiplier="1.3" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBookLabTest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/colorCard"
+                    app:layout_constraintStart_toEndOf="@+id/cardFindDoctor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvServices">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Icon background circle -->
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_white_rounded"
+                            android:backgroundTint="#D6F5F0">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/research"
+                                app:tint="#1A9C87" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Book Lab Test"
+                            android:textColor="@color/text_black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Schedule diagnostics or home collection."
+                            android:textColor="@color/text_hint"
+                            android:textSize="12sp"
+                            android:lineSpacingMultiplier="1.3" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Row 2: Tumor Risk Analysis full-width banner card -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardTumorRiskAnalysis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/colorCard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardFindDoctor">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <!-- Purple circle icon -->
+                        <FrameLayout
+                            android:id="@+id/iconTumorRisk"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_white_rounded"
+                            android:backgroundTint="#EDE0F7"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/brain_tumor"
+                                app:tint="#8B5CF6" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutTumorRiskText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/ivTumorRiskArrow"
+                            app:layout_constraintStart_toEndOf="@+id/iconTumorRisk"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tumor Risk Analysis"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Assess your tumor risk now"
+                                android:textColor="@color/text_hint"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivTumorRiskArrow"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/text_hint"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:layout_constraintTop_toBottomOf="@+id/cardTumorRiskAnalysis"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>
