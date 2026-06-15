@@ -14,7 +14,7 @@
 
         <!-- ========================================== -->
         <!-- SECTION 1: HEADER (Always Visible)         -->
-        <!-- ========================================== -->
+        <!-- ========================================== --> 
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="24dp"
@@ -612,7 +612,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins"
-                android:text="Lab Report"
+                android:text="Tests Booked"
                 android:textColor="@color/text_black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -633,6 +633,16 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <!-- Multi-test report list (shown for completed multi-test bookings) -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvBookingTests"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:listitem="@layout/item_booking_test_report" />
+
                     <!-- Empty State -->
                     <TextView
                         android:id="@+id/tvNoLabReport"
@@ -645,44 +655,53 @@
                         android:textSize="14sp"
                         android:visibility="gone"
                         tools:visibility="visible" />
-
-                    <!-- Populated State -->
-                    <LinearLayout
-                        android:id="@+id/layoutLabReportDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:id="@+id/tvResultSummary"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:textColor="@color/text_black"
-                            android:textSize="14sp"
-                            android:visibility="gone"
-                            tools:text="Result: Normal limits observed."
-                            tools:visibility="visible" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnViewReport"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:fontFamily="@font/poppins"
-                            app:backgroundTint="@color/primary_blue"
-                            android:padding="12dp"
-                            android:text="View Full Report"
-                            android:textAllCaps="false"
-                            android:textSize="14sp"
-                            app:cornerRadius="8dp" />
-
-                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+
+        <!-- ========================================== -->
+        <!-- SECTION 7: INSTALLMENT PLAN / PAYMENT SCHEDULE (Lab bookings with installments only) -->
+        <!-- ========================================== -->
+        <TextView
+            android:id="@+id/tvInstallmentPlanLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins"
+            android:text="Payment Schedule"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutLabReport"
+            tools:visibility="visible" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardInstallmentPlan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvInstallmentPlanLabel"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/layoutInstallmentRows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Barrier 2: Safe anchoring at the bottom -->
         <androidx.constraintlayout.widget.Barrier
@@ -690,7 +709,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="cardAppointmentInfo,layoutPrescription,layoutLabReport" />
+            app:constraint_referenced_ids="cardAppointmentInfo,layoutPrescription,layoutLabReport,cardInstallmentPlan" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReportIssue"

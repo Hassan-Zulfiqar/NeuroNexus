@@ -280,6 +280,37 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!-- Cart count badge -->
+        <TextView
+            android:id="@+id/tvCartBadge"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_avatar_circle"
+            android:backgroundTint="@color/blue_button"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:visibility="gone"
+            tools:text="2"
+            tools:visibility="visible" />
+
+        <!-- View Cart button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewCart"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:backgroundTint="@color/blue_button"
+            android:text="View Cart"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins"
+            app:cornerRadius="8dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
     </LinearLayout>
 
     <!-- Enhanced RecyclerView with ItemDecoration -->

@@ -20,7 +20,12 @@ data class Lab(
 
     // NEW: Rating fields for "Top Rated" logic
     val rating: Double = 0.0,
-    val reviewCount: Int = 0
+    val reviewCount: Int = 0,
+
+    // NEW: Installment support fields
+    val offersInstallments: Boolean = false,
+    val maxInstallments: Int = 0,
+    val minBillForInstallment: Double = 0.0
 ) : Serializable
 
 data class LabTest(
@@ -36,5 +41,10 @@ data class LabTest(
     val updatedAt: Long = 0L,
 
     // Future-proofing: Placeholder for sample report image
-    val sampleReportImageUrl: String = ""
+    val sampleReportImageUrl: String = "",
+
+    // NEW: Additional test details for multi-test bookings
+    val duration: String = "",
+    val sampleType: String = "",
+    val isAvailable: Boolean = true
 ) : Serializable

@@ -72,6 +72,18 @@
                         android:textSize="18sp"
                         android:textStyle="bold"/>
 
+                    <!-- Multiple tests list -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvConfirmationTests"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:listitem="@layout/item_cart_test" />
+
+                    <!-- Single test info (shown when 0 or 1 tests) -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -354,7 +366,7 @@
                             android:text="Pay Online"
                             android:fontFamily="@font/poppins"
                             android:textSize="14sp"
-                            android:enabled="false"/> <!-- Disabled until implemented -->
+                            android:enabled="true"/>
                     </RadioGroup>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -481,3 +493,4 @@
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

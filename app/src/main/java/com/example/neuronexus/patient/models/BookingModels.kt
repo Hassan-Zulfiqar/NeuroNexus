@@ -23,7 +23,20 @@ data class PatientProfile(
 ) : Serializable
 
 // ==========================================
-// 2. BOOKING MODELS
+// 2. LAB TEST CART MODELS
+// ==========================================
+
+data class SelectedTest(
+    val testId: String = "",
+    val testName: String = "",
+    val testType: String = "",
+    val sampleType: String = "",
+    val price: Double = 0.0,
+    val duration: String = ""
+) : Serializable
+
+// ==========================================
+// 3. BOOKING MODELS
 // ==========================================
 
 open class Booking(
@@ -92,23 +105,32 @@ data class LabTestBooking(
     val labId: String = "",
     val labName: String = "",
     val labImageUrl: String = "",
-    val testId: String = "", // Added for better tracking
-    val testName: String = "",
-    val testType: String = "",
+    val testId: String = "", // keep for backward compatibility
+    val testName: String = "", // keep for backward compatibility
+    val testType: String = "", // keep for backward compatibility
     val testDate: String = "",
     val testTime: String = "",
 
     // Composition: A lab booking results in a report
-    val reportId: String? = null,
+    val reportId: String? = null, // keep for backward compatibility
 
     // OPTIONAL LINK TO INSTALLMENT CONTRACT (Null means paid in full)
-    val installmentPlanId: String? = null
+    val installmentPlanId: String? = null,
+
+    // NEW: Multiple test cart support
+    val tests: List<SelectedTest> = emptyList(),
+    val totalAmount: Double = 0.0,
+    val reportIds: Map<String, String> = emptyMap(),
+    val offersInstallments: Boolean = false,
+    val maxInstallments: Int = 0,
+    val selectedInstallments: Int = 0,
+    val installmentAmount: Double = 0.0
 ) : Booking(bookingId, accountHolderId, patientProfileId, patientNameSnapshot, patientInfo,
     status, "lab_test", payment, createdAt, updatedAt, null,
     "NONE", previousBookingId, exactTimeInMillis)
 
 // ==========================================
-// 3. MEDICAL RECORDS (Composition)
+// 4. MEDICAL RECORDS (Composition)
 // ==========================================
 
 data class MedicalRecord(
@@ -145,27 +167,40 @@ data class LabReport(
     val testTime: String = "",
     val resultSummary: String = "",
     val fileUrl: String = "",
-    val issuedDate: Long = System.currentTimeMillis()
+    val issuedDate: Long = 0L
 ) : Serializable
 
 // ==========================================
-// 4. UTILITY MODELS
+// 5. UTILITY MODELS
 // ==========================================
 
 data class Payment(
     val paymentId: String = "",
     val amount: Double = 0.0,
-    val currency: String = "PKR",
-    val paymentMethod: String = "",
-    val paymentStatus: String = "pending",
+    val currency: String = "USD",        // Changed from PKR — Stripe account is US
+    val paymentMethod: String = "",       // "online", "cash", "installment"
+    val paymentStatus: String = "pending", // pending, paid, failed, refunded, pending_cash
     val transactionDate: Long = System.currentTimeMillis(),
-
-    // Links a payment to a specific installment slot (Null means upfront/full payment)
-    val installmentRecordId: String? = null
+    val installmentRecordId: String? = null,
+    val stripePaymentIntentId: String? = null,  // for refunds
+    val stripeClientSecret: String? = null,      // for payment confirmation
+    val refundId: String? = null                 // Stripe refund ID
 ) : Serializable
 
+//data class Payment(
+//    val paymentId: String = "",
+//    val amount: Double = 0.0,
+//    val currency: String = "PKR",
+//    val paymentMethod: String = "",
+//    val paymentStatus: String = "pending",
+//    val transactionDate: Long = System.currentTimeMillis(),
+//
+//    // Links a payment to a specific installment slot (Null means upfront/full payment)
+//    val installmentRecordId: String? = null
+//) : Serializable
+
 // ==========================================
-// 5. INSTALLMENT TRACKING (LEDGER SYSTEM)
+// 6. INSTALLMENT TRACKING (LEDGER SYSTEM)
 // ==========================================
 
 /**

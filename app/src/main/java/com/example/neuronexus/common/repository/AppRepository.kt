@@ -6,6 +6,7 @@ import com.example.neuronexus.common.models.AppAnnouncement
 import com.example.neuronexus.common.models.AppNotification
 import com.example.neuronexus.common.models.User
 import com.example.neuronexus.doctor.models.Doctor
+import com.example.neuronexus.doctor.models.TumorReport
 import com.example.neuronexus.models.Patient
 import com.example.neuronexus.patient.models.Booking
 import com.example.neuronexus.patient.models.DoctorAppointment
@@ -24,13 +25,23 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
+import com.example.neuronexus.BuildConfig
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
 
 class AppRepository {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseDatabase.getInstance().reference
-    private val storage = FirebaseStorage.getInstance().reference
+    private val paymentServerUrl = BuildConfig.PAYMENT_SERVER_URL
 
     interface RegisterCallback {
         fun onSuccess(message: String)
@@ -319,12 +330,25 @@ class AppRepository {
         // ====================================================================
 
         var dummyPayment = booking.payment.copy(
-            paymentId = "PAY_DUMMY_${System.currentTimeMillis()}",
+            paymentId = if (booking.payment.paymentId.isBlank()) {
+                "PAY_${System.currentTimeMillis()}"
+            } else {
+                booking.payment.paymentId  // Keep existing ID if already set by Stripe
+            },
             amount = booking.payment.amount,
-            // If an installment plan exists, this first payment is strictly "partial"
-            paymentStatus = if (installmentPlan != null) "partial" else "pending",
-            paymentMethod = "PAY_AT_CLINIC",
-            transactionDate = System.currentTimeMillis()
+            paymentStatus = when {
+                booking.payment.paymentMethod == "ONLINE"
+                    && booking.payment.stripePaymentIntentId != null -> "paid"
+                installmentPlan != null -> "partial"
+                booking.payment.paymentMethod == "PAY_AT_LAB" -> "pending_cash"
+                booking.payment.paymentMethod == "PAY_AT_CLINIC" -> "pending_cash"
+                else -> "pending"
+            },
+            paymentMethod = booking.payment.paymentMethod
+                .ifBlank { "PAY_AT_CLINIC" },  // Keep original — do NOT override
+            transactionDate = System.currentTimeMillis(),
+            stripePaymentIntentId = booking.payment.stripePaymentIntentId,
+            stripeClientSecret = null  // Never save client secret to Firebase — security
         )
 
         if (installmentPlan != null && installmentRecords.isNotEmpty()) {
@@ -501,11 +525,10 @@ class AppRepository {
 
         // 1. Payment-Aware Stub (Stripe Integration Hook)
         // If the payment method was ONLINE, we flag it for the future refund Cloud Function.
-        val penaltyStatus = if (booking.payment.paymentMethod == "ONLINE") {
-            "PENDING_REFUND"
-        } else {
-            "NONE"
-        }
+        val isOnlinePayment = booking.payment.paymentMethod == "ONLINE"
+        val hasStripePayment = !booking.payment.stripePaymentIntentId.isNullOrBlank()
+        // penaltyStatus is for patient penalty fees — not refund tracking
+        val penaltyStatus = "NONE"
 
         // 2. Cancel the main booking and apply the penalty/refund status
         updates["/appointments/${booking.bookingId}/status"] = "cancelled"
@@ -521,6 +544,30 @@ class AppRepository {
         db.updateChildren(updates)
             .addOnSuccessListener {
                 callback(Result.success(booking.bookingId))
+                
+                // Trigger Stripe refund if online payment exists
+                if (isOnlinePayment && hasStripePayment) {
+                    val paymentIntentId = booking.payment.stripePaymentIntentId ?: ""
+                    processRefund(
+                        paymentIntentId = paymentIntentId,
+                        reason = "requested_by_customer"
+                    ) { refundResult ->
+                        refundResult.onSuccess { refundId ->
+                            val refundUpdates = hashMapOf<String, Any>(
+                                "/appointments/${booking.bookingId}/payment/paymentStatus" to "refunded",
+                                "/appointments/${booking.bookingId}/payment/refundId" to refundId
+                            )
+                            db.updateChildren(refundUpdates)
+                        }
+                        refundResult.onFailure {
+                            val failUpdates = hashMapOf<String, Any>(
+                                "/appointments/${booking.bookingId}/payment/paymentStatus" to "refund_failed"
+                            )
+                            db.updateChildren(failUpdates)
+                        }
+                    }
+                }
+                
                 if (booking is DoctorAppointment) {
                     createNotification(
                         recipientUid = booking.doctorId,
@@ -672,6 +719,17 @@ class AppRepository {
                     bookingId = appointmentId,
                     referenceId = null
                 )
+
+                // Trigger refund for rejected online bookings
+                if (newStatus == "rejected") {
+                    db.child("appointments").child(appointmentId).get()
+                        .addOnSuccessListener { snapshot ->
+                            val appointment = snapshot.getValue(DoctorAppointment::class.java)
+                            if (appointment != null) {
+                                triggerRefundIfOnlinePayment(appointment.copy(bookingId = appointmentId))
+                            }
+                        }
+                }
             }
             .addOnFailureListener { e ->
                 callback(Result.failure(e))
@@ -699,7 +757,15 @@ class AppRepository {
                     set(java.util.Calendar.MILLISECOND, 0)
                 }.timeInMillis
 
+                class ExpiredBookingPaymentInfo(
+                    val bookingId: String,
+                    val bookingAccountHolderId: String,
+                    val paymentMethod: String,
+                    val stripePaymentIntentId: String?
+                )
+
                 val updates = hashMapOf<String, Any>()
+                val expiredPayments = mutableListOf<ExpiredBookingPaymentInfo>()
                 var expiredCount = 0
 
                 for (child in snapshot.children) {
@@ -727,6 +793,24 @@ class AppRepository {
                         updates["/appointments/$bookingId/status"] = "expired"
                         updates["/appointments/$bookingId/updatedAt"] = System.currentTimeMillis()
                         expiredCount++
+
+                        val paymentMethod = child.child("payment")
+                            .child("paymentMethod")
+                            .getValue(String::class.java) ?: ""
+                        val stripePaymentIntentId = child.child("payment")
+                            .child("stripePaymentIntentId")
+                            .getValue(String::class.java)
+                        val bookingAccountHolderId = child.child("accountHolderId")
+                            .getValue(String::class.java) ?: ""
+
+                        expiredPayments.add(
+                            ExpiredBookingPaymentInfo(
+                                bookingId = bookingId,
+                                bookingAccountHolderId = bookingAccountHolderId,
+                                paymentMethod = paymentMethod,
+                                stripePaymentIntentId = stripePaymentIntentId
+                            )
+                        )
                     }
                 }
 
@@ -736,7 +820,47 @@ class AppRepository {
                 }
 
                 db.updateChildren(updates)
-                    .addOnSuccessListener { callback(Result.success(expiredCount)) }
+                    .addOnSuccessListener {
+                        callback(Result.success(expiredCount))
+
+                        expiredPayments.forEach { paymentInfo ->
+                            if (paymentInfo.paymentMethod == "ONLINE" &&
+                                !paymentInfo.stripePaymentIntentId.isNullOrBlank()) {
+
+                                processRefund(
+                                    paymentIntentId = paymentInfo.stripePaymentIntentId ?: "",
+                                    reason = "requested_by_customer"
+                                ) { refundResult ->
+                                    refundResult.onSuccess { refundId ->
+                                        val refundUpdates = hashMapOf<String, Any>(
+                                            "/appointments/${paymentInfo.bookingId}/payment/paymentStatus"
+                                                to "refunded",
+                                            "/appointments/${paymentInfo.bookingId}/payment/refundId"
+                                                to refundId
+                                        )
+                                        db.updateChildren(refundUpdates)
+
+                                        createNotification(
+                                            recipientUid = paymentInfo.bookingAccountHolderId,
+                                            senderName = "NuroNexus",
+                                            type = "PAYMENT_REFUNDED",
+                                            title = "Payment Refunded",
+                                            message = "Your payment has been refunded as your booking has expired.",
+                                            bookingId = paymentInfo.bookingId,
+                                            referenceId = null
+                                        )
+                                    }
+                                    refundResult.onFailure {
+                                        val failUpdates = hashMapOf<String, Any>(
+                                            "/appointments/${paymentInfo.bookingId}/payment/paymentStatus"
+                                                to "refund_failed"
+                                        )
+                                        db.updateChildren(failUpdates)
+                                    }
+                                }
+                            }
+                        }
+                    }
                     .addOnFailureListener { callback(Result.failure(it)) }
             }
             .addOnFailureListener { callback(Result.failure(it)) }
@@ -833,14 +957,52 @@ class AppRepository {
     // 15. UPLOAD PATIENT IMAGE
     // ----------------------------------------------------------------
     fun uploadPatientImage(uid: String, uri: Uri, callback: (Result<String>) -> Unit) {
-        val profileRef = storage.child("profile_pics/patients/$uid.jpg")
-        uploadImage(profileRef, uri) { url ->
-            if (url.isNotEmpty()) {
-                callback(Result.success(url))
-            } else {
-                callback(Result.failure(Exception("Failed to upload image")))
-            }
-        }
+        MediaManager.get()
+            .upload(uri)
+            .unsigned(BuildConfig.CLOUDINARY_UPLOAD_PRESET)
+            .option("folder", "neuronexus/patient_profiles")
+            .callback(object : UploadCallback {
+                override fun onStart(requestId: String) {}
+
+                override fun onProgress(
+                    requestId: String,
+                    bytes: Long,
+                    totalBytes: Long
+                ) {}
+
+                override fun onSuccess(
+                    requestId: String,
+                    resultData: Map<*, *>
+                ) {
+                    val secureUrl = resultData["secure_url"] as? String
+                    if (!secureUrl.isNullOrBlank()) {
+                        callback(Result.success(secureUrl))
+                    } else {
+                        callback(Result.failure(
+                            Exception("Upload succeeded but URL is missing")
+                        ))
+                    }
+                }
+
+                override fun onError(
+                    requestId: String,
+                    error: ErrorInfo
+                ) {
+                    callback(Result.failure(
+                        Exception(error.description ?: "Upload failed")
+                    ))
+                }
+
+                override fun onReschedule(
+                    requestId: String,
+                    error: ErrorInfo
+                ) {
+                    callback(Result.failure(
+                        Exception("Upload rescheduled: ${error.description}")
+                    ))
+                }
+            })
+            .dispatch()
     }
 
     // ----------------------------------------------------------------
@@ -858,22 +1020,52 @@ class AppRepository {
     }
 
     fun uploadDoctorProfileImage(imageUri: android.net.Uri, uid: String, callback: (Result<String>) -> Unit) {
-        val storageRef = com.google.firebase.storage.FirebaseStorage.getInstance().reference
-            .child("doctor_profiles/$uid.jpg")
+        MediaManager.get()
+            .upload(imageUri)
+            .unsigned(BuildConfig.CLOUDINARY_UPLOAD_PRESET)
+            .option("folder", "neuronexus/doctor_profiles")
+            .callback(object : UploadCallback {
+                override fun onStart(requestId: String) {}
 
-        storageRef.putFile(imageUri)
-            .addOnSuccessListener { taskSnapshot ->
-                taskSnapshot.storage.downloadUrl
-                    .addOnSuccessListener { uri ->
-                        callback(Result.success(uri.toString()))
+                override fun onProgress(
+                    requestId: String,
+                    bytes: Long,
+                    totalBytes: Long
+                ) {}
+
+                override fun onSuccess(
+                    requestId: String,
+                    resultData: Map<*, *>
+                ) {
+                    val secureUrl = resultData["secure_url"] as? String
+                    if (!secureUrl.isNullOrBlank()) {
+                        callback(Result.success(secureUrl))
+                    } else {
+                        callback(Result.failure(
+                            Exception("Upload succeeded but URL is missing")
+                        ))
                     }
-                    .addOnFailureListener { e ->
-                        callback(Result.failure(e))
-                    }
-            }
-            .addOnFailureListener { e ->
-                callback(Result.failure(e))
-            }
+                }
+
+                override fun onError(
+                    requestId: String,
+                    error: ErrorInfo
+                ) {
+                    callback(Result.failure(
+                        Exception(error.description ?: "Upload failed")
+                    ))
+                }
+
+                override fun onReschedule(
+                    requestId: String,
+                    error: ErrorInfo
+                ) {
+                    callback(Result.failure(
+                        Exception("Upload rescheduled: ${error.description}")
+                    ))
+                }
+            })
+            .dispatch()
     }
 
     // ----------------------------------------------------------------
@@ -953,11 +1145,8 @@ class AppRepository {
                 return@addOnSuccessListener
             }
 
-            val profileRef = storage.child("profile_pics/doctors/$uid.jpg")
-            val licenseRef = storage.child("license_images/doctors/$uid.jpg")
-
-            uploadImage(profileRef, profileImageUri) { profileUrl ->
-                uploadImage(licenseRef, licenseImageUri) { licenseUrl ->
+            uploadImage(profileImageUri, "doctor_profiles", uid) { profileUrl ->
+                uploadImage(licenseImageUri, "doctor_licenses", "${uid}_license") { licenseUrl ->
                     val finalDoctor = doctor.copy(
                         uid = uid,
                         profileImageUrl = profileUrl,
@@ -1000,9 +1189,7 @@ class AppRepository {
                 return@addOnSuccessListener
             }
 
-            val profileRef = storage.child("profile_pics/patients/$uid.jpg")
-
-            uploadImage(profileRef, profileImageUri) { profileUrl ->
+            uploadImage(profileImageUri, "patient_profiles", uid) { profileUrl ->
                 val finalPatient = patient.copy(
                     uid = uid,
                     profileImageUrl = profileUrl
@@ -1269,6 +1456,141 @@ class AppRepository {
             }
     }
 
+    // ==========================================
+    // LAB REPORT FUNCTIONS
+    // ==========================================
+
+    fun getLabReportsForBooking(
+        patientProfileId: String,
+        bookingId: String,
+        callback: (Result<List<LabReport>>) -> Unit
+    ) {
+        if (patientProfileId.isBlank() || bookingId.isBlank()) {
+            callback(Result.failure(Exception("Invalid patient profile or booking ID")))
+            return
+        }
+
+        db.child("medical_records")
+            .child(patientProfileId)
+            .child("lab_reports")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val reports = mutableListOf<LabReport>()
+                for (child in snapshot.children) {
+                    val report = child.getValue(LabReport::class.java)
+                        ?.copy(reportId = child.key ?: "")
+                    if (report != null && report.bookingId == bookingId) {
+                        reports.add(report)
+                    }
+                }
+                reports.sortByDescending { it.issuedDate }
+                callback(Result.success(reports))
+            }
+            .addOnFailureListener {
+                callback(Result.failure(it))
+            }
+    }
+
+    // ==========================================
+    // INSTALLMENT PLAN DETAILS (for appointment detail screen)
+    // ==========================================
+
+    fun getInstallmentPlanDetails(
+        planId: String,
+        callback: (Result<Pair<InstallmentPlan?, List<InstallmentRecord>>>) -> Unit
+    ) {
+        if (planId.isBlank()) {
+            callback(Result.failure(Exception("Installment plan ID is missing")))
+            return
+        }
+
+        db.child("installment_plans").child(planId).get()
+            .addOnSuccessListener { planSnapshot ->
+                val plan = planSnapshot.getValue(InstallmentPlan::class.java)
+
+                // Fetch all records, filter by planId client-side (no index needed)
+                db.child("installment_records").get()
+                    .addOnSuccessListener { recordsSnapshot ->
+                        val records = mutableListOf<InstallmentRecord>()
+                        for (child in recordsSnapshot.children) {
+                            val record = child.getValue(InstallmentRecord::class.java)
+                            if (record != null && record.planId == planId) {
+                                records.add(record)
+                            }
+                        }
+                        records.sortBy { it.installmentNumber }
+                        callback(Result.success(Pair(plan, records)))
+                    }
+                    .addOnFailureListener { e ->
+                        callback(Result.failure(e))
+                    }
+            }
+            .addOnFailureListener { e ->
+                callback(Result.failure(e))
+            }
+    }
+
+    // ==========================================
+    // TUMOR DETECTION HISTORY
+    // ==========================================
+
+    fun getTumorDetectionRecords(
+        doctorId: String,
+        callback: (Result<List<TumorReport>>) -> Unit
+    ) {
+        if (doctorId.isBlank()) {
+            callback(Result.failure(Exception("Doctor ID is missing")))
+            return
+        }
+
+        db.child("detect_tumor")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val reports = mutableListOf<TumorReport>()
+                for (child in snapshot.children) {
+                    val report = mapSnapshotToTumorReport(child)
+                    if (report != null && report.doctorId == doctorId) {
+                        reports.add(report)
+                    }
+                }
+                reports.sortByDescending { it.timestamp }
+                callback(Result.success(reports))
+            }
+            .addOnFailureListener {
+                callback(Result.failure(it))
+            }
+    }
+
+    private fun mapSnapshotToTumorReport(
+        snapshot: DataSnapshot
+    ): TumorReport? {
+        return try {
+            TumorReport(
+                recordId = snapshot.child("recordId").getValue(String::class.java)
+                    ?: snapshot.key ?: "",
+                doctorId = snapshot.child("doctorId").getValue(String::class.java) ?: "",
+                patientName = snapshot.child("patientName").getValue(String::class.java) ?: "",
+                patientAge = snapshot.child("patientAge").getValue(String::class.java) ?: "",
+                patientGender = snapshot.child("patientGender").getValue(String::class.java) ?: "",
+                prediction = snapshot.child("prediction").getValue(String::class.java) ?: "",
+                confidence = snapshot.child("confidence").getValue(Double::class.java) ?: 0.0,
+                hasTumor = snapshot.child("hasTumor").getValue(Boolean::class.java) ?: false,
+                tumorDetected = snapshot.child("tumorDetected").getValue(String::class.java) ?: "",
+                location = snapshot.child("location").getValue(String::class.java) ?: "",
+                size = snapshot.child("size").getValue(String::class.java) ?: "",
+                areaPercentage = snapshot.child("areaPercentage").getValue(Double::class.java) ?: 0.0,
+                pixelCount = snapshot.child("pixelCount").getValue(Long::class.java)?.toInt() ?: 0,
+                maxDiameterPixels = snapshot.child("maxDiameterPixels").getValue(Double::class.java) ?: 0.0,
+                originalImageUrl = snapshot.child("imageUrl").getValue(String::class.java) ?: "",
+                overlayImageUrl = snapshot.child("overlayUrl").getValue(String::class.java) ?: "",
+                pdfUrl = snapshot.child("pdfUrl").getValue(String::class.java) ?: "",
+                timestamp = snapshot.child("timestamp").getValue(Long::class.java) ?: 0L,
+                date = snapshot.child("date").getValue(String::class.java) ?: ""
+            )
+        } catch (e: Exception) {
+            null
+        }
+    }
 
     // ==========================================
     // NOTIFICATION FUNCTIONS
@@ -1594,26 +1916,230 @@ class AppRepository {
             }
     }
 
+    // ==========================================
+    // STRIPE PAYMENT FUNCTIONS
+    // ==========================================
+
+    fun createPaymentIntent(
+        amount: Double,
+        currency: String = "usd",
+        bookingId: String,
+        description: String = "NuroNexus Booking",
+        callback: (Result<Pair<String, String>>) -> Unit
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("$paymentServerUrl/create-payment-intent")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.doOutput = true
+                connection.connectTimeout = 15000
+                connection.readTimeout = 15000
+
+                // Build request body
+                val requestBody = JSONObject().apply {
+                    put("amount", amount)
+                    put("currency", currency)
+                    put("bookingId", bookingId)
+                    put("description", description)
+                }.toString()
+
+                // Write request
+                OutputStreamWriter(connection.outputStream).use { writer ->
+                    writer.write(requestBody)
+                    writer.flush()
+                }
+
+                val responseCode = connection.responseCode
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val response = connection.inputStream
+                        .bufferedReader()
+                        .use { it.readText() }
+
+                    val jsonResponse = JSONObject(response)
+                    val clientSecret = jsonResponse.optString("clientSecret", "")
+                    val paymentIntentId = jsonResponse.optString("paymentIntentId", "")
+
+                    if (clientSecret.isNotBlank() && paymentIntentId.isNotBlank()) {
+                        callback(Result.success(Pair(clientSecret, paymentIntentId)))
+                    } else {
+                        callback(Result.failure(
+                            Exception("Invalid response from payment server")
+                        ))
+                    }
+                } else {
+                    val errorResponse = connection.errorStream
+                        ?.bufferedReader()
+                        ?.use { it.readText() } ?: "Unknown error"
+                    callback(Result.failure(
+                        Exception("Payment server error: $errorResponse")
+                    ))
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+                callback(Result.failure(
+                    Exception("Failed to connect to payment server: ${e.message}")
+                ))
+            }
+        }
+    }
+
+    fun processRefund(
+        paymentIntentId: String,
+        reason: String = "requested_by_customer",
+        callback: (Result<String>) -> Unit
+    ) {
+        if (paymentIntentId.isBlank()) {
+            callback(Result.failure(Exception("Payment intent ID is required for refund")))
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("$paymentServerUrl/refund-payment")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.doOutput = true
+                connection.connectTimeout = 15000
+                connection.readTimeout = 15000
+
+                val requestBody = JSONObject().apply {
+                    put("paymentIntentId", paymentIntentId)
+                    put("reason", reason)
+                }.toString()
+
+                OutputStreamWriter(connection.outputStream).use { writer ->
+                    writer.write(requestBody)
+                    writer.flush()
+                }
+
+                val responseCode = connection.responseCode
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val response = connection.inputStream
+                        .bufferedReader()
+                        .use { it.readText() }
+
+                    val jsonResponse = JSONObject(response)
+                    val refundId = jsonResponse.optString("refundId", "")
+                    val status = jsonResponse.optString("status", "")
+
+                    if (refundId.isNotBlank()) {
+                        callback(Result.success(refundId))
+                    } else {
+                        callback(Result.failure(
+                            Exception("Refund failed: status = $status")
+                        ))
+                    }
+                } else {
+                    val errorResponse = connection.errorStream
+                        ?.bufferedReader()
+                        ?.use { it.readText() } ?: "Unknown error"
+                    callback(Result.failure(
+                        Exception("Refund server error: $errorResponse")
+                    ))
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+                callback(Result.failure(
+                    Exception("Failed to process refund: ${e.message}")
+                ))
+            }
+        }
+    }
+
     ////////////////////////////
     //HELPER
 
+    private fun triggerRefundIfOnlinePayment(booking: Booking) {
+        val isOnlinePayment = booking.payment.paymentMethod == "ONLINE"
+        val hasStripePayment = !booking.payment.stripePaymentIntentId.isNullOrBlank()
+
+        if (isOnlinePayment && hasStripePayment) {
+            val paymentIntentId = booking.payment.stripePaymentIntentId ?: return
+            processRefund(
+                paymentIntentId = paymentIntentId,
+                reason = "duplicate"
+            ) { refundResult ->
+                refundResult.onSuccess { refundId ->
+                    val updates = hashMapOf<String, Any>(
+                        "/appointments/${booking.bookingId}/payment/paymentStatus" to "refunded",
+                        "/appointments/${booking.bookingId}/payment/refundId" to refundId
+                    )
+                    db.updateChildren(updates)
+
+                    createNotification(
+                        recipientUid = booking.accountHolderId,
+                        senderName = "NuroNexus",
+                        type = "PAYMENT_REFUNDED",
+                        title = "Payment Refunded",
+                        message = "Your payment has been refunded as your booking was rejected.",
+                        bookingId = booking.bookingId,
+                        referenceId = null
+                    )
+                }
+                refundResult.onFailure {
+                    val updates = hashMapOf<String, Any>(
+                        "/appointments/${booking.bookingId}/payment/paymentStatus" to "refund_failed"
+                    )
+                    db.updateChildren(updates)
+                }
+            }
+        }
+    }
+
     private fun uploadImage(
-        storageRef: com.google.firebase.storage.StorageReference,
         uri: Uri?,
+        folderName: String,
+        publicId: String,
         onComplete: (String) -> Unit
     ) {
         if (uri == null) {
             onComplete("")
             return
         }
-        storageRef.putFile(uri)
-            .addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                    onComplete(downloadUri.toString())
+        MediaManager.get()
+            .upload(uri)
+            .unsigned(BuildConfig.CLOUDINARY_UPLOAD_PRESET)
+            .option("folder", "neuronexus/$folderName")
+            .callback(object : UploadCallback {
+                override fun onStart(requestId: String) {}
+
+                override fun onProgress(
+                    requestId: String,
+                    bytes: Long,
+                    totalBytes: Long
+                ) {}
+
+                override fun onSuccess(
+                    requestId: String,
+                    resultData: Map<*, *>
+                ) {
+                    val secureUrl = resultData["secure_url"] as? String
+                    onComplete(secureUrl ?: "")
                 }
-            }
-            .addOnFailureListener {
-                onComplete("")
-            }
+
+                override fun onError(
+                    requestId: String,
+                    error: ErrorInfo
+                ) {
+                    onComplete("")
+                }
+
+                override fun onReschedule(
+                    requestId: String,
+                    error: ErrorInfo
+                ) {
+                    onComplete("")
+                }
+            })
+            .dispatch()
     }
 }

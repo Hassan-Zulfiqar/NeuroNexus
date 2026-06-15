@@ -22,6 +22,8 @@ import com.example.neuronexus.patient.models.LabReport
 import com.example.neuronexus.patient.models.PatientProfile
 import com.example.neuronexus.patient.models.Prescription
 import com.example.neuronexus.patient.models.Review
+import com.example.neuronexus.patient.models.Payment
+import com.example.neuronexus.doctor.models.TumorReport
 import com.google.firebase.database.ValueEventListener
 import java.util.UUID
 
@@ -105,6 +107,13 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
     private val _labReportResult = MutableLiveData<Result<LabReport?>?>()
     val labReportResult: LiveData<Result<LabReport?>?> = _labReportResult
 
+    // ==========================================
+    // LAB REPORTS FOR BOOKING
+    // ==========================================
+
+    private val _labReportsForBooking = MutableLiveData<Result<List<LabReport>>?>()
+    val labReportsForBooking: LiveData<Result<List<LabReport>>?> = _labReportsForBooking
+
     // 13. Save Patient Profile Result for booking, its not main user account
     private val _saveProfileResult = MutableLiveData<Result<PatientProfile>?>()
     val saveProfileResult: LiveData<Result<PatientProfile>?> = _saveProfileResult
@@ -162,6 +171,37 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
     private val _doctorAppointmentByIdResult = MutableLiveData<Result<DoctorAppointment?>?>()
     val doctorAppointmentByIdResult: LiveData<Result<DoctorAppointment?>?> = _doctorAppointmentByIdResult
 
+    // ==========================================
+    // STRIPE PAYMENT STATE
+    // ==========================================
+    private val _paymentIntentResult = MutableLiveData<Result<Pair<String, String>>?>()
+    val paymentIntentResult: LiveData<Result<Pair<String, String>>?> = _paymentIntentResult
+    // Pair: first = clientSecret, second = paymentIntentId
+
+    private val _refundResult = MutableLiveData<Result<String>?>()
+    val refundResult: LiveData<Result<String>?> = _refundResult
+    // String = refundId on success
+
+    private val _paymentLoading = MutableLiveData<Boolean>()
+    val paymentLoading: LiveData<Boolean> = _paymentLoading
+    // Separate loading for payment — does not interfere with booking loading
+
+    // ==========================================
+    // INSTALLMENT PLAN DETAILS
+    // ==========================================
+
+    private val _installmentPlanDetails =
+        MutableLiveData<Result<Pair<InstallmentPlan?, List<InstallmentRecord>>>?>()
+    val installmentPlanDetails: LiveData<Result<Pair<InstallmentPlan?, List<InstallmentRecord>>>?> =
+        _installmentPlanDetails
+
+    // ==========================================
+    // TUMOR DETECTION HISTORY
+    // ==========================================
+
+    private val _tumorReports = MutableLiveData<Result<List<TumorReport>>?>()
+    val tumorReports: LiveData<Result<List<TumorReport>>?> = _tumorReports
+
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
@@ -174,10 +214,21 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
         }
     }
 
-    // Book Appointment (EXISTING DOCTOR FLOW - UNTOUCHED)
-    fun bookAppointment(booking: Booking) {
+    // Book Appointment
+    fun bookAppointment(
+        booking: Booking,
+        confirmedPayment: Payment? = null  // null = use booking.payment
+    ) {
         _loading.value = true
-        repository.saveBooking(booking) { result ->
+
+        // Use confirmed Stripe payment if provided
+        val finalBooking = if (confirmedPayment != null && booking is DoctorAppointment) {
+            booking.copy(payment = confirmedPayment)
+        } else {
+            booking
+        }
+
+        repository.saveBooking(finalBooking) { result ->
             _loading.value = false
             _bookingResult.value = result
         }
@@ -483,17 +534,22 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
         booking: LabTestBooking,
         isInstallment: Boolean = false,
         totalAmount: Double = 0.0,
-        numInstallments: Int = 0
+        numInstallments: Int = 0,
+        confirmedPayment: Payment? = null  // null = use booking.payment
     ) {
         _loading.value = true
 
+        // Use confirmed Stripe payment if provided
+        val finalPayment = confirmedPayment ?: booking.payment
+        val bookingWithPayment = booking.copy(payment = finalPayment)
+
         // 1. Ensure booking has an ID so we can establish cross-linking foreign keys immediately
-        val finalBookingId = if (booking.bookingId.isEmpty()) {
+        val finalBookingId = if (bookingWithPayment.bookingId.isEmpty()) {
             UUID.randomUUID().toString()
         } else {
-            booking.bookingId
+            bookingWithPayment.bookingId
         }
-        val finalBooking = booking.copy(bookingId = finalBookingId)
+        val finalBooking = bookingWithPayment.copy(bookingId = finalBookingId)
 
         var plan: InstallmentPlan? = null
         val records = mutableListOf<InstallmentRecord>()
@@ -555,6 +611,49 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
             _loading.value = false
             _bookingResult.value = result
         }
+    }
+
+    // ==========================================
+    // STRIPE PAYMENT WRAPPER FUNCTIONS
+    // ==========================================
+
+    fun fetchPaymentIntent(
+        amount: Double,
+        bookingId: String,
+        description: String = "NuroNexus Booking"
+    ) {
+        _paymentLoading.value = true
+        repository.createPaymentIntent(
+            amount = amount,
+            currency = "usd",
+            bookingId = bookingId,
+            description = description
+        ) { result ->
+            _paymentLoading.postValue(false)
+            _paymentIntentResult.postValue(result)
+        }
+    }
+
+    fun resetPaymentIntentResult() {
+        _paymentIntentResult.value = null
+    }
+
+    fun triggerRefund(
+        paymentIntentId: String,
+        reason: String = "requested_by_customer"
+    ) {
+        _paymentLoading.value = true
+        repository.processRefund(
+            paymentIntentId = paymentIntentId,
+            reason = reason
+        ) { result ->
+            _paymentLoading.postValue(false)
+            _refundResult.postValue(result)
+        }
+    }
+
+    fun resetRefundResult() {
+        _refundResult.value = null
     }
 
     fun checkAndExpirePendingAppointments() {
@@ -662,6 +761,18 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
             _loading.postValue(false)
             _labReportResult.postValue(result)
         }
+    }
+
+    fun fetchLabReportsForBooking(patientProfileId: String, bookingId: String) {
+        _loading.value = true
+        repository.getLabReportsForBooking(patientProfileId, bookingId) { result ->
+            _loading.postValue(false)
+            _labReportsForBooking.postValue(result)
+        }
+    }
+
+    fun resetLabReportsForBooking() {
+        _labReportsForBooking.value = null
     }
 
 
@@ -783,5 +894,27 @@ class NetworkViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun resetImageUpdateState() {
         _imageUpdateResult.value = null
+    }
+
+    fun fetchTumorDetectionRecords(doctorId: String) {
+        _loading.value = true
+        repository.getTumorDetectionRecords(doctorId) { result ->
+            _loading.value = false
+            _tumorReports.value = result
+        }
+    }
+
+    fun resetTumorReports() {
+        _tumorReports.value = null
+    }
+
+    fun fetchInstallmentPlanDetails(planId: String) {
+        repository.getInstallmentPlanDetails(planId) { result ->
+            _installmentPlanDetails.postValue(result)
+        }
+    }
+
+    fun resetInstallmentPlanDetails() {
+        _installmentPlanDetails.value = null
     }
 }

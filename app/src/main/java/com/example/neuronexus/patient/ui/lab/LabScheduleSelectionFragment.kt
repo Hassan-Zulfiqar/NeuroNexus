@@ -60,7 +60,9 @@ class LabScheduleSelectionFragment : Fragment() {
             updateSelectedDate(calendar.timeInMillis)
             sharedViewModel.selectDate(calendar.timeInMillis)
         }
-        android.util.Log.d("LAB_DEBUG", "selectDate called. selectedLab: ${sharedViewModel.selectedLab.value?.name}, selectedLabTest: ${sharedViewModel.selectedLabTest.value?.testName}")
+        
+        val isCartFlow = sharedViewModel.cartTests.value?.isNotEmpty() == true
+    
 
         setupObservers()
         setupCalendar()
@@ -94,13 +96,28 @@ class LabScheduleSelectionFragment : Fragment() {
             timeSlotAdapter.setSelectedTimeSlot(time)
         }
 
-        // 2. Lab Test Info Guard
+        // 2. Lab Test Info Guard — supports both single-test and cart flows
         sharedViewModel.selectedLabTest.observe(viewLifecycleOwner) { test ->
             if (test != null) {
+                // Single test flow — set currentTest as before
                 currentTest = test
             } else {
-                AlertUtils.showError(requireContext(), "Test information missing. Please select a test.")
-                findNavController().popBackStack()
+                // Check if cart flow is active
+                val cartTests = sharedViewModel.cartTests.value
+                val isCartFlow = cartTests?.isNotEmpty() == true
+
+                if (isCartFlow) {
+                    // Cart flow — selectedLabTest is intentionally null
+                    android.util.Log.d("SCHEDULE_DEBUG", "Cart flow detected — skipping test null error. Cart size: ${cartTests?.size}")
+                    // currentTest stays null — validateSelection() handles this
+                    // Do NOT show error — do NOT pop back
+                } else {
+                    AlertUtils.showError(
+                        requireContext(),
+                        "Test information missing. Please select a test."
+                    )
+                    findNavController().popBackStack()
+                }
             }
         }
 
@@ -162,8 +179,23 @@ class LabScheduleSelectionFragment : Fragment() {
     }
 
     private fun validateSelection(): Boolean {
-        if (currentLab == null || currentTest == null) {
-            AlertUtils.showError(requireContext(), "Booking information is missing. Please restart the process.")
+        val isCartFlow = sharedViewModel.cartTests.value?.isNotEmpty() == true
+
+        // Lab must always be present
+        if (currentLab == null) {
+            AlertUtils.showError(
+                requireContext(),
+                "Lab information is missing. Please restart the process."
+            )
+            return false
+        }
+
+        // Test validation — accept either currentTest (single) or cartTests (cart)
+        if (currentTest == null && !isCartFlow) {
+            AlertUtils.showError(
+                requireContext(),
+                "Test information is missing. Please select a test."
+            )
             return false
         }
 

@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neuronexus.databinding.ItemLabTestBinding
 import com.example.neuronexus.patient.models.LabTest
+import com.example.neuronexus.patient.models.SelectedTest
 
 class LabTestAdapter(
     private var tests: List<LabTest>,
-    private val onTestSelected: (LabTest) -> Unit
+    private val onTestSelected: (LabTest) -> Unit,
+    private val onAddToCartClick: (LabTest) -> Unit,
+    private var cartTestIds: Set<String> = emptySet()
 ) : RecyclerView.Adapter<LabTestAdapter.TestViewHolder>() {
 
     inner class TestViewHolder(val binding: ItemLabTestBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -26,7 +29,16 @@ class LabTestAdapter(
                 binding.tvInstallmentBadge.visibility = View.GONE
             }
 
-            // Click Listener (Navigate to Test Details)
+            // Cart button state — shows Add or Remove based on cart state
+            val isInCart = cartTestIds.contains(test.id)
+            binding.btnAddToCart.text = if (isInCart) "Remove from Cart" else "Add to Cart"
+
+            // Cart button click
+            binding.btnAddToCart.setOnClickListener {
+                onAddToCartClick(test)
+            }
+
+            // Card click still navigates to details
             binding.root.setOnClickListener {
                 onTestSelected(test)
             }
@@ -48,6 +60,11 @@ class LabTestAdapter(
 
     fun updateList(newTests: List<LabTest>) {
         tests = newTests
+        notifyDataSetChanged()
+    }
+
+    fun updateCartState(cartIds: Set<String>) {
+        cartTestIds = cartIds
         notifyDataSetChanged()
     }
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Test Name & Report Status Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Test Name -->
+                <TextView
+                    android:id="@+id/tvReportTestName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/text_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="Blood Test" />
+
+                <!-- Test Type (Sample: Blood) -->
+                <TextView
+                    android:id="@+id/tvReportSampleType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/gray_1"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"
+                    tools:text="Sample: Blood" />
+
+            </LinearLayout>
+
+            <!-- Report Status Badge -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipReportStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins"
+                android:textSize="11sp"
+                app:chipBackgroundColor="@color/colorBackground"
+                app:chipIconTint="@color/success"
+                app:chipStrokeColor="@color/success"
+                app:chipStrokeWidth="1dp"
+                tools:text="Ready" />
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="@color/gray_2" />
+
+        <!-- Result Summary (if available) -->
+        <TextView
+            android:id="@+id/tvReportResultSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_black"
+            android:textSize="13sp"
+            android:visibility="gone"
+            tools:text="Result: All values within normal limits"
+            tools:visibility="visible" />
+
+        <!-- View Report Button (visible only if report exists) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewTestReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins"
+            android:padding="10dp"
+            android:text="View Report"
+            android:textAllCaps="false"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:backgroundTint="@color/primary_blue"
+            app:cornerRadius="8dp"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -12,6 +12,7 @@ import com.example.neuronexus.patient.models.PatientProfile
 import com.example.neuronexus.patient.model.TimeSlot
 import com.example.neuronexus.patient.models.Booking
 import com.example.neuronexus.patient.models.DoctorAppointment
+import com.example.neuronexus.patient.models.SelectedTest
 import com.example.neuronexus.patient.utils.ScheduleParser
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -88,7 +89,21 @@ class SharedViewModel(private val repository: AppRepository? = null) : ViewModel
     private val _patientHistoryStatusFilter = MutableLiveData<String>("all")
     val patientHistoryStatusFilter: LiveData<String> = _patientHistoryStatusFilter
 
-    // Setter function
+    // ==========================================
+    // LAB TEST CART STATE
+    // ==========================================
+
+    private val _cartTests = MutableLiveData<MutableList<SelectedTest>>(mutableListOf())
+    val cartTests: LiveData<MutableList<SelectedTest>> = _cartTests
+
+    // Loading State
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
+    // -----------------------------------------------------------
+    // Setter Functions
+    // -----------------------------------------------------------
+
     fun selectMedicalRecordTab(index: Int) {
         _selectedMedicalRecordTab.value = index
     }
@@ -97,9 +112,35 @@ class SharedViewModel(private val repository: AppRepository? = null) : ViewModel
         _patientHistoryStatusFilter.value = status.lowercase(Locale.getDefault())
     }
 
-    // Loading State
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> = _loading
+    // -----------------------------------------------------------
+    // Cart Functions
+    // -----------------------------------------------------------
+
+    fun addTestToCart(test: SelectedTest) {
+        val current = _cartTests.value ?: mutableListOf()
+        if (current.none { it.testId == test.testId }) {
+            current.add(test)
+            _cartTests.value = current
+        }
+    }
+
+    fun removeTestFromCart(testId: String) {
+        val current = _cartTests.value ?: mutableListOf()
+        current.removeAll { it.testId == testId }
+        _cartTests.value = current
+    }
+
+    fun clearCart() {
+        _cartTests.value = mutableListOf()
+    }
+
+    fun getCartTotal(): Double {
+        return _cartTests.value?.sumOf { it.price } ?: 0.0
+    }
+
+    fun getCartCount(): Int {
+        return _cartTests.value?.size ?: 0
+    }
 
     // -----------------------------------------------------------
     // Logic Methods
@@ -166,6 +207,7 @@ class SharedViewModel(private val repository: AppRepository? = null) : ViewModel
         _selectedDoctorAppointment.value = null
         _selectedPatientBooking.value = null
         _selectedMedicalRecordTab.value = 0
+        clearCart()
     }
 
     // -----------------------------------------------------------

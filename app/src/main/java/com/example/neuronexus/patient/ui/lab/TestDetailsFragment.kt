@@ -60,7 +60,19 @@ class TestDetailsFragment : Fragment() {
             }
         }
 
+        // Observe cart to update button state
+        sharedViewModel.cartTests.observe(viewLifecycleOwner) { cartTests ->
+            updateCartButtonState(cartTests)
+        }
+
         setupListeners()
+    }
+
+    private fun updateCartButtonState(cartTests: List<com.example.neuronexus.patient.models.SelectedTest>) {
+        if (currentTest != null) {
+            val isInCart = cartTests.any { it.testId == currentTest?.id }
+            binding.btnAddToCartDetail?.text = if (isInCart) "Remove from Cart" else "Add to Cart"
+        }
     }
 
     private fun bindTestDetails(test: LabTest) {
@@ -96,20 +108,40 @@ class TestDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.btnBookAppointment.setOnClickListener {
-            if (currentTest != null && currentLab != null) {
-               sharedViewModel.selectDate(0L)
-                sharedViewModel.selectTimeSlot("")
-                sharedViewModel.setBookingReason("")
+        // Disable old booking flow - cart is now the only path
+        binding.btnBookAppointment?.visibility = View.GONE
+        binding.btnBookAppointment?.setOnClickListener { }
 
-                findNavController().navigate(R.id.action_testDetails_to_labSchedule)
+        binding.btnAddToCartDetail?.setOnClickListener {
+            if (currentTest != null) {
+                onAddToCartClick(currentTest!!)
             } else {
-                AlertUtils.showError(requireContext(), "Please wait for test details to load.")
+                AlertUtils.showError(requireContext(), "Test details missing.")
             }
         }
 
         binding.cardSampleReport.setOnClickListener {
             Toast.makeText(requireContext(), "Opening PDF Preview...", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun onAddToCartClick(test: LabTest) {
+        val isInCart = sharedViewModel.cartTests.value
+            ?.any { it.testId == test.id } == true
+
+        if (isInCart) {
+            sharedViewModel.removeTestFromCart(test.id)
+        } else {
+            // Convert LabTest to SelectedTest for cart
+            val selectedTest = com.example.neuronexus.patient.models.SelectedTest(
+                testId = test.id,
+                testName = test.testName,
+                testType = test.category,
+                sampleType = test.sampleType,
+                price = test.price.toDoubleOrNull() ?: 0.0,
+                duration = test.duration
+            )
+            sharedViewModel.addTestToCart(selectedTest)
         }
     }
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Test name -->
+        <TextView
+            android:id="@+id/tvCartTestName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_black"
+            tools:text="Complete Blood Count (CBC)"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvCartTestPrice"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Test type -->
+        <TextView
+            android:id="@+id/tvCartTestType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_hint"
+            tools:text="Blood Test"
+            app:layout_constraintStart_toStartOf="@id/tvCartTestName"
+            app:layout_constraintEnd_toStartOf="@id/tvCartTestPrice"
+            app:layout_constraintTop_toBottomOf="@id/tvCartTestName"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Sample type -->
+        <TextView
+            android:id="@+id/tvCartSampleType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/text_hint"
+            tools:text="Sample: Blood"
+            app:layout_constraintStart_toStartOf="@id/tvCartTestName"
+            app:layout_constraintEnd_toStartOf="@id/tvCartTestPrice"
+            app:layout_constraintTop_toBottomOf="@id/tvCartTestType"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tvCartTestPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/primary_blue"
+            tools:text="Rs. 800"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnRemoveTest"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Remove button -->
+        <ImageView
+            android:id="@+id/btnRemoveTest"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="Remove test from cart"
+            app:tint="@color/error"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

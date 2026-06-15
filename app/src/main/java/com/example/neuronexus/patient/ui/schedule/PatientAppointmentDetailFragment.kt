@@ -1,11 +1,15 @@
 package com.example.neuronexus.patient.ui.schedule
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -20,8 +24,13 @@ import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentPatientAppointmentDetailBinding
 import com.example.neuronexus.patient.models.Booking
 import com.example.neuronexus.patient.models.DoctorAppointment
+import com.example.neuronexus.patient.models.InstallmentPlan
+import com.example.neuronexus.patient.models.InstallmentRecord
 import com.example.neuronexus.patient.models.LabTestBooking
 import com.example.neuronexus.patient.models.Prescription
+import com.example.neuronexus.patient.adapters.BookingTestReportAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.neuronexus.patient.models.SelectedTest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -38,6 +47,7 @@ class PatientAppointmentDetailFragment : Fragment() {
 
     private var currentBooking: Booking? = null
     private var currentLabReportUrl: String? = null
+    private var bookingTestAdapter: BookingTestReportAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,6 +109,17 @@ class PatientAppointmentDetailFragment : Fragment() {
                     "Appointment cancelled successfully",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                val booking = currentBooking
+                if (booking?.payment?.paymentMethod == "ONLINE" &&
+                    !booking.payment.stripePaymentIntentId.isNullOrBlank()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Your online payment will be refunded within 5-10 business days.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
                 networkViewModel.resetBookingState()
                 backPressHandling()
             } else {
@@ -160,43 +181,54 @@ class PatientAppointmentDetailFragment : Fragment() {
         }
 
         // Observe Single Lab Report Result
-        networkViewModel.labReportResult.observe(viewLifecycleOwner) { result ->
+//        networkViewModel.labReportResult.observe(viewLifecycleOwner) { result ->
+//            result ?: return@observe
+//            val b = binding ?: return@observe
+//
+//            if (result.isSuccess) {
+//                val report = result.getOrNull()
+//                if (report != null) {
+//                    // Save URL locally so the button click can use it instantly
+//                    currentLabReportUrl = report.fileUrl
+//
+//                    // Show result summary if available
+//                    if (report.resultSummary.isNotBlank()) {
+//                        b.tvResultSummary.visibility = View.VISIBLE
+//                        b.tvResultSummary.text = report.resultSummary
+//                    } else {
+//                        b.tvResultSummary.visibility = View.GONE
+//                    }
+//
+//                    // Show or hide view report button based on fileUrl
+//                    if (report.fileUrl.isNotBlank()) {
+//                        b.btnViewReport.visibility = View.VISIBLE
+//                    } else {
+//                        b.btnViewReport.visibility = View.GONE
+//                        b.tvNoLabReport.visibility = View.VISIBLE
+//                        b.tvNoLabReport.text =
+//                            "Lab report details available but file not uploaded yet"
+//                        b.layoutLabReportDetails.visibility = View.GONE
+//                    }
+//                } else {
+//                    b.tvNoLabReport.visibility = View.VISIBLE
+//                    b.layoutLabReportDetails.visibility = View.GONE
+//                }
+//            } else {
+//                b.tvNoLabReport.visibility = View.VISIBLE
+//                b.layoutLabReportDetails.visibility = View.GONE
+//            }
+//            networkViewModel.resetLabReportResult() // Mandatory Reset
+//        }
+
+        // Observe Multi-Test Lab Reports for Booking
+        networkViewModel.labReportsForBooking.observe(viewLifecycleOwner) { result ->
             result ?: return@observe
-            val b = binding ?: return@observe
-
             if (result.isSuccess) {
-                val report = result.getOrNull()
-                if (report != null) {
-                    // Save URL locally so the button click can use it instantly
-                    currentLabReportUrl = report.fileUrl
-
-                    // Show result summary if available
-                    if (report.resultSummary.isNotBlank()) {
-                        b.tvResultSummary.visibility = View.VISIBLE
-                        b.tvResultSummary.text = report.resultSummary
-                    } else {
-                        b.tvResultSummary.visibility = View.GONE
-                    }
-
-                    // Show or hide view report button based on fileUrl
-                    if (report.fileUrl.isNotBlank()) {
-                        b.btnViewReport.visibility = View.VISIBLE
-                    } else {
-                        b.btnViewReport.visibility = View.GONE
-                        b.tvNoLabReport.visibility = View.VISIBLE
-                        b.tvNoLabReport.text =
-                            "Lab report details available but file not uploaded yet"
-                        b.layoutLabReportDetails.visibility = View.GONE
-                    }
-                } else {
-                    b.tvNoLabReport.visibility = View.VISIBLE
-                    b.layoutLabReportDetails.visibility = View.GONE
-                }
-            } else {
-                b.tvNoLabReport.visibility = View.VISIBLE
-                b.layoutLabReportDetails.visibility = View.GONE
+                val reports = result.getOrNull() ?: emptyList()
+                val reportMap = reports.associate { it.testId to it }
+                bookingTestAdapter?.updateReports(reportMap)  // Now works correctly after Fix 1
             }
-            networkViewModel.resetLabReportResult() // Mandatory Reset
+            networkViewModel.resetLabReportsForBooking()
         }
 
         // 1. Observe if the user has already submitted a review
@@ -226,6 +258,21 @@ class PatientAppointmentDetailFragment : Fragment() {
                 }
             }
             networkViewModel.resetReviewExistsResult()
+        }
+
+        // Installment plan details observer
+        networkViewModel.installmentPlanDetails.observe(viewLifecycleOwner) { result ->
+            result ?: return@observe
+            val b = binding ?: return@observe
+
+            result.onSuccess { (plan, records) ->
+                renderInstallmentSchedule(plan, records)
+            }
+            result.onFailure {
+                b.tvInstallmentPlanLabel.visibility = View.GONE
+                b.cardInstallmentPlan.visibility = View.GONE
+            }
+            networkViewModel.resetInstallmentPlanDetails()
         }
 
         // 2. Fetch and display the specific review if it exists
@@ -336,67 +383,148 @@ class PatientAppointmentDetailFragment : Fragment() {
         b.cardDoctorInfo.visibility = View.GONE
 
         // Bind Lab info
-        b.tvTestName.text = booking.testName.ifBlank { "Lab Test" }
         b.tvLabName.text = booking.labName.ifBlank { "Unknown Lab" }
-        b.tvTestType.text = booking.testType.ifBlank { "" }
         b.tvLabAddress.visibility = View.VISIBLE
         b.tvLabAddress.text = "Loading address..."
         networkViewModel.fetchLabDetails(booking.labId)
 
-        // Bind appointment info
+        // tvTestName in cardLabInfo — always shows summary
+        b.tvTestName.text = when {
+            booking.tests.size > 1  -> "${booking.tests.size} Tests"
+            booking.tests.size == 1 -> booking.tests[0].testName
+            else                    -> booking.testName.ifBlank { "Lab Test" }
+        }
+
+        // tvTestType in cardLabInfo — shows first test type
+        b.tvTestType.text = when {
+            booking.tests.isNotEmpty() -> booking.tests[0].testType.ifBlank { "" }
+            else                       -> booking.testType.ifBlank { "" }
+        }
+
+        // Appointment info card
         b.tvDate.text = booking.testDate
         b.tvTime.text = booking.testTime
-        b.tvReasonOrType.text = booking.testName.ifBlank { "Lab Test" }
-
-        // Lab report section — only for completed
-        if (booking.status.lowercase() == "completed") {
-            b.layoutLabReport.visibility = View.VISIBLE
-            b.layoutPrescription.visibility = View.GONE
-
-            if (!booking.reportId.isNullOrEmpty()) {
-                b.tvNoLabReport.visibility = View.GONE
-                b.layoutLabReportDetails.visibility = View.VISIBLE
-
-                // NEW: Trigger the fetch to get summary & URL
-                networkViewModel.fetchLabReport(
-                    booking.patientProfileId,
-                    booking.reportId!!
-                )
-
-                b.btnViewReport.setOnClickListener {
-                    openReportFile(booking)
-                }
-            } else {
-                b.tvNoLabReport.visibility = View.VISIBLE
-                b.layoutLabReportDetails.visibility = View.GONE
-            }
-        } else {
-            b.layoutLabReport.visibility = View.GONE
-            b.layoutPrescription.visibility = View.GONE
+        b.tvReasonOrType.text = when {
+            booking.tests.size > 1  -> "${booking.tests.size} Tests Booked"
+            booking.tests.size == 1 -> booking.tests[0].testName
+            else                    -> booking.testName.ifBlank { "Lab Test" }
         }
+
+        // Prescription section — never shown for lab bookings
+        b.layoutPrescription.visibility = View.GONE
+
+        // Determine tests to show — handles both new and old bookings
+        val testsToShow: List<SelectedTest> = when {
+            booking.tests.isNotEmpty() -> booking.tests
+            booking.testId.isNotBlank() || booking.testName.isNotBlank() -> {
+                // Old single test booking — wrap in list for unified display
+                listOf(
+                    SelectedTest(
+                        testId = booking.testId,
+                        testName = booking.testName,
+                        testType = booking.testType
+                    )
+                )
+            }
+            else -> emptyList()
+        }
+
+        // Determine if completed — controls report UI in adapter
+        val isCompleted = booking.status.lowercase() == "completed"
+
+        if (testsToShow.isNotEmpty()) {
+            // Show "Tests Booked" section for ALL statuses
+            b.layoutLabReport.visibility = View.VISIBLE
+            b.tvNoLabReport.visibility = View.GONE
+            b.rvBookingTests.visibility = View.VISIBLE
+
+            // Initialize adapter
+            // showReportStatus = true only for completed bookings
+            bookingTestAdapter = BookingTestReportAdapter(
+                tests = testsToShow,
+                reports = emptyMap(),
+                showReportStatus = isCompleted,
+                onViewReportClick = { testId, reportUrl ->
+                    openReportFile(reportUrl)
+                }
+            )
+
+            b.rvBookingTests.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = bookingTestAdapter
+            }
+
+            // Fetch reports only if completed
+            if (isCompleted &&
+                booking.patientProfileId.isNotBlank() &&
+                booking.bookingId.isNotBlank()) {
+                networkViewModel.fetchLabReportsForBooking(
+                    booking.patientProfileId,
+                    booking.bookingId
+                )
+            }
+
+        } else {
+            // No tests found — hide section
+            b.layoutLabReport.visibility = View.GONE
+            b.rvBookingTests.visibility = View.GONE
+            b.tvNoLabReport.visibility = View.VISIBLE
+        }
+
+        // Installment Plan / Payment Schedule — only if booking has a plan
+        val installmentPlanId = booking.installmentPlanId
+        if (!installmentPlanId.isNullOrBlank()) {
+            b.tvInstallmentPlanLabel.visibility = View.VISIBLE
+            b.cardInstallmentPlan.visibility = View.VISIBLE
+            networkViewModel.fetchInstallmentPlanDetails(installmentPlanId)
+        } else {
+            b.tvInstallmentPlanLabel.visibility = View.GONE
+            b.cardInstallmentPlan.visibility = View.GONE
+        }
+
+        // Setup cancel/review action section — unchanged
+        setupActionSection(booking)
     }
 
-    // Intent launch using the cached URL
-    private fun openReportFile(booking: LabTestBooking) {
-        val fileUrl = currentLabReportUrl
+//    // Intent launch for multi-test report URL
+//    private fun openReportFileForTest(fileUrl: String?) {
+//        if (!fileUrl.isNullOrBlank()) {
+//            try {
+//                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
+//                    data = android.net.Uri.parse(fileUrl)
+//                    flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+//                }
+//                startActivity(intent)
+//            } catch (e: android.content.ActivityNotFoundException) {
+//                Toast.makeText(
+//                    requireContext(),
+//                    "No PDF/Image viewer found on this device",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        } else {
+//            Toast.makeText(requireContext(), "Report file not available", Toast.LENGTH_SHORT)
+//                .show()
+//        }
+//    }
 
-        if (!fileUrl.isNullOrBlank()) {
-            try {
-                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
-                    data = android.net.Uri.parse(fileUrl)
-                    flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                startActivity(intent)
-            } catch (e: android.content.ActivityNotFoundException) {
-                Toast.makeText(
-                    requireContext(),
-                    "No PDF/Image viewer found on this device",
-                    Toast.LENGTH_SHORT
-                ).show()
+    private fun openReportFile(fileUrl: String) {
+        if (fileUrl.isBlank()) {
+            Toast.makeText(requireContext(), "Report not available", Toast.LENGTH_SHORT).show()
+            return
+        }
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(fileUrl)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
-        } else {
-            Toast.makeText(requireContext(), "Report file not uploaded yet", Toast.LENGTH_SHORT)
-                .show()
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                requireContext(),
+                "No app found to open this file",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -405,8 +533,9 @@ class PatientAppointmentDetailFragment : Fragment() {
         val status = booking.status.lowercase()
 
         when {
-            status == "pending" || status == "confirmed" -> {
+            status == "pending" || status == "confirmed" && booking.exactTimeInMillis > System.currentTimeMillis() -> {
                 // Show cancel — hide review
+                booking.exactTimeInMillis > System.currentTimeMillis()
                 b.dividerAction.visibility = View.VISIBLE
                 b.btnCancel.visibility = View.VISIBLE
                 b.layoutReviewAction.visibility = View.GONE
@@ -515,6 +644,88 @@ class PatientAppointmentDetailFragment : Fragment() {
                 SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date(followUp))
             }"
         }
+    }
+
+    private fun renderInstallmentSchedule(
+        plan: InstallmentPlan?,
+        records: List<InstallmentRecord>
+    ) {
+        val b = binding ?: return
+
+        if (plan == null || records.isEmpty()) {
+            b.tvInstallmentPlanLabel.visibility = View.GONE
+            b.cardInstallmentPlan.visibility = View.GONE
+            return
+        }
+
+        b.layoutInstallmentRows.removeAllViews()
+
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val now = System.currentTimeMillis()
+
+        records.forEachIndexed { index, record ->
+            val row = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    if (index > 0) topMargin = dpToPx(10)
+                }
+                gravity = android.view.Gravity.CENTER_VERTICAL
+            }
+
+            val leftText = TextView(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+                )
+                val dueDateStr = if (record.dueDate > 0) {
+                    dateFormat.format(Date(record.dueDate))
+                } else "—"
+                text = "Installment ${record.installmentNumber} — Due: $dueDateStr"
+                textSize = 13f
+                setTextColor(resources.getColor(R.color.text_black, null))
+            }
+
+            val isOverdue = record.status == "pending" && record.dueDate in 1 until now
+            val displayStatus = if (isOverdue) "Overdue" else
+                record.status.replaceFirstChar { it.uppercase() }
+
+            val statusColor = when {
+                record.status == "paid" -> R.color.success
+                isOverdue -> R.color.error
+                else -> R.color.text_hint
+            }
+
+            val rightText = TextView(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                text = "$${String.format("%.2f", record.amount)} • $displayStatus"
+                textSize = 13f
+                setTextColor(resources.getColor(statusColor, null))
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+            }
+
+            row.addView(leftText)
+            row.addView(rightText)
+            b.layoutInstallmentRows.addView(row)
+
+            if (index < records.size - 1) {
+                val divider = View(requireContext()).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(1)
+                    ).apply { topMargin = dpToPx(10) }
+                    setBackgroundColor(android.graphics.Color.parseColor("#E0E0E0"))
+                }
+                b.layoutInstallmentRows.addView(divider)
+            }
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 
     override fun onResume() {

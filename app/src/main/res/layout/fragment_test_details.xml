@@ -264,7 +264,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Action Button -->
+    <!-- Bottom Action Buttons -->
     <LinearLayout
         android:id="@+id/layoutBottomAction"
         android:layout_width="match_parent"
@@ -277,23 +277,53 @@
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBookAppointment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:fontFamily="@font/poppins"
-            android:text="Book This Test"
-            android:textAllCaps="false"
-            android:textColor="@color/text_white"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/primary_blue"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/calendar"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconSize="20dp"
-            app:iconTint="@color/text_white" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:spacing="8dp">
+
+            <!-- Add to Cart Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCartDetail"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins"
+                android:text="Add to Cart"
+                android:textAllCaps="false"
+                android:textColor="@color/primary_blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                app:backgroundTint="@color/colorBackground"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/primary_blue"
+                app:strokeWidth="2dp" />
+
+            <!-- Book Appointment Button (Hidden - cart is only path) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBookAppointment"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins"
+                android:text="Book Now"
+                android:textAllCaps="false"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:backgroundTint="@color/primary_blue"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/calendar"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/text_white" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

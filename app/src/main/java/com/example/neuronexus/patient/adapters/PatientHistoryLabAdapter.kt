@@ -31,7 +31,11 @@ class PatientHistoryLabAdapter(
         val booking = bookings[position]
 
         // Text Bindings
-        holder.binding.tvTestName.text = booking.testName.ifBlank { "Lab Test" }
+        holder.binding.tvTestName.text = when {
+            booking.tests.size > 1  -> "${booking.tests.size} Tests"
+            booking.tests.size == 1 -> booking.tests[0].testName.ifBlank { booking.testName.ifBlank { "Lab Test" } }
+            else                    -> booking.testName.ifBlank { "Lab Test" }
+        }
         holder.binding.tvLabName.text = booking.labName.ifBlank { "Unknown Lab" }
         holder.binding.tvDate.text = booking.testDate
 

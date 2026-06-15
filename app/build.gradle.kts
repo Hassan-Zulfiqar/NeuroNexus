@@ -37,6 +37,19 @@ android {
             "CLOUDINARY_UPLOAD_PRESET",
             "\"${localProperties["CLOUDINARY_UPLOAD_PRESET"]}\""
         )
+
+        buildConfigField (
+            "String",
+            "STRIPE_PUBLISHABLE_KEY",
+        "\"${localProperties["STRIPE_PUBLISHABLE_KEY"]}\""
+        )
+
+        buildConfigField (
+            "String",
+            "PAYMENT_SERVER_URL",
+        "\"${localProperties["PAYMENT_SERVER_URL"]}\""
+        )
+        
     }
 
     buildTypes {
@@ -77,7 +90,6 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
-    implementation(libs.firebase.storage)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.legacy.support.v4)
@@ -104,6 +116,7 @@ dependencies {
     implementation("com.cloudinary:cloudinary-android:2.3.1")
 
     implementation("com.facebook.android:facebook-login:18.2.3")
+    implementation("com.stripe:stripe-android:20.48.0")
 }
 
 

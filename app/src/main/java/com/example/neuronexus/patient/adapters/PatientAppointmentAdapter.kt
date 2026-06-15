@@ -74,7 +74,7 @@ class PatientAppointmentAdapter(
     }
 
     // =========================================================================
-    // DOCTOR BINDING LOGIC (100% UNTOUCHED & SAFE)
+    // DOCTOR BINDING LOGIC
     // =========================================================================
     private fun bindDoctor(holder: DoctorViewHolder, appointment: DoctorAppointment) {
         holder.binding.tvName.text = appointment.doctorName
@@ -93,11 +93,11 @@ class PatientAppointmentAdapter(
             holder.binding.imgDoc.setImageResource(R.drawable.doctor)
         }
 
-        setupActionButton(holder.binding, appointment, appointment.status)
+        setupActionButton(holder.binding, appointment, appointment.status, System.currentTimeMillis())
     }
 
     // =========================================================================
-    // LAB BINDING LOGIC (NEWLY ADDED)
+    // LAB BINDING LOGIC
     // =========================================================================
     private fun bindLab(holder: LabViewHolder, booking: LabTestBooking) {
         // Map Lab data to the existing UI fields
@@ -118,7 +118,7 @@ class PatientAppointmentAdapter(
             holder.binding.imgDoc.setImageResource(R.drawable.doctor)
         }
 
-        setupActionButton(holder.binding, booking, booking.status)
+        setupActionButton(holder.binding, booking, booking.status, System.currentTimeMillis())
     }
 
     // =========================================================================
@@ -126,18 +126,26 @@ class PatientAppointmentAdapter(
     // =========================================================================
 
     // Abstracted button logic so we don't repeat the exact same color/click code twice
-    private fun setupActionButton(binding: ItemPatientScheduleAppointmentBinding, item: Booking, status: String) {
-        val isUpcoming = status == "pending" || status == "confirmed"
+    private fun setupActionButton(
+        binding: ItemPatientScheduleAppointmentBinding,
+        item: Booking,
+        status: String,
+        currentTime: Long  // pass this in
+    ) {
+        val (date, time, _) = extractBookingDetails(item)
+        val timestamp = getAppointmentTimestamp(date, time)
+
+        val isUpcoming = (status == "pending" || status == "confirmed") && timestamp > currentTime
 
         if (isUpcoming) {
             binding.btnCancel.text = "CANCEL"
-            binding.btnCancel.setTextColor(Color.parseColor("#FF4848")) // Red
+            binding.btnCancel.setTextColor(Color.parseColor("#FF4848"))
             binding.btnCancel.setOnClickListener {
                 onActionClick(item, "CANCEL")
             }
         } else {
             binding.btnCancel.text = "RESCHEDULE"
-            binding.btnCancel.setTextColor(Color.parseColor("#407BFF")) // Blue
+            binding.btnCancel.setTextColor(Color.parseColor("#407BFF"))
             binding.btnCancel.setOnClickListener {
                 onActionClick(item, "RESCHEDULE")
             }
@@ -149,6 +157,24 @@ class PatientAppointmentAdapter(
     fun updateList(newList: List<Booking>) {
         appointmentList = newList
         notifyDataSetChanged()
+    }
+
+    private fun extractBookingDetails(booking: Booking): Triple<String, String, String> {
+        return when (booking) {
+            is DoctorAppointment -> Triple(booking.appointmentDate, booking.appointmentTime, booking.status)
+            is LabTestBooking -> Triple(booking.testDate, booking.testTime, booking.status)
+            else -> Triple("", "", "") // Fallback for unknown types
+        }
+    }
+
+    private fun getAppointmentTimestamp(date: String, time: String): Long {
+        return try {
+            val format = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+            val dateObj = format.parse("$date $time")
+            dateObj?.time ?: 0L
+        } catch (e: Exception) {
+            0L
+        }
     }
 
     private fun calculateTimeRange(startTime: String): String {

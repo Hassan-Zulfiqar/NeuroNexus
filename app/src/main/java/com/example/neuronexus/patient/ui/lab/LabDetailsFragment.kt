@@ -80,15 +80,21 @@ class LabDetailsFragment : Fragment() {
     }
 
     private fun setupUI() {
-        adapter = LabTestAdapter(emptyList()) { selectedTest ->
+        adapter = LabTestAdapter(emptyList(), { selectedTest ->
             onTestSelected(selectedTest)
-        }
+        }, { test ->
+            onAddToCartClick(test)
+        })
 
         binding.rvLabTests.layoutManager = LinearLayoutManager(context)
         binding.rvLabTests.adapter = adapter
 
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        binding.btnViewCart?.setOnClickListener {
+            findNavController().navigate(R.id.action_lab_details_to_cart)
         }
 
         binding.etSearchTests.addTextChangedListener(object : TextWatcher {
@@ -119,6 +125,24 @@ class LabDetailsFragment : Fragment() {
                 binding.cardProgress.isVisible = isLoading
             }
         }
+
+        // Observe cart changes to update adapter state and badge
+        sharedViewModel.cartTests.observe(viewLifecycleOwner) { cartTests ->
+            val cartIds = cartTests.map { it.testId }.toSet()
+            adapter.updateCartState(cartIds)
+
+            // Show/hide cart badge and View Cart button
+            val count = cartTests.size
+            if (count > 0) {
+                binding.tvCartBadge?.text = count.toString()
+                binding.tvCartBadge?.visibility = android.view.View.VISIBLE
+                binding.btnViewCart?.visibility = android.view.View.VISIBLE
+                binding.btnViewCart?.text = "View Cart ($count)"
+            } else {
+                binding.tvCartBadge?.visibility = android.view.View.GONE
+                binding.btnViewCart?.visibility = android.view.View.GONE
+            }
+        }
     }
 
     private fun filterTests(query: String) {
@@ -145,6 +169,26 @@ class LabDetailsFragment : Fragment() {
             findNavController().navigate(R.id.action_labDetails_to_testDetails)
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun onAddToCartClick(test: LabTest) {
+        val isInCart = sharedViewModel.cartTests.value
+            ?.any { it.testId == test.id } == true
+
+        if (isInCart) {
+            sharedViewModel.removeTestFromCart(test.id)
+        } else {
+            // Convert LabTest to SelectedTest for cart
+            val selectedTest = com.example.neuronexus.patient.models.SelectedTest(
+                testId = test.id,
+                testName = test.testName,
+                testType = test.category,
+                sampleType = test.sampleType,
+                price = test.price.toDoubleOrNull() ?: 0.0,
+                duration = test.duration
+            )
+            sharedViewModel.addTestToCart(selectedTest)
         }
     }
 

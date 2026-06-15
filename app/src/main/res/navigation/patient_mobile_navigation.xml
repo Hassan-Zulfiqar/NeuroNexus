@@ -60,6 +60,10 @@
         <action
             android:id="@+id/action_labDetails_to_testDetails"
             app:destination="@id/navigation_test_details" />
+        <!-- Action to navigate to Lab Test Cart -->
+        <action
+            android:id="@+id/action_lab_details_to_cart"
+            app:destination="@id/navigation_lab_test_cart" />
     </fragment>
 
     <!-- Test Details Fragment with NEW Action -->
@@ -71,6 +75,20 @@
         <!-- Action to navigate to Lab Schedule -->
         <action
             android:id="@+id/action_testDetails_to_labSchedule"
+            app:destination="@id/navigation_lab_schedule" />
+        <!-- Action to navigate to Lab Test Cart -->
+        <action
+            android:id="@+id/action_test_details_to_cart"
+            app:destination="@id/navigation_lab_test_cart" />
+    </fragment>
+
+    <!-- NEW: Lab Test Cart Fragment -->
+    <fragment
+        android:id="@+id/navigation_lab_test_cart"
+        android:name="com.example.neuronexus.patient.ui.lab.LabTestCartFragment"
+        android:label="LabTestCartFragment">
+        <action
+            android:id="@+id/action_cart_to_patient_selection"
             app:destination="@id/navigation_lab_schedule" />
     </fragment>
 
