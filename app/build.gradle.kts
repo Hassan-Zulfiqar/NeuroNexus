@@ -59,6 +59,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -117,6 +118,7 @@ dependencies {
 
     implementation("com.facebook.android:facebook-login:18.2.3")
     implementation("com.stripe:stripe-android:20.48.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 }
 
 

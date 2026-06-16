@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.neuronexus.R
 import com.example.neuronexus.common.activities.NotificationsActivity
+import com.example.neuronexus.common.utils.NotificationHelper
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentPatientHomeBinding
@@ -35,6 +36,8 @@ class PatientHomeFragment : Fragment() {
 
     // Koin Injection
     private val networkViewModel: NetworkViewModel by viewModel()
+
+    private var seenNotificationIds: Set<String> = emptySet()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -234,6 +237,29 @@ class PatientHomeFragment : Fragment() {
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }
+
+        // 6. Real-time device notifications for booking status changes
+        val patientTypes = setOf("BOOKING_CONFIRMED", "BOOKING_REJECTED", "PAYMENT_REFUNDED")
+        networkViewModel.notifications.observe(viewLifecycleOwner) { result ->
+            result?.onSuccess { notificationList ->
+                val previousIds = seenNotificationIds
+                val currentIds = notificationList.map { it.notificationId }.toSet()
+                if (previousIds.isNotEmpty()) {
+                    notificationList
+                        .filter { it.notificationId !in previousIds && it.type in patientTypes }
+                        .forEach { notif ->
+                            NotificationHelper.showNotification(
+                                context = requireContext().applicationContext,
+                                channelId = NotificationHelper.CHANNEL_BOOKING_UPDATES,
+                                notificationId = notif.notificationId.hashCode(),
+                                title = notif.title,
+                                message = notif.message
+                            )
+                        }
+                }
+                seenNotificationIds = currentIds
+            }
+        }
     }
 
     private fun getServiceList(): List<PatientDashboardService> {
@@ -260,6 +286,7 @@ class PatientHomeFragment : Fragment() {
         val uid = networkViewModel.getCurrentUserUid()
         if (!uid.isNullOrEmpty()) {
             networkViewModel.startListeningToUnreadCount(uid)
+            networkViewModel.startListeningToNotifications(uid)
         }
         networkViewModel.checkAndExpirePendingAppointments()
     }
@@ -267,6 +294,7 @@ class PatientHomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         networkViewModel.stopListeningToUnreadCount()
+        networkViewModel.stopListeningToNotifications()
     }
 
     override fun onDestroyView() {

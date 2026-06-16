@@ -12,6 +12,7 @@ import com.example.neuronexus.databinding.ActivityPatientDashboardBinding
 import com.example.neuronexus.patient.ui.more.PatientMoreFragment
 import com.example.neuronexus.R
 import com.example.neuronexus.common.utils.Constant
+import com.example.neuronexus.common.utils.NotificationHelper
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -28,6 +29,15 @@ class PatientDashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPatientDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        NotificationHelper.createChannels(this)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (!NotificationHelper.hasNotificationPermission(this)) {
+                registerForActivityResult(
+                    androidx.activity.result.contract.ActivityResultContracts.RequestPermission()
+                ) { }.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment

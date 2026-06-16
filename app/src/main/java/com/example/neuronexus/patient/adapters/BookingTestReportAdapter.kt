@@ -25,7 +25,13 @@ class BookingTestReportAdapter(
         fun bind(test: SelectedTest) {
             // Bind test info
             binding.tvReportTestName.text = test.testName
-            binding.tvReportSampleType.text = "Sample: ${test.sampleType}"
+            if(test.sampleType != "")
+            {
+                binding.tvReportSampleType.text = "Sample: ${test.sampleType}"
+            }
+            else{
+                binding.tvReportSampleType.visibility = View.GONE
+            }
 
             // Only show report status and buttons if this is a completed booking
             if (showReportStatus) {

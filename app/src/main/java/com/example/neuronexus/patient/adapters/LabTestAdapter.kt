@@ -21,13 +21,13 @@ class LabTestAdapter(
             binding.tvDescription.text = test.description
             binding.tvPrice.text = "RS ${test.price}"
 
-            // Installment Logic
-            if (test.installments.equals("yes", ignoreCase = true)) {
-                binding.tvInstallmentBadge.visibility = View.VISIBLE
-                binding.tvInstallmentBadge.text = "${test.noOfInstallments} Installments Available"
-            } else {
-                binding.tvInstallmentBadge.visibility = View.GONE
-            }
+//            // Installment Logic
+//            if (test.installments.equals("yes", ignoreCase = true)) {
+//                binding.tvInstallmentBadge.visibility = View.VISIBLE
+//                binding.tvInstallmentBadge.text = "${test.noOfInstallments} Installments Available"
+//            } else {
+//                binding.tvInstallmentBadge.visibility = View.GONE
+//            }
 
             // Cart button state — shows Add or Remove based on cart state
             val isInCart = cartTestIds.contains(test.id)

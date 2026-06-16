@@ -27,6 +27,7 @@ import java.util.Locale
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import androidx.appcompat.app.AlertDialog
+import com.example.neuronexus.common.workers.ReminderScheduler
 
 class LabBookingConfirmationFragment : Fragment() {
 
@@ -56,6 +57,9 @@ class LabBookingConfirmationFragment : Fragment() {
     private lateinit var paymentSheet: PaymentSheet
     private var pendingBookingId: String = ""
     private var stripePaymentIntentId: String = ""  // Store for later use in handlePaymentResult()
+    private var pendingExactTimeInMillis: Long = 0L
+    private var pendingPlanStartTime: Long = 0L
+    private var pendingInstallmentAmount: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,6 +116,50 @@ class LabBookingConfirmationFragment : Fragment() {
         networkViewModel.bookingResult.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 result.onSuccess {
+                    val cartTests = sharedViewModel.cartTests.value ?: emptyList()
+                    val testsSummary = if (cartTests.size > 1) {
+                        "${cartTests.size} tests"
+                    } else {
+                        cartTests.firstOrNull()?.testName
+                            ?: selectedLabTest?.testName
+                            ?: "your lab test"
+                    }
+                    ReminderScheduler.scheduleAppointmentReminder(
+                        context = requireContext().applicationContext,
+                        bookingId = pendingBookingId,
+                        exactTimeInMillis = pendingExactTimeInMillis,
+                        title = "Lab Test Reminder",
+                        message = "You have $testsSummary at ${selectedLab?.name ?: "the lab"} " +
+                                  "in 30 minutes ($selectedTimeSlot)"
+                    )
+
+                    // Schedule 1-day-before reminders for installments #2 onwards (#1 is pre-paid)
+                    val isInstallment = binding?.rbPayInstallment?.isChecked == true && labOffersInstallments
+                    if (isInstallment && selectedInstallmentsCount > 1) {
+                        val thirtyDaysMs = 30L * 24 * 60 * 60 * 1000
+                        val labDisplayName = selectedLab?.name ?: "the lab"
+
+                        for (i in 2..selectedInstallmentsCount) {
+                            val dueDate = pendingPlanStartTime + ((i - 1) * thirtyDaysMs)
+                            android.util.Log.d(
+                                "InstallmentReminder",
+                                "Installment $i — due: ${java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(dueDate))}" +
+                                ", reminder: ${java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(dueDate - 24 * 60 * 60 * 1000))}" +
+                                ", delay hours: ${(dueDate - 24 * 60 * 60 * 1000 - System.currentTimeMillis()) / (1000 * 60 * 60)}"
+                            )
+                            ReminderScheduler.scheduleInstallmentReminder(
+                                context = requireContext().applicationContext,
+                                bookingId = pendingBookingId,
+                                installmentNumber = i,
+                                dueDateMillis = dueDate,
+                                title = "Installment Payment Due Tomorrow",
+                                message = "Installment $i of $selectedInstallmentsCount " +
+                                          "($${String.format("%.2f", pendingInstallmentAmount)}) " +
+                                          "for your $labDisplayName booking is due tomorrow"
+                            )
+                        }
+                    }
+
                     showSuccessAndExit()
                     networkViewModel.resetBookingState()
                 }
@@ -510,6 +558,13 @@ class LabBookingConfirmationFragment : Fragment() {
             parseFormat.parse("$formattedDate $selectedTimeSlot")?.time ?: 0L
         } catch (e: Exception) {
             0L
+        }
+        pendingExactTimeInMillis = calculatedExactTime
+        pendingPlanStartTime = System.currentTimeMillis()
+        pendingInstallmentAmount = if (selectedInstallmentsCount > 0 && totalAmount > 0) {
+            totalAmount / selectedInstallmentsCount
+        } else {
+            0.0
         }
 
         val booking = LabTestBooking(

@@ -23,6 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.example.neuronexus.common.workers.ReminderScheduler
 
 class BookingConfirmationFragment : Fragment() {
 
@@ -41,6 +42,7 @@ class BookingConfirmationFragment : Fragment() {
     private lateinit var paymentSheet: PaymentSheet
     private var pendingBookingId: String = ""
     private var pendingPaymentIntentId: String = ""
+    private var pendingExactTimeInMillis: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,6 +131,7 @@ class BookingConfirmationFragment : Fragment() {
         } catch (e: Exception) {
             0L
         }
+        pendingExactTimeInMillis = calculatedExactTime
 
         val booking = DoctorAppointment(
             bookingId = if (pendingBookingId.isNotBlank()) pendingBookingId else "",
@@ -189,6 +192,14 @@ class BookingConfirmationFragment : Fragment() {
         networkViewModel.bookingResult.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 result.onSuccess { bookingId ->
+                    ReminderScheduler.scheduleAppointmentReminder(
+                        context = requireContext().applicationContext,
+                        bookingId = bookingId.ifBlank { pendingBookingId },
+                        exactTimeInMillis = pendingExactTimeInMillis,
+                        title = "Appointment Reminder",
+                        message = "Your appointment with Dr. ${selectedDoctor?.name ?: "your doctor"} " +
+                                  "is in 30 minutes ($selectedTimeSlot)"
+                    )
                     showSuccessAndExit(bookingId)
                     networkViewModel.resetBookingState()
                 }

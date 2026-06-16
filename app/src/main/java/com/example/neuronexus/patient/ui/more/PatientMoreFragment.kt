@@ -55,10 +55,10 @@ class PatientMoreFragment : BottomSheetDialogFragment() {
                 .navigate(R.id.action_global_to_patient_profile_selector)
         }
 
-        binding.btnSettings.setOnClickListener {
-            Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
+//        binding.btnSettings.setOnClickListener {
+//            Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show()
+//            dismiss()
+//        }
 
         binding.btnHelp.setOnClickListener {
             dismiss()

@@ -12,6 +12,7 @@ import com.example.neuronexus.databinding.ActivityDoctorDashboardBinding
 import com.example.neuronexus.R
 import com.example.neuronexus.common.activities.NotificationsActivity
 import com.example.neuronexus.common.utils.Constant
+import com.example.neuronexus.common.utils.NotificationHelper
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.doctor.ui.more.DoctorMoreFragment
@@ -27,6 +28,8 @@ class DoctorDashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDoctorDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        NotificationHelper.createChannels(this)
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_doctor) as NavHostFragment

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.neuronexus.R
 import com.example.neuronexus.common.activities.NotificationsActivity
 import com.example.neuronexus.common.utils.Constant
+import com.example.neuronexus.common.workers.ReminderScheduler
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentDoctorAppointmentDetailBinding
@@ -140,6 +141,10 @@ class DoctorAppointmentDetailFragment : Fragment() {
                             backPressHandling()
                         }
                         "rejected" -> {
+                            ReminderScheduler.cancelAppointmentReminder(
+                                context = requireContext().applicationContext,
+                                bookingId = currentAppointment?.bookingId ?: ""
+                            )
                             Toast.makeText(
                                 requireContext(),
                                 "Appointment rejected",

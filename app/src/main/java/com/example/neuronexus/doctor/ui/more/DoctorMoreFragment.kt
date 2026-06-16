@@ -46,10 +46,10 @@ class DoctorMoreFragment : BottomSheetDialogFragment() {
                 .navigate(R.id.navigation_doctor_history)
         }
 
-        binding.btnSettings.setOnClickListener {
-            Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
+//        binding.btnSettings.setOnClickListener {
+//            Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show()
+//            dismiss()
+//        }
 
         binding.btnHelp.setOnClickListener {
             dismiss()

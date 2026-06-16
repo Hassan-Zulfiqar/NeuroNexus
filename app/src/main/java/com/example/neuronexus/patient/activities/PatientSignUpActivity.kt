@@ -15,6 +15,7 @@ import androidx.core.content.FileProvider
 import com.example.neuronexus.R
 import com.example.neuronexus.common.auth.LoginActivity
 import com.example.neuronexus.common.utils.AlertUtils
+import com.example.neuronexus.common.utils.ValidationUtils
 import com.example.neuronexus.common.viewmodel.AuthViewModel
 import com.example.neuronexus.databinding.ActivityPatientSignUpBinding
 import com.example.neuronexus.models.Patient
@@ -163,19 +164,33 @@ class PatientSignUpActivity : AppCompatActivity() {
         val password = binding.inputPass.editText?.text.toString().trim()
         val confirmPass = binding.inputConfirmPass.editText?.text.toString().trim()
 
-        // UI Validations
-        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || cnic.isEmpty() || password.isEmpty()) {
-            AlertUtils.showError(this, "Please fill all required fields", "Missing Information")
+        if (!ValidationUtils.isValidName(name)) {
+            AlertUtils.showError(this, "Please enter your full name (at least 2 characters)", "Invalid Name")
             return
         }
 
-        if (password.length < 6) {
-            AlertUtils.showError(this, "Password must be at least 6 characters")
+        if (!ValidationUtils.isValidEmail(email)) {
+            AlertUtils.showError(this, "Please enter a valid email address", "Invalid Email")
+            return
+        }
+
+        if (!ValidationUtils.isValidContact(phone)) {
+            AlertUtils.showError(this, "Contact number must be 11–13 digits (numbers only)", "Invalid Contact")
+            return
+        }
+
+        if (!ValidationUtils.isValidCnic(cnic)) {
+            AlertUtils.showError(this, "CNIC must be exactly 13 digits (numbers only)", "Invalid CNIC")
+            return
+        }
+
+        if (!ValidationUtils.isValidPassword(password)) {
+            AlertUtils.showError(this, ValidationUtils.getPasswordStrengthMessage(), "Weak Password")
             return
         }
 
         if (password != confirmPass) {
-            AlertUtils.showError(this, "Passwords do not match")
+            AlertUtils.showError(this, "Passwords do not match", "Password Mismatch")
             return
         }
 

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.neuronexus.R
 import com.example.neuronexus.common.utils.Constant
+import com.example.neuronexus.common.workers.ReminderScheduler
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentDoctorScheduleBinding
@@ -241,6 +242,10 @@ class DoctorScheduleFragment : Fragment() {
                             networkViewModel.resetBookingState()
                         }
                         "rejected" -> {
+                            ReminderScheduler.cancelAppointmentReminder(
+                                context = requireContext().applicationContext,
+                                bookingId = lastActedAppointment?.bookingId ?: ""
+                            )
                             Toast.makeText(
                                 requireContext(),
                                 "Appointment rejected",

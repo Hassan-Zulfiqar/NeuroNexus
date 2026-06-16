@@ -31,6 +31,7 @@ import com.example.neuronexus.patient.models.Prescription
 import com.example.neuronexus.patient.adapters.BookingTestReportAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.neuronexus.patient.models.SelectedTest
+import com.example.neuronexus.common.workers.ReminderScheduler
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -120,6 +121,18 @@ class PatientAppointmentDetailFragment : Fragment() {
                     ).show()
                 }
 
+                ReminderScheduler.cancelAppointmentReminder(
+                    context = requireContext().applicationContext,
+                    bookingId = currentBooking?.bookingId ?: ""
+                )
+                val labBooking = currentBooking as? LabTestBooking
+                if (labBooking != null && labBooking.selectedInstallments > 1) {
+                    ReminderScheduler.cancelInstallmentReminders(
+                        context = requireContext().applicationContext,
+                        bookingId = labBooking.bookingId,
+                        maxInstallments = labBooking.selectedInstallments
+                    )
+                }
                 networkViewModel.resetBookingState()
                 backPressHandling()
             } else {

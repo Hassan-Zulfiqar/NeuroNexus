@@ -19,6 +19,7 @@ import com.example.neuronexus.R
 import com.example.neuronexus.common.ui.ImagePickerHelper
 import com.example.neuronexus.common.ui.ImageSelectionDialog
 import com.example.neuronexus.common.utils.Constant.analyzeResponse
+import com.example.neuronexus.common.utils.NotificationHelper
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.common.viewmodel.SharedViewModel
 import com.example.neuronexus.databinding.FragmentDoctorHomeBinding
@@ -49,6 +50,8 @@ class DoctorHomeFragment : Fragment() {
     var progressDialog: ProgressDialog? = null
 
     private lateinit var imagePickerHelper: ImagePickerHelper
+
+    private var seenNotificationIds: Set<String> = emptySet()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -214,6 +217,28 @@ class DoctorHomeFragment : Fragment() {
         networkViewModel.unreadCount.observe(viewLifecycleOwner) { count ->
             updateNotificationBadge(count)
         }
+
+        // Real-time device notifications for new bookings
+        networkViewModel.notifications.observe(viewLifecycleOwner) { result ->
+            result?.onSuccess { notificationList ->
+                val previousIds = seenNotificationIds
+                val currentIds = notificationList.map { it.notificationId }.toSet()
+                if (previousIds.isNotEmpty()) {
+                    notificationList
+                        .filter { it.notificationId !in previousIds && it.type == "NEW_BOOKING" }
+                        .forEach { notif ->
+                            NotificationHelper.showNotification(
+                                context = requireContext().applicationContext,
+                                channelId = NotificationHelper.CHANNEL_BOOKING_UPDATES,
+                                notificationId = notif.notificationId.hashCode(),
+                                title = notif.title,
+                                message = notif.message
+                            )
+                        }
+                }
+                seenNotificationIds = currentIds
+            }
+        }
     }
 
     private fun fetchData() {
@@ -368,12 +393,14 @@ class DoctorHomeFragment : Fragment() {
         val uid = networkViewModel.getCurrentUserUid()
         if (!uid.isNullOrEmpty()) {
             networkViewModel.startListeningToUnreadCount(uid)
+            networkViewModel.startListeningToNotifications(uid)
         }
     }
 
     override fun onPause() {
         super.onPause()
         networkViewModel.stopListeningToUnreadCount()
+        networkViewModel.stopListeningToNotifications()
     }
 
     override fun onDestroyView() {

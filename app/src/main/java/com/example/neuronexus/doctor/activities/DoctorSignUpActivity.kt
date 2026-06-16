@@ -16,6 +16,7 @@ import androidx.core.content.FileProvider
 import com.example.neuronexus.R
 import com.example.neuronexus.common.auth.LoginActivity
 import com.example.neuronexus.common.utils.AlertUtils
+import com.example.neuronexus.common.utils.ValidationUtils
 import com.example.neuronexus.common.viewmodel.AuthViewModel
 import com.example.neuronexus.common.viewmodel.NetworkViewModel
 import com.example.neuronexus.databinding.ActivityDoctorSignUpBinding
@@ -239,18 +240,33 @@ class DoctorSignUpActivity : AppCompatActivity() {
         val schedule = binding.inputSchedule.editText?.text.toString().trim()
 
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || license.isEmpty()) {
-            AlertUtils.showError(this, "Please fill all required fields", "Missing Info")
+        if (!ValidationUtils.isValidName(name)) {
+            AlertUtils.showError(this, "Please enter your full name (at least 2 characters)", "Invalid Name")
             return
         }
 
-        if (password.length < 6) {
-            AlertUtils.showError(this, "Password must be at least 6 characters")
+        if (!ValidationUtils.isValidEmail(email)) {
+            AlertUtils.showError(this, "Please enter a valid email address", "Invalid Email")
+            return
+        }
+
+        if (phone.isNotEmpty() && !ValidationUtils.isValidContact(phone)) {
+            AlertUtils.showError(this, "Contact number must be 11–13 digits (numbers only)", "Invalid Contact")
+            return
+        }
+
+        if (!ValidationUtils.isValidPassword(password)) {
+            AlertUtils.showError(this, ValidationUtils.getPasswordStrengthMessage(), "Weak Password")
             return
         }
 
         if (password != confirmPass) {
-            AlertUtils.showError(this, "Passwords do not match")
+            AlertUtils.showError(this, "Passwords do not match", "Password Mismatch")
+            return
+        }
+
+        if (license.isEmpty()) {
+            AlertUtils.showError(this, "Please enter your PMDC / License Number", "Missing Info")
             return
         }
 
